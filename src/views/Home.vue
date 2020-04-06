@@ -1,18 +1,24 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <form>
+    <input type="text" v-model="username" />
+    <input type="password" v-model="password" />
+    <button @click="handleLogin">login</button>
+  </form>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+import { Action } from 'vuex-class'
+import { UserDto } from '../models'
+@Component
+export default class Home extends Vue {
+  username = ''
+  password = ''
+  @Action
+  login!: (payload: UserDto) => undefined
 
-export default {
-  name: "Home",
-  components: {
-    HelloWorld
+  handleLogin() {
+    this.login({ username: this.username, password: this.password })
   }
-};
+}
 </script>
