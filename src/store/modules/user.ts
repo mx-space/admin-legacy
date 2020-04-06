@@ -2,8 +2,8 @@ import { rest } from '@/api/rest'
 import { LoginDto } from '@/models'
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { LoginRespDto } from '@/models/response.dto'
-@Module
-export class User extends VuexModule {
+@Module({ name: 'user' })
+export class UserModule extends VuexModule {
   token: string | null = null
   name?: string = ''
   avatar?: string = ''

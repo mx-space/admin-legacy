@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { Action } from 'vuex-class'
+import { Action, Getter, State } from 'vuex-class'
 import { UserDto } from '../models'
 @Component
 export default class Home extends Vue {
@@ -20,5 +20,7 @@ export default class Home extends Vue {
   handleLogin() {
     this.login({ username: this.username, password: this.password })
   }
+  @Getter
+  title!: string
 }
 </script>

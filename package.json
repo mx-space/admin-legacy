@@ -1,6 +1,7 @@
 {
   "name": "mx-admin",
   "version": "0.1.0",
+  "license": "MIT",
   "scripts": {
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
