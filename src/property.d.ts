@@ -8,7 +8,7 @@ declare module 'vue/types/vue' {
   // 3. Declare augmentation for Vue
   interface Vue {
     $process: QProgress
-    $message: typeof Message
+    $notice: Message
     $api: typeof rest
   }
 }

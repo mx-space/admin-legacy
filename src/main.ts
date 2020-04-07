@@ -13,8 +13,9 @@ import './plugins/element-ui'
 import './plugins/processbar'
 import { rest } from '@/api/rest'
 Vue.prototype.$api = rest
-import Message from './plugins/message'
+import Message, { Message as M } from './plugins/message'
 Vue.use(Message)
+Vue.prototype.$notice = M
 Vue.config.productionTip = false
 
 new Vue({

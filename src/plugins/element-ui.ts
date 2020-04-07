@@ -12,6 +12,7 @@ import {
 
 const components = [FormItem, Form, Card, Row, Col, Input, Button, Checkbox]
 import 'element-ui/lib/theme-chalk/index.css'
+
 components.forEach((component) => {
   Vue.use(component)
 })
