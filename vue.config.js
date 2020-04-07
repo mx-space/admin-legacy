@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 'use strict'
 // const path = require('path')
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -33,21 +34,31 @@ module.exports = {
     },
   },
 
-  configureWebpack: config => {
+  configureWebpack: (config) => {
     config.plugins.push(
       new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
     )
   },
-
+  chainWebpack: (config) => {
+    const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
+    types.forEach((type) =>
+      addStyleResource(config.module.rule('scss').oneOf(type)),
+    )
+  },
   pluginOptions: {
-    'style-resources-loader': {
-      preProcessor: 'scss',
-      patterns: [
-        require('path').resolve(__dirname, 'src/assets/scss/_var.scss'),
-      ],
-    },
     webpackBundleAnalyzer: {
       openAnalyzer: process.env.NODE_ENV === 'production' ? true : false,
     },
   },
+}
+
+function addStyleResource(rule) {
+  rule
+    .use('style-resource')
+    .loader('style-resources-loader')
+    .options({
+      patterns: [
+        require('path').resolve(__dirname, 'src/assets/scss/_var.scss'),
+      ],
+    })
 }

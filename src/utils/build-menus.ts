@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import { RouteConfig } from 'vue-router'
 
 export interface MenuModel {
@@ -13,7 +14,6 @@ const model = (item: RouteConfig): MenuModel => ({
   icon: item.meta?.icon,
   subItems: buildSubMenus(item),
 })
-
 function buildSubMenus(route: RouteConfig) {
   if (Array.isArray(route.children)) {
     return route.children.map((item) => {

@@ -7,6 +7,8 @@ import 'normalize.css/normalize.css'
 import { PerfectScrollbar } from 'vue2-perfect-scrollbar'
 Vue.component('ps', PerfectScrollbar as VueConstructor<Vue>)
 
+import './plugins/font-awesome'
+
 Vue.config.productionTip = false
 
 new Vue({
