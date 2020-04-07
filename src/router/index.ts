@@ -1,6 +1,6 @@
+import BasicLayout from '@/layouts/BasicLayout.vue'
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import BasicLayout from '@/layouts/BasicLayout.vue'
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [

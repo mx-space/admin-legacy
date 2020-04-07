@@ -1,82 +1,17 @@
 <template>
   <div class="full bg">
     <div class="dialog">
-      <Card class="card" title="欢迎回来~">
-        <Form @submit="onSubmit" :form="form" class="form">
-          <FormItem>
-            <AInput
-              size="large"
-              placeholder="请输入账户名"
-              v-decorator="[
-                'username',
-                {
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入账户名',
-                      whitespace: true,
-                    },
-                  ],
-                },
-              ]"
-            >
-              <icon slot="prefix" :icon="['fas', 'user']" />
-            </AInput>
-          </FormItem>
-          <FormItem>
-            <AInput
-              size="large"
-              placeholder="请输入密码"
-              type="password"
-              v-decorator="[
-                'password',
-                {
-                  rules: [
-                    { required: true, message: '请输入密码', whitespace: true },
-                  ],
-                },
-              ]"
-            >
-              <icon slot="prefix" :icon="['fas', 'key']" />
-            </AInput>
-          </FormItem>
-          <FormItem>
-            <Checkbox
-              :checked="remberPassword"
-              @change="(e) => (this.remberPassword = e.target.checked)"
-            >
-              记住密码
-            </Checkbox>
-          </FormItem>
-          <FormItem>
-            <Button
-              :loading="logging"
-              style="width: 100%; margin-top: 12px;"
-              size="large"
-              html-type="submit"
-              @click="onSubmit"
-              type="primary"
-              >登录</Button
-            >
-          </FormItem>
-        </Form>
-      </Card>
+      <!-- <v-form>
+        <v-container></v-container>
+      </v-form> -->
     </div>
   </div>
 </template>
 
 <script>
-import { Card, Form, Input as AInput, Button, Checkbox } from 'ant-design-vue'
 export default {
   name: 'Login',
-  components: {
-    Card,
-    Form,
-    FormItem: Form.Item,
-    AInput,
-    Button,
-    Checkbox,
-  },
+  components: {},
   data() {
     return {
       logging: false,
@@ -90,6 +25,11 @@ export default {
       username: localStorage.getItem('focus_username') || '',
       password: localStorage.getItem('focus_password') || '',
     })
+  },
+  created() {
+    console.log(this.$message)
+    // this.$message.success(['1', '1'])
+    this.$message('1')
   },
   methods: {
     onSubmit(e) {

@@ -1,7 +1,7 @@
+import { Message } from '@/plugins/message'
 import router from '@/router'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
-import { message as Message } from 'ant-design-vue'
 import axios from 'axios'
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,

@@ -1,5 +1,5 @@
-import inflection from 'inflection'
 import $axios from '@/utils/request'
+import inflection from 'inflection'
 
 export enum AccessRoutesEnum {
   Post,

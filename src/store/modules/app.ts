@@ -1,7 +1,7 @@
-import Cookies from 'js-cookie'
 import { configs } from '@/configs'
-import { VuexModule, Mutation, Action, Module } from 'vuex-module-decorators'
 import { ViewportRecord } from '@/store/interfaces/viewport.interface'
+import Cookies from 'js-cookie'
+import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 
 @Module({ namespaced: true })
 export class AppModule extends VuexModule {
