@@ -1,57 +1,79 @@
 <template>
   <div class="full bg">
     <div class="dialog">
-      <!-- <v-form>
-        <v-container></v-container>
-      </v-form> -->
+      <el-card class="box-card"
+        ><div slot="header" class="clearfix">
+          <span>登陆</span>
+        </div>
+        <el-form
+          v-model="user"
+          label-position="left"
+          label-width="80px"
+          status-icon
+          @submit.native.prevent
+          class="form"
+        >
+          <el-form-item label="用户名" prop="username">
+            <el-input v-model="user.username"></el-input>
+          </el-form-item>
+          <el-form-item label="密码" prop="password">
+            <el-input
+              v-model="user.password"
+              type="password"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-checkbox v-model="remberPassword">记住密码</el-checkbox>
+        </el-form>
+
+        <footer style="text-align: center;">
+          <Button
+            style="margin-top: 12px;"
+            @click="onSubmit"
+            title="登陆"
+          ></Button>
+        </footer>
+      </el-card>
     </div>
   </div>
 </template>
 
 <script>
+import Button from '@/components/button/parallaxButton'
 export default {
   name: 'Login',
-  components: {},
+  components: { Button },
   data() {
     return {
       logging: false,
       error: '',
       remberPassword: true,
-      // form: this.$form.createForm(this, { name: 'login' }),
+      user: {
+        username: '',
+        password: '',
+      },
     }
   },
   mounted() {
-    // this.form.setFieldsValue({
-    //   username: localStorage.getItem('focus_username') || '',
-    //   password: localStorage.getItem('focus_password') || '',
-    // })
+    this.username = localStorage.getItem('focus_username') || ''
+    this.password = localStorage.getItem('focus_password') || ''
   },
-  created() {
-    // console.log(this.$message)
-  },
+
   methods: {
-    onSubmit(e) {
-      e.preventDefault()
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          this.logging = true
-          this.$store
-            .dispatch('user/login', values)
-            .then(() => {
-              this.logging = false
-              if (this.remberPassword) {
-                localStorage.setItem('focus_username', values.username)
-                localStorage.setItem('focus_password', values.password)
-              }
-              this.$router.push({ path: this.redirect || '/' })
-            })
-            .catch(() => {
-              this.logging = false
-            })
-        } else {
-          console.log('error submit!!')
-          return false
+    onSubmit() {
+      if (!this.user.username || !this.user.password) {
+        this.$message.error('用户名或密码不正确哦')
+        throw new Error('wrong username or password')
+      }
+
+      this.logging = true
+      this.$store.dispatch('user/login', this.user).then(() => {
+        this.logging = false
+        if (this.remberPassword) {
+          localStorage.setItem('focus_username', this.user.username)
+          localStorage.setItem('focus_password', this.user.password)
         }
+        this.$router.push({ path: this.redirect || '/' })
       })
     },
   },

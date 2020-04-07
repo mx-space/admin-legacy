@@ -41,29 +41,31 @@ export interface MessageOptions {
 export interface Message {
   (message: string): void
   (message: string, options: MessageOptions): void
-  success?: MessageConstructor
-  error?: MessageConstructor
-  info?: MessageConstructor
-  warning?: MessageConstructor
+  success: MessageConstructor
+  error: MessageConstructor
+  info: MessageConstructor
+  warning: MessageConstructor
 }
-export const Message: Message = (
-  message: string,
-  options: MessageOptions = {},
-) => {
-  // const { type, timeout } = options
-  createMessage(message, options)
-}
+export const Message: Message =
+  (((message: string, options: MessageOptions = {}) => {
+    // const { type, timeout } = options
+    createMessage(message, options)
+  }) as
+    any) as
+  Message
 ;['success', 'info', 'error', 'warning'].forEach((type) => {
   ;(Message as any)[type] = (
     message: string | string[],
     options?: MessageOptions,
   ) => {
     if (Array.isArray(message)) {
-      message.forEach((message) => {
-        createMessage(
-          message as string,
-          ({ ...options, type } as any) as MessageOptions,
-        )
+      message.forEach((message, index) => {
+        setTimeout(() => {
+          createMessage(
+            message as string,
+            ({ ...options, type } as any) as MessageOptions,
+          )
+        }, index * 100)
       })
     } else {
       createMessage(
@@ -91,3 +93,4 @@ export default {
   },
   Message,
 }
+

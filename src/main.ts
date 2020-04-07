@@ -9,6 +9,7 @@ Vue.component('ps', PerfectScrollbar as VueConstructor<Vue>)
 
 import './plugins/font-awesome'
 import './plugins/vuetify'
+import './plugins/element-ui'
 import './plugins/processbar'
 import { rest } from '@/api/rest'
 Vue.prototype.$api = rest
