@@ -16,10 +16,12 @@
     "dayjs": "^1.8.23",
     "inflection": "^1.12.0",
     "js-cookie": "^2.2.1",
+    "normalize.css": "^8.0.1",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.1",
     "vue-router": "^3.1.6",
+    "vue2-perfect-scrollbar": "^1.4.0",
     "vuex": "^3.1.3",
     "vuex-class": "^0.3.2",
     "vuex-module-decorators": "^0.16.1"
