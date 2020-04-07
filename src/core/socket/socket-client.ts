@@ -1,12 +1,5 @@
-import { Message as M } from '@/plugins/message'
+import { Message, MessageType, MessageConstructor } from '@/plugins/message'
 
-const Message = {
-  // info: M.info,
-  error: M.error,
-  success: M.success,
-  // warn: M.warn,
-  // warning: M.warning,
-}
 class SocketClient {
   static retryDelay(times: number) {
     switch (times) {
@@ -162,20 +155,17 @@ class SocketClient {
   }
 
   _onMessage(event: { data: any }) {
-    // TODO onmessage
-    // const { data } = event
-    // // console.log(data);
-    // try {
-    //   const {
-    //     type,
-    //     message,
-    //   }: { type: keyof typeof Message; message: string } = JSON.parse(data)
-    //   Message[type]({
-    //     message: 'Notice',
-    //   })
-    // } catch (err) {
-    //   console.log(err)
-    // }
+    const { data } = event
+    // console.log(data);
+    try {
+      const {
+        type,
+        message,
+      }: { type: keyof typeof MessageType; message: string } = JSON.parse(data)
+      ;(Message[type] as MessageConstructor)(message)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   _onError(event: any) {

@@ -17,19 +17,17 @@ export default {
       logging: false,
       error: '',
       remberPassword: true,
-      form: this.$form.createForm(this, { name: 'login' }),
+      // form: this.$form.createForm(this, { name: 'login' }),
     }
   },
   mounted() {
-    this.form.setFieldsValue({
-      username: localStorage.getItem('focus_username') || '',
-      password: localStorage.getItem('focus_password') || '',
-    })
+    // this.form.setFieldsValue({
+    //   username: localStorage.getItem('focus_username') || '',
+    //   password: localStorage.getItem('focus_password') || '',
+    // })
   },
   created() {
-    console.log(this.$message)
-    // this.$message.success(['1', '1'])
-    this.$message('1')
+    // console.log(this.$message)
   },
   methods: {
     onSubmit(e) {

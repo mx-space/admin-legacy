@@ -11,47 +11,64 @@ export enum MessageType {
   'warning',
 }
 
-const createMessage = (
-  message: string,
-  type: keyof typeof MessageType = 'info',
-  timeout = 3000,
-) => {
+const createMessage = (message: string, options: MessageOptions) => {
   if (!message) {
     throw new Error('message is empty.')
   }
+  const {
+    type = 'info',
+    color = '',
+    closable = false,
+    timeout = 3000,
+  } = options
   const vNode = new MessageConstructor({
-    data: { message: message, type, timeout },
+    data: { message: message, type, timeout, color, closable },
   })
   const dom = vNode.$mount()
   const listDom = document.getElementById('notice-list')
   listDom?.appendChild(dom.$el)
 }
 
-export const Message:
-  | Record<keyof typeof MessageType | any, any>
-  | Function
-  | any = (
+export interface MessageConstructor {
+  (message: string | string[], options?: MessageOptions): void
+}
+export interface MessageOptions {
+  timeout?: number
+  type?: keyof typeof MessageType
+  color?: string
+  closable?: boolean
+}
+export interface Message {
+  (message: string): void
+  (message: string, options: MessageOptions): void
+  success?: MessageConstructor
+  error?: MessageConstructor
+  info?: MessageConstructor
+  warning?: MessageConstructor
+}
+export const Message: Message = (
   message: string,
-  options: { type?: keyof typeof MessageType; timeout?: number } = {},
+  options: MessageOptions = {},
 ) => {
-  const { type, timeout } = options
-  createMessage(message, type, timeout)
+  // const { type, timeout } = options
+  createMessage(message, options)
 }
 ;['success', 'info', 'error', 'warning'].forEach((type) => {
-  Message[type] = (message: string | string[], timeout: number) => {
+  ;(Message as any)[type] = (
+    message: string | string[],
+    options?: MessageOptions,
+  ) => {
     if (Array.isArray(message)) {
       message.forEach((message) => {
         createMessage(
           message as string,
-          type as keyof typeof MessageType,
-          timeout,
+          ({ ...options, type } as any) as MessageOptions,
         )
       })
     } else {
       createMessage(
         message as string,
-        type as keyof typeof MessageType,
-        timeout,
+        ({ ...options, type } as any) as MessageOptions,
       )
     }
   }

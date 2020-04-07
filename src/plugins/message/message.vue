@@ -9,6 +9,7 @@
     }"
   >
     <div class="content">{{ message }}</div>
+    <div class="close" v-if="!!closable" @click="destroy"></div>
   </div>
 </template>
 
@@ -21,17 +22,26 @@ export default Vue.extend({
       color: '',
       type: '',
       timeout: 3000,
+      closable: true,
     }
   },
+  methods: {
+    destroy(timeout = 0) {
+      setTimeout(() => {
+        const classes = this.$el.getAttribute('class') || ''
+        this.$el.setAttribute('class', classes + ' remove')
+
+        setTimeout(() => {
+          ;(this.$el.parentNode as Node).removeChild(this.$el)
+          this.$destroy()
+        }, 1000)
+      }, timeout)
+    },
+  },
   created() {
-    setTimeout(() => {
-      const classes = this.$el.getAttribute('class') || ''
-      this.$el.setAttribute('class', classes + ' remove')
-    }, this.timeout)
-    setTimeout(() => {
-      ;(this.$el.parentNode as Node).removeChild(this.$el)
-      this.$destroy()
-    }, this.timeout + 1000)
+    if (!this.closable) {
+      this.destroy(this.timeout)
+    }
   },
 })
 </script>
@@ -47,8 +57,8 @@ export default Vue.extend({
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
   animation: fade-small-large 0.3s both;
   background-color: #7e7af8;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: noto sans sc, pingfang sc, hiragino sans gb, microsoft yahei,
+    'sans-serif';
 
   &.remove {
     animation: fade-in-top 0.3s both reverse;
@@ -75,10 +85,23 @@ export default Vue.extend({
       #27ae60 100%
     ) !important;
   }
-}
-.bubble .content {
-  padding: 0.5em 1em;
-  display: table-cell;
+  .close {
+    cursor: pointer;
+    border-radius: 0 1em 1em 0;
+    transition: background 0.3s;
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+    &:after {
+      content: '×';
+      font: inherit;
+    }
+  }
+  > div {
+    padding: 0.5em 1em;
+    display: table-cell;
+    vertical-align: middle;
+  }
 }
 
 @keyframes fade-small-large {
