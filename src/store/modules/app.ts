@@ -3,7 +3,7 @@ import { configs } from '@/configs'
 import { VuexModule, Mutation, Action, Module } from 'vuex-module-decorators'
 import { ViewportRecord } from '@/store/interfaces/viewport.interface'
 
-@Module({ name: 'app' })
+@Module({ namespaced: true })
 export class AppModule extends VuexModule {
   sidebar: boolean = Cookies.get('sidebarStatus') === '0' ? false : true
   menus: Array<any> = []
@@ -14,10 +14,12 @@ export class AppModule extends VuexModule {
   SET_SIDEBAR(status: boolean) {
     this.sidebar = status
   }
+
   @Mutation
   SET_MENUS(menus: Array<Record<string, any>>) {
     this.menus = [...menus]
   }
+
   @Mutation
   SET_VIEWPORT(viewport: ViewportRecord) {
     this.viewport = { ...viewport }
@@ -28,6 +30,7 @@ export class AppModule extends VuexModule {
     Cookies.set('sidebarStatus', String(Number(status)))
     return status
   }
+
   @Action({ commit: 'SET_SIDEBAR', rawError: true })
   toggleSidebarStatus() {
     const toggle = !this.sidebar

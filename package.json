@@ -13,6 +13,7 @@
     "ant-design-vue": "^1.5.1",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "dayjs": "^1.8.23",
     "inflection": "^1.12.0",
     "js-cookie": "^2.2.1",
     "vue": "^2.6.11",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^2.2.5",
+    "@types/lodash": "^4.14.149",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "@vue/cli-plugin-babel": "^4.3.0",

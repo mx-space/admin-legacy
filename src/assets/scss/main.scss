@@ -1,0 +1,98 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  background-color: #fafafa;
+}
+
+body {
+  min-height: 100vh;
+}
+
+a {
+  color: #1890ff;
+}
+
+a:hover {
+  color: #5eaad6;
+}
+
+button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  outline: none;
+  cursor: pointer;
+}
+// ::-webkit-scrollbar {
+//   width: 0;
+//   height: 0;
+// }
+.layout::-webkit-scrollbar,
+.items::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+* {
+  scrollbar-width: none;
+}
+
+html {
+  font-size: 16px;
+}
+@media (max-width: 500px) {
+  html {
+    font-size: 0.8rem;
+  }
+}
+
+img[src=''],
+img:not([src]) {
+  opacity: 0;
+}
+button {
+  border: 0;
+}
+
+.ps__rail-x,
+.ps__rail-y {
+  z-index: 12;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.CodeMirror {
+  font-family: -apple-system, sans-serif !important;
+
+  .cm-comment {
+    font-family: 'Fira Code', Monaco, monospace;
+  }
+  &.cm-s-3024-day span.cm-string {
+    color: #3498db;
+  }
+  &.cm-s-3024-day span.cm-comment {
+    color: #27ae60;
+  }
+}
+
+.vue-codemirror.focus .CodeMirror {
+  .CodeMirror-code {
+    > :not(.CodeMirror-activeline) {
+      opacity: 0.6;
+    }
+    > div {
+      transition: opacity 0.5s;
+    }
+  }
+}
+
+@import './ant.scss';

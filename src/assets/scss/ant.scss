@@ -1,0 +1,15 @@
+#app .ant-pagination-simple .ant-pagination-simple-pager {
+  > input {
+    color: #666666b5;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+    transition: border 0.5s;
+    &:hover,
+    &:focus {
+      border-color: #1681e1;
+    }
+  }
+}

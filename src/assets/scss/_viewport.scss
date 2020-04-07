@@ -1,0 +1,11 @@
+$small: 568px;
+$medium: 900px;
+$desktop-small: 1024px;
+$desktop-big: 1440px;
+
+$viewport: (
+  'mobile': $small,
+  'pad': $medium,
+  'desktop': $desktop-small,
+  'wider': $desktop-big
+);
