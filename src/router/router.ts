@@ -10,12 +10,12 @@ const routes: Array<RouteConfig> = [
     component: BasicLayout,
     redirect: '/dashboard',
     children: [
-      // {
-      //   path: 'dashboard',
-      //   name: 'dashboard',
-      //   meta: { title: '仪表盘', icon: ['fas', 'tachometer-alt'] },
-      //   component: () => import('@/views/Dashboard'),
-      // },
+      {
+        path: 'dashboard',
+        name: 'dashboard',
+        meta: { title: '仪表盘', icon: ['fas', 'tachometer-alt'] },
+        component: () => import('@/views/Dashboard/index.vue'),
+      },
       // {
       //   path: 'posts',
       //   name: 'post',

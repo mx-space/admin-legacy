@@ -1,6 +1,6 @@
-import Vue from 'vue'
-import Vuetify from 'vuetify/lib'
+// import Vue from 'vue'
+// import Vuetify from 'vuetify/lib'
 
-Vue.use(Vuetify, {
-  components: {},
-})
+// Vue.use(Vuetify, {
+//   components: {},
+// })
