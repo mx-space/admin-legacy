@@ -1,80 +1,73 @@
 <template>
   <div class="full bg">
     <div class="dialog">
-      <el-card class="box-card"
-        ><div slot="header" class="clearfix">
-          <span>登陆</span>
-        </div>
-        <el-form
-          v-model="user"
-          label-position="left"
-          label-width="80px"
-          status-icon
-          @submit.native.prevent
-          class="form"
-        >
-          <el-form-item label="用户名" prop="username">
-            <el-input v-model="user.username"></el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="password">
-            <el-input
-              v-model="user.password"
-              type="password"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-          <el-checkbox v-model="remberPassword">记住密码</el-checkbox>
-        </el-form>
-
-        <footer style="text-align: center;">
-          <Button
-            style="margin-top: 12px;"
-            @click="onSubmit"
-            title="登陆"
-          ></Button>
-        </footer>
-      </el-card>
+      <Avatar :size="100" :src="avatar"></Avatar>
+      <BlurInput
+        type="password"
+        :value="password"
+        @keyup.enter.native="onSubmit"
+        @change="(e) => (password = e)"
+      />
+      <footer style="text-align: center;">
+        <Button
+          style="margin-top: 12px;"
+          @click="onSubmit"
+          title="登陆"
+        ></Button>
+      </footer>
     </div>
   </div>
 </template>
 
 <script>
-import Button from '@/components/button/parallaxButton'
+import Button from '@/components/Button/parallaxButton'
+import Avatar from '@/components/Avatar'
+import BlurInput from '@/components/Input/BlurInput'
+import { mapGetters } from 'vuex'
 export default {
   name: 'Login',
-  components: { Button },
+  components: { Button, Avatar, BlurInput },
   data() {
     return {
       logging: false,
       error: '',
       remberPassword: true,
-      user: {
-        username: '',
-        password: '',
-      },
+      password: '',
     }
   },
+  computed: {
+    ...mapGetters(['username', 'avatar']),
+  },
   mounted() {
-    this.username = localStorage.getItem('focus_username') || ''
+    // this.username = localStorage.getItem('focus_username') || ''
     this.password = localStorage.getItem('focus_password') || ''
   },
 
   methods: {
+    handleChange(e) {
+      this.password = e
+    },
     onSubmit() {
-      if (!this.user.username || !this.user.password) {
-        this.$message.error('用户名或密码不正确哦')
-        throw new Error('wrong username or password')
+      if (!this.password) {
+        this.$message.error('密码不正确哦')
+        throw new Error('wrong password')
       }
 
       this.logging = true
-      this.$store.dispatch('user/login', this.user).then(() => {
-        this.logging = false
-        if (this.remberPassword) {
-          localStorage.setItem('focus_username', this.user.username)
-          localStorage.setItem('focus_password', this.user.password)
-        }
-        this.$router.push({ path: this.redirect || '/' })
-      })
+      this.$store
+        .dispatch('user/login', {
+          username: this.username,
+          password: this.password,
+        })
+        .then(() => {
+          this.logging = false
+          if (this.remberPassword) {
+            // localStorage.setItem('focus_username', this.user.username)
+            localStorage.setItem('focus_password', this.password)
+          }
+          this.$message.success('欢迎回来!')
+          this.$router.push({ path: this.redirect || '/' })
+        })
     },
   },
 }
@@ -93,10 +86,11 @@ export default {
 }
 .dialog {
   position: absolute;
+  text-align: center;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 6px 9px 24px -8px #3a3737d1;
+  // box-shadow: 6px 9px 24px -8px #3a3737d1;
   overflow: hidden;
   border-radius: 24px;
 }

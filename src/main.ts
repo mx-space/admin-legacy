@@ -11,11 +11,11 @@ import './plugins/font-awesome'
 import './plugins/vuetify'
 import './plugins/element-ui'
 import './plugins/processbar'
+import './plugins/kico-message'
 import { rest } from '@/api/rest'
+import 'vue-tsx-support/enable-check'
 Vue.prototype.$api = rest
-import Message, { Message as M } from './plugins/message'
-Vue.use(Message)
-Vue.prototype.$notice = M
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -5054,6 +5054,11 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
+kico-message@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/kico-message/-/kico-message-1.0.2.tgz#288386ea18da598c8c3b02912a9f79ab9e92ae53"
+  integrity sha512-gd1AfM6JEvR4eYFMkzHL0jZqrigZ0CbnH9l8WzAlKn+LeUrt0GMwbMVlI/zL85+VeCriGxex0VsQtdZGxJA+3A==
+
 killable@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/killable/-/killable-1.0.1.tgz#4c8ce441187a061c7474fb87ca08e2a638194892"
@@ -8477,6 +8482,11 @@ vue-template-es2015-compiler@^1.9.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
+
+vue-tsx-support@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/vue-tsx-support/-/vue-tsx-support-2.3.3.tgz#234603ce7d15d6a93aff7049622b3857250bcf47"
+  integrity sha512-4pwCgTH8XyZcBD1Jo/SalVE+iDQdyouwWuBkK/dZ3rHIRSd/rMdmYSjfJlKTl1EjlsEbTSafU/FAtgNZu4buVw==
 
 vue2-perfect-scrollbar@^1.4.0:
   version "1.4.0"

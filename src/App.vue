@@ -11,10 +11,12 @@ import { mapActions } from 'vuex'
 export default Vue.extend({
   created() {
     this.updateViewport()
+    this.fetchMaster()
     window.addEventListener('resize', debounce(this.updateViewport, 13))
   },
   methods: {
     ...mapActions('app', ['updateViewport']),
+    ...mapActions('user', ['fetchMaster']),
   },
 })
 </script>
