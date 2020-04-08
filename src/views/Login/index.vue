@@ -38,7 +38,7 @@ export default {
   computed: {
     ...mapGetters(['username', 'avatar']),
   },
-  mounted() {
+  created() {
     // this.username = localStorage.getItem('focus_username') || ''
     this.password = localStorage.getItem('focus_password') || ''
   },
@@ -83,6 +83,20 @@ export default {
 }
 .bg {
   background: $deepBg;
+  position: relative;
+  overflow: hidden;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 0;
+    filter: blur(4px) brightness(0.8);
+    margin: -5rem;
+    background: url(https://i.loli.net/2020/04/08/OseRqS2jn7WaJKM.png) center;
+  }
 }
 .dialog {
   position: absolute;
@@ -99,15 +113,5 @@ export default {
 }
 .form {
   padding: 0 0.5rem;
-}
-</style>
-
-<style lang="scss">
-.ant-form-item:last-child {
-  margin-bottom: 0;
-}
-.ant-form-item:nth-last-child(2),
-.ant-form-item:nth-last-child(3) {
-  margin-bottom: 2px;
 }
 </style>

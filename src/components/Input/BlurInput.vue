@@ -29,17 +29,20 @@ export default Vue.extend({
   margin: 2rem 0;
   input {
     position: relative;
+    -webkit-text-fill-color: #eee;
+    color: #eee;
 
-    padding: 1px 4px;
+    padding: 1px 8px;
     line-height: 1.8;
   }
   .blur {
+    mix-blend-mode: difference;
     position: absolute;
     top: -10px;
     bottom: -10px;
     right: -10px;
     left: -10px;
-    background: #eee;
+    background: #e6e6e686;
     filter: blur(10px);
     backdrop-filter: blur(10px) brightness(0.8);
     z-index: -1;
