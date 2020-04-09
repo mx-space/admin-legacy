@@ -6,18 +6,29 @@ export interface MenuModel {
   path: string
   icon: string | string[]
   subItems?: Array<MenuModel>
+  hasParent: boolean
+  fullPath: string
 }
 
-const model = (item: RouteConfig): MenuModel => ({
-  title: item.meta?.title || item.name || item.path,
-  path: item.path && /^\//.test(item.path) ? item.path : '/' + item.path,
-  icon: item.meta?.icon,
-  subItems: buildSubMenus(item),
-})
-function buildSubMenus(route: RouteConfig) {
+const model = (
+  item: RouteConfig,
+  hasParent: boolean,
+  prevPath: string,
+): MenuModel => {
+  const fullPath = prevPath + '/' + item.path
+  return {
+    title: item.meta?.title || item.name || item.path,
+    path: item.path && /^\//.test(item.path) ? item.path : '/' + item.path,
+    icon: item.meta?.icon,
+    subItems: buildSubMenus(item, fullPath),
+    hasParent,
+    fullPath,
+  }
+}
+function buildSubMenus(route: RouteConfig, prevPath = '') {
   if (Array.isArray(route.children)) {
     return route.children.map((item) => {
-      return model(item)
+      return model(item, true, prevPath)
     })
   }
 }
@@ -28,7 +39,7 @@ const buildMenus = (routes: Array<RouteConfig>) =>
   ).children
     .filter((item: RouteConfig) => item.path !== '*')
     .map((item: RouteConfig) => {
-      return model(item)
+      return model(item, false, '')
     })
 
 export default buildMenus

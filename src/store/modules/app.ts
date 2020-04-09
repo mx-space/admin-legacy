@@ -2,11 +2,12 @@ import { configs } from '@/configs'
 import { ViewportRecord } from '@/store/interfaces/viewport.interface'
 import Cookies from 'js-cookie'
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
+import { MenuModel } from '@/utils/build-menus'
 
 @Module({ namespaced: true })
 export class AppModule extends VuexModule {
   sidebar: boolean = Cookies.get('sidebarStatus') === '0' ? false : true
-  menus: Array<any> = []
+  menus: Array<MenuModel> = []
   title = configs.title || 'MX-Space'
   viewport: ViewportRecord | any = null
 
@@ -16,7 +17,7 @@ export class AppModule extends VuexModule {
   }
 
   @Mutation
-  SET_MENUS(menus: Array<Record<string, any>>) {
+  SET_MENUS(menus: Array<MenuModel>) {
     this.menus = [...menus]
   }
 

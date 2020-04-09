@@ -47,12 +47,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { mapGetters, mapActions } from 'vuex'
 import item from './item.vue'
-// import { logout } from '@/api/master'
+import Vue from 'vue'
+import { MenuModel } from '../../utils/build-menus'
+import { Route } from 'vue-router'
 
-export default {
+export default Vue.extend({
   name: 'Sidebar',
   computed: {
     ...mapGetters({
@@ -63,82 +65,42 @@ export default {
     homePage() {
       return process.env.VUE_APP_WEB_URL
     },
+    activeItems() {
+      const routePath = this.$route.path
+      const menus = this.items as Array<MenuModel>
+      console.log(menus)
+
+      return menus.findIndex((item) => {
+        const reg = new RegExp('^' + item.path, 'ig')
+        console.log(item.path, routePath)
+        return !!routePath.match(reg)
+      })
+    },
   },
   components: {
     item,
   },
   methods: {
-    ...mapActions(['']),
-    async handleLogout() {
-      // TODO 注销
-      // const { ok } = await rest.master.logout.get()
-      // if (ok) {
-      //   this.$router.push('/login')
-      // }
+    ...mapActions('user', ['clearData']),
+    handleLogout() {
+      // this.clearData()
+      this.$router.push('/login')
     },
   },
-  created() {
-    // bind active menu item to routes
-    this.$root.$data.route = ''
-    const path = this.$route.fullPath.split('/')[1]
-
-    this.items.forEach((item, index) => {
-      if (item.path.slice(1) === path) {
-        this.activeItems = index
-      }
-    })
+  mounted() {
+    // const routePath = this.$route.path
+    // const menus = this.items as Array<MenuModel>
+    // console.log(menus)
+    // this.activeItems = menus.findIndex((item) => {
+    //   const reg = new RegExp('^' + item.path, 'ig')
+    //   console.log(item.path, routePath)
+    //   return !!routePath.match(reg)
+    // })
   },
-  beforeDestroy() {
-    this.$root.$data.route = null
-    delete this.$root.$data.route
-  },
-  // beforeRouteEnter(to, from, next) {
-  //   next(vm => {
-  //     // if (!vm.isLogged) {
-  //     //   return next('/login')
-  //     // }
-
-  // const path = to.fullPath
-  //   .replace(vm.$root.$data.route, '')
-  //   .split('/')
-  //   .map(item => '/' + item)
-  //   .slice(1)
-  // console.log(path)
-
-  // vm.items.forEach((item, index) => {
-  //   if (item.path === path[0]) {
-  //     vm.activeItems = index
-  //     next()
-  //   }
-  // })
-  //   })
-  // },
-  // beforeRouteUpdate(to, from, next) {
-  //   const path = to.fullPath
-  //     .replace(this.$root.$data.route, '')
-  //     .split('/')
-  //     .map(item => '/' + item)
-  //     .slice(1)
-
-  //   this.items.forEach((item, index) => {
-  //     if (item.path === path[0]) {
-  //       this.activeItems = index
-  //       return next()
-  //     }
-  //   })
-  // },
-  data() {
-    return {
-      // path: '/',
-      activeItems: 0,
-    }
-  },
-}
+})
 </script>
 
 <style lang="scss" scoped>
-@import url(https://fonts.googleapis.com/css?family=Nunito&display=swap);
-
 $deepBg: #1681e1;
 $shallowbg: #1a9cf3;
 $left-margin: 1.5rem;

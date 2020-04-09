@@ -34,9 +34,9 @@
   </div>
 </template>
 
-<script>
-/* eslint-disable no-empty */
-export default {
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
   name: 'Item',
   props: {
     active: Boolean,
@@ -78,48 +78,9 @@ export default {
   methods: {
     handleClick() {
       if (!this.item.subItems) {
-        this.$parent.activeItems = this.index
-
-        const activeItems = []
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
-        for (let i = this; i.$props && i.$props.index > -1; i = i.$parent) {
-          activeItems.push(i.$props.index)
-        }
-        // console.log(activeItems);
-        // console.log(this.$parent.$data);
-
-        for (
-          let vm = this.$parent;
-          vm.$data && vm.$data.activeItems > -1;
-          vm = vm.$parent
-        ) {
-          vm.$data.activeItems = activeItems.shift()
-          // console.log(vm.$data.activeItems);
-        }
+        this.$router.push(this.item.fullPath)
       } else {
         this.extend = !this.extend
-      }
-      if (this.$parent.activeItems === this.index) {
-        this.$refs['row-item'].classList.toggle('hide')
-      }
-      if (!this.hasChild) {
-        let path = this.item.path
-        let item = this.$parent
-        for (;;) {
-          // path += item.path
-          if (item.item && item.item.path) {
-            path = item.item.path + path
-            item = item.$parent
-          } else break
-        }
-        // console.log(path);
-        path = this.$root.$data.route + path
-
-        if (path === this.$route.fullPath) {
-          return
-        }
-
-        this.$router.push(path)
       }
     },
     isArray(arr) {
@@ -130,6 +91,7 @@ export default {
     try {
       this.height =
         [...this.$refs.insider.querySelectorAll('.item')].length * 5 + 'rem'
+      // eslint-disable-next-line no-empty
     } catch {}
 
     this.$refs.svg?.addEventListener('load', function () {
@@ -138,7 +100,7 @@ export default {
       svg.setAttribute('fill', '#fff')
     })
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

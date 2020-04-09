@@ -16,38 +16,38 @@ const routes: Array<RouteConfig> = [
         meta: { title: '仪表盘', icon: ['fas', 'tachometer-alt'] },
         component: () => import('@/views/Dashboard/index.vue'),
       },
-      // {
-      //   path: 'posts',
-      //   name: 'post',
-      //   meta: { title: '博文', icon: require('../assets/icons/code.svg') },
-      //   redirect: '/posts/view',
-      //   component: () => import('@/layouts/BlankLayout.vue'),
-      //   children: [
-      //     {
-      //       path: 'view',
-      //       name: 'view-posts',
-      //       meta: { title: '管理文章', icon: ['fas', 'eye'] },
-      //       component: () => import('@/views/ManagePost/ListPosts.vue'),
-      //     },
-      //     {
-      //       path: 'edit',
-      //       name: 'edit-posts',
-      //       meta: { title: '编辑文章', icon: ['fas', 'pencil-alt'] },
-      //       props: true,
-      //       component: () => import('@/views/ManagePost/EditPost.vue'),
-      //     },
-      //   ],
-      // },
+      {
+        path: 'posts',
+        name: 'post',
+        meta: { title: '博文', icon: require('../assets/icons/code.svg') },
+        redirect: '/posts/view',
+        component: () => import('@/layouts/BlankLayout.vue'),
+        children: [
+          {
+            path: 'view',
+            name: 'view-posts',
+            meta: { title: '管理文章', icon: ['fas', 'eye'] },
+            component: () => import('@/views/ManagePost/ListPosts.vue'),
+          },
+          // {
+          //   path: 'edit',
+          //   name: 'edit-posts',
+          //   meta: { title: '编辑文章', icon: ['fas', 'pencil-alt'] },
+          //   props: true,
+          //   component: () => import('@/views/ManagePost/EditPost.vue'),
+          // },
+        ],
+      },
       // {
       //   path: 'comments',
       //   name: 'comment',
       //   meta: { title: '评论', icon: ['fas', 'comment'] },
       //   component: () => import('@/views/ManageComment'),
       // },
-      // {
-      //   path: '*',
-      //   redirect: '/dashboard'
-      // }
+      {
+        path: '*',
+        redirect: '/dashboard',
+      },
     ],
   },
 

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import Button from '@/components/Button/parallaxButton'
+import Button from '@/components/Button/ParallaxButton'
 import Avatar from '@/components/Avatar'
 import BlurInput from '@/components/Input/BlurInput'
 import { mapGetters } from 'vuex'

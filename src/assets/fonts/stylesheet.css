@@ -1,0 +1,65 @@
+@font-face {
+  font-family: 'Josefin Sans';
+  src: url('./JosefinSans-Medium.eot');
+  src: url('./JosefinSans-Medium.eot?#iefix') format('embedded-opentype'),
+    url('./JosefinSans-Medium.woff2') format('woff2'),
+    url('./JosefinSans-Medium.woff') format('woff'),
+    url('./JosefinSans-Medium.svg#JosefinSans-Medium') format('svg');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Josefin Sans';
+  src: url('./JosefinSans-Thin.eot');
+  src: url('./JosefinSans-Thin.eot?#iefix') format('embedded-opentype'),
+    url('./JosefinSans-Thin.woff2') format('woff2'),
+    url('./JosefinSans-Thin.woff') format('woff'),
+    url('./JosefinSans-Thin.svg#JosefinSans-Thin') format('svg');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Josefin Sans';
+  src: url('./JosefinSans-Bold.eot');
+  src: url('./JosefinSans-Bold.eot?#iefix') format('embedded-opentype'),
+    url('./JosefinSans-Bold.woff2') format('woff2'),
+    url('./JosefinSans-Bold.woff') format('woff'),
+    url('./JosefinSans-Bold.svg#JosefinSans-Bold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Josefin Sans';
+  src: url('./JosefinSans-Light.eot');
+  src: url('./JosefinSans-Light.eot?#iefix') format('embedded-opentype'),
+    url('./JosefinSans-Light.woff2') format('woff2'),
+    url('./JosefinSans-Light.woff') format('woff'),
+    url('./JosefinSans-Light.svg#JosefinSans-Light') format('svg');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Josefin Sans';
+  src: url('./JosefinSans-Italic.eot');
+  src: url('./JosefinSans-Italic.eot?#iefix') format('embedded-opentype'),
+    url('./JosefinSans-Italic.woff2') format('woff2'),
+    url('./JosefinSans-Italic.woff') format('woff'),
+    url('./JosefinSans-Italic.svg#JosefinSans-Italic') format('svg');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Josefin Sans';
+  src: url('./JosefinSans-Regular.eot');
+  src: url('./JosefinSans-Regular.eot?#iefix') format('embedded-opentype'),
+    url('./JosefinSans-Regular.woff2') format('woff2'),
+    url('./JosefinSans-Regular.woff') format('woff'),
+    url('./JosefinSans-Regular.svg#JosefinSans-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 
 import 'normalize.css/normalize.css'
+import '@/assets/fonts/stylesheet.css'
 import { PerfectScrollbar } from 'vue2-perfect-scrollbar'
 Vue.component('ps', PerfectScrollbar as VueConstructor<Vue>)
 

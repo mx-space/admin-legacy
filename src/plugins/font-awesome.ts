@@ -13,6 +13,12 @@ import {
   faSlidersH,
   faTachometerAlt,
   faGlobeAsia,
+  faPencilAlt,
+  faPlus,
+  faChevronDown,
+  faChevronLeft,
+  faChevronRight,
+  faEye,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Vue from 'vue'
@@ -27,6 +33,12 @@ export const Icons: IconType[] = [
   faSlidersH,
   faTachometerAlt,
   faGlobeAsia,
+  faPencilAlt,
+  faEye,
+  faPlus,
+  faChevronDown,
+  faChevronLeft,
+  faChevronRight,
 ]
 
 library.add(...Icons)

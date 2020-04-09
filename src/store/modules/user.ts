@@ -23,6 +23,12 @@ export class UserModule extends VuexModule {
   async fetchMaster() {
     return await rest('Master').gets()
   }
+
+  @Action({ commit: 'SET_USER', rawError: true })
+  clearData() {
+    return {}
+  }
+
   @Mutation
   SET_MASTER(payload: Partial<LoginRespDto>) {
     const { username, name, avatar } = payload
