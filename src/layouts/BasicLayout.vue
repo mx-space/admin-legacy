@@ -12,6 +12,7 @@
 <script>
 import Sidebar from '@/components/Sidebar/index.vue'
 import buildMenus from '@/utils/build-menus'
+
 export default {
   components: {
     Sidebar,
@@ -40,7 +41,7 @@ export default {
   bottom: 0;
   right: 0;
   background-color: $deepBg;
-  filter: blur(10px) brightness(0.8);
+  // filter: blur(10px) brightness(0.8);
 }
 .wrap.full {
   transform: scale(1);

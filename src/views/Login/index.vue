@@ -1,5 +1,13 @@
 <template>
   <div class="full bg">
+    <img
+      class="wallpaper"
+      :class="{ loading }"
+      src="https://i.loli.net/2020/04/08/OseRqS2jn7WaJKM.png"
+      @load="loading = false"
+      @error="loading = true"
+    />
+
     <div class="dialog">
       <Avatar :size="100" :src="avatar"></Avatar>
       <BlurInput
@@ -30,6 +38,7 @@ export default {
   data() {
     return {
       logging: false,
+      loading: true,
       error: '',
       remberPassword: true,
       password: '',
@@ -85,18 +94,12 @@ export default {
   background: $deepBg;
   position: relative;
   overflow: hidden;
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    z-index: 0;
-    filter: blur(4px) brightness(0.8);
-    margin: -5rem;
-    background: url(https://i.loli.net/2020/04/08/OseRqS2jn7WaJKM.png) center;
-  }
+}
+.wallpaper {
+  z-index: 0;
+  max-width: 100%;
+  max-height: 100%;
+  transform: scale(2);
 }
 .dialog {
   position: absolute;

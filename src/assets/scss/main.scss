@@ -129,3 +129,20 @@ input {
     }
   }
 }
+
+.wallpaper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  filter: blur(5px) brightness(0.8);
+  margin: -5rem;
+  transition: opacity 0.5s;
+
+  pointer-events: none;
+  &.loading,
+  &.error {
+    opacity: 0;
+  }
+}
