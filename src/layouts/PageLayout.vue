@@ -30,9 +30,9 @@ export default {
     ...mapGetters(['sidebar']),
   },
   methods: {
-    ...mapActions('app', ['toggleSideBar', 'closeSideBar']),
+    ...mapActions('app', ['toggleSideBar', 'toggleSidebarStatus']),
     handleClick() {
-      this.closeSideBar()
+      this.toggleSidebarStatus(false)
     },
   },
   props: {
@@ -72,7 +72,7 @@ export default {
     position: sticky;
     background: rgba($color: #fff, $alpha: 0.3);
     backdrop-filter: blur(5px);
-    z-index: 3;
+    z-index: 9;
     padding: 3rem 0.8rem 0.5rem;
     border-radius: 0 0 12px 12px;
     top: -1rem;

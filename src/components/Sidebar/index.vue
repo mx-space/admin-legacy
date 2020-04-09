@@ -68,11 +68,9 @@ export default Vue.extend({
     activeItems() {
       const routePath = this.$route.path
       const menus = this.items as Array<MenuModel>
-      console.log(menus)
 
       return menus.findIndex((item) => {
         const reg = new RegExp('^' + item.path, 'ig')
-        console.log(item.path, routePath)
         return !!routePath.match(reg)
       })
     },

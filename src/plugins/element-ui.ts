@@ -8,9 +8,24 @@ import {
   Input,
   Button,
   Checkbox,
+  Popconfirm,
+  Table,
+  TableColumn,
 } from 'element-ui'
 
-const components = [FormItem, Form, Card, Row, Col, Input, Button, Checkbox]
+const components = [
+  FormItem,
+  Form,
+  Card,
+  Row,
+  Col,
+  Input,
+  Button,
+  Checkbox,
+  Popconfirm,
+  Table,
+  TableColumn,
+]
 import 'element-ui/lib/theme-chalk/index.css'
 
 components.forEach((component) => {
