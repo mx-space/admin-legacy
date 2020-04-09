@@ -3,6 +3,7 @@ import router from '@/router'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 import axios from 'axios'
+
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
   // withCredentials: true,

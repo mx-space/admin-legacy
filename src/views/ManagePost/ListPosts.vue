@@ -23,7 +23,7 @@
       </el-table-column>
       <el-table-column prop="title" label="分类" width="100">
         <template slot-scope="scope">
-          {{ data[scope.$index].categoryId.name }}
+          {{ getCategoryName(data[scope.$index]._id) }}
         </template>
       </el-table-column>
 
@@ -56,14 +56,13 @@
 
 <script>
 import PageLayout from '@/layouts/PageLayout.vue'
-// import Table from '@/components/Table'
+import { mapGetters } from 'vuex'
 import Button from '@/components/Button/LayoutButton'
 
 import * as time from '@/utils/time'
 export default {
   components: {
     PageLayout,
-
     Button,
   },
   data() {
@@ -76,7 +75,15 @@ export default {
   async created() {
     await this.getData()
   },
+  computed: {
+    ...mapGetters(['categories']),
+  },
   methods: {
+    getCategoryName(id) {
+      console.log(this.categories)
+
+      return this.categories.get(id).name
+    },
     handleEdit(row) {
       this.$router.push({
         name: 'edit-posts',

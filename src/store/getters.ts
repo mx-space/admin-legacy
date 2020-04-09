@@ -14,5 +14,6 @@ const getters: GetterTree<any, any> = {
   name: (state) => state.user.name,
   username: (state) => state.user.username,
   profile: (state) => state.user,
+  categories: (state) => state.category.categories,
 }
 export default getters

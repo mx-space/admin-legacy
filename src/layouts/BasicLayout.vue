@@ -12,10 +12,13 @@
 <script>
 import Sidebar from '@/components/Sidebar/index.vue'
 import buildMenus from '@/utils/build-menus'
-
+import { mapActions } from 'vuex'
 export default {
   components: {
     Sidebar,
+  },
+  methods: {
+    ...mapActions('category', ['fetchCategory']),
   },
   async created() {
     if (this.$store.state.app.menus?.length === 0) {
@@ -24,7 +27,7 @@ export default {
         buildMenus(this.$router.options.routes),
       )
     }
-    // await this.$store.dispatch('user/getInfo')
+    this.fetchCategory()
   },
   mounted() {
     setTimeout(() => {
