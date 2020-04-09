@@ -8,7 +8,7 @@ type CategoryMap = Map<string, CategoryModel>
 
 @Module({ namespaced: true })
 export class CategoryModule extends VuexModule {
-  categories?: CategoryMap
+  categories?: CategoryMap = Map<string, CategoryModel>()
 
   @Action({ commit: 'SET_CATEGORY', rawError: true })
   async fetchCategory() {
@@ -25,8 +25,6 @@ export class CategoryModule extends VuexModule {
       },
       map,
     )
-
-    console.log(newMap)
     return newMap
   }
 

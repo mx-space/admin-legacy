@@ -23,7 +23,11 @@
       </el-table-column>
       <el-table-column prop="title" label="分类" width="100">
         <template slot-scope="scope">
-          {{ getCategoryName(data[scope.$index]._id) }}
+          {{
+            categories &&
+            categories.get(data[scope.$index].categoryId) &&
+            categories.get(data[scope.$index].categoryId).name
+          }}
         </template>
       </el-table-column>
 
@@ -80,9 +84,7 @@ export default {
   },
   methods: {
     getCategoryName(id) {
-      console.log(this.categories)
-
-      return this.categories.get(id).name
+      return this.categories.get(id)?.name
     },
     handleEdit(row) {
       this.$router.push({
