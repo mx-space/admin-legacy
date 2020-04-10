@@ -1,7 +1,6 @@
 <template>
   <div class="input-wrap">
     <input :type="type || 'text'" v-model="text" @change="handleChange" />
-    <div class="blur"></div>
   </div>
 </template>
 

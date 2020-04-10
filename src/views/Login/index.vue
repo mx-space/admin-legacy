@@ -100,6 +100,7 @@ export default {
   max-width: 100%;
   max-height: 100%;
   transform: scale(2);
+  transform-origin: top;
 }
 .dialog {
   position: absolute;

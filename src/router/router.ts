@@ -44,10 +44,6 @@ const routes: Array<RouteConfig> = [
       //   meta: { title: '评论', icon: ['fas', 'comment'] },
       //   component: () => import('@/views/ManageComment'),
       // },
-      {
-        path: '*',
-        redirect: '/dashboard',
-      },
     ],
   },
 
