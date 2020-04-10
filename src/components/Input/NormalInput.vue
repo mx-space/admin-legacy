@@ -17,30 +17,27 @@ export default Vue.extend({
   position: relative;
   overflow: hidden;
   margin: 2rem 0;
+  width: 100%;
   input {
-    position: relative;
-    -webkit-text-fill-color: #eee;
-    color: #eee;
-
-    padding: 1px 8px;
-    line-height: 1.8;
-  }
-  .blur {
-    mix-blend-mode: difference;
-    position: absolute;
-    top: -10px;
-    bottom: -10px;
-    right: -10px;
-    left: -10px;
-    background: #e6e6e686;
-    filter: blur(10px);
-    backdrop-filter: blur(10px) brightness(0.8);
-    z-index: -1;
-    transform: scale(1.5);
+    padding: 0.5rem 0.8em;
+    color: inherit;
+    border-radius: 4px;
+    border: #ccc 1px solid;
+    line-height: 2;
+    outline: none;
+    font: inherit;
+    width: 100%;
+    background: none;
+    vertical-align: middle;
+    transition: border 0.5s;
+    &:focus {
+      border: #38a0d1 1px solid;
+    }
   }
 }
 * {
   outline: none;
   border-radius: 3px;
+  box-sizing: border-box;
 }
 </style>

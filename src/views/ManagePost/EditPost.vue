@@ -13,7 +13,12 @@
         :name="$route.query.id ? '更新' : '发布'"
       />
     </template>
-    <Writer />
+    <Writer
+      :name="inputLabel"
+      :title="model.title"
+      :text="model.text"
+      @change="onChange"
+    />
     <template #footer>
       <button>
         <icon :icon="['fas', 'sliders-h']" />
@@ -40,7 +45,14 @@ export default class PostWriteView extends Vue {
   options = {
     title: '撰写新文章',
   }
-
+  inputLabel = '想想取个什么题目比较好呢~'
+  model = {
+    title: '',
+    text: '',
+  }
   handleSubmit() {}
+  onChange(model: { title: string; text: string }) {
+    this.model = { ...model }
+  }
 }
 </script>
