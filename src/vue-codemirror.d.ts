@@ -1,8 +1,8 @@
 declare module 'vue-codemirror' {
-  import { VueConstructor } from 'vue'
+  // import { Component } from 'vue'
   import Vue from 'vue'
 
-  export function codemirror(): VueConstructor
+  export function codemirror(): any
 
   export default Vue
 }
