@@ -1,5 +1,4 @@
-import { Message, MessageType, MessageConstructor } from '@/plugins/message'
-
+import { Message } from 'element-ui'
 class SocketClient {
   static retryDelay(times: number) {
     switch (times) {
@@ -161,8 +160,8 @@ class SocketClient {
       const {
         type,
         message,
-      }: { type: keyof typeof MessageType; message: string } = JSON.parse(data)
-      ;(Message[type] as MessageConstructor)(message)
+      }: { type: keyof typeof Message; message: string } = JSON.parse(data)
+      Message[type](message)
     } catch (err) {
       console.log(err)
     }

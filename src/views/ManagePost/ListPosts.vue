@@ -110,6 +110,7 @@ export default {
     async handleDelete(index) {
       const _id = this.data[index]._id
       await this.$api('Post').delete(_id)
+      this.$notice.success('删除成功')
       this.getData()
     },
     handleEdit(row) {
@@ -139,15 +140,6 @@ export default {
       this.data = data
 
       this.loading = false
-    },
-    async confirm({ id }) {
-      const { deletedCount, msg } = await this.$api('Post').del(id)
-      if (deletedCount) {
-        this.$message.success(msg)
-        this.getData({ page: this.page.currentPage })
-      } else {
-        this.$message.error(msg)
-      }
     },
   },
 }

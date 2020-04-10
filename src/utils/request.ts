@@ -1,4 +1,4 @@
-import { Message } from '@/plugins/message'
+import { Message } from 'kico-message'
 import router from '@/router'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
