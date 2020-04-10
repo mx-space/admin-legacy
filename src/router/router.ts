@@ -29,13 +29,13 @@ const routes: Array<RouteConfig> = [
             meta: { title: '管理文章', icon: ['fas', 'eye'] },
             component: () => import('@/views/ManagePost/ListPosts.vue'),
           },
-          // {
-          //   path: 'edit',
-          //   name: 'edit-posts',
-          //   meta: { title: '编辑文章', icon: ['fas', 'pencil-alt'] },
-          //   props: true,
-          //   component: () => import('@/views/ManagePost/EditPost.vue'),
-          // },
+          {
+            path: 'edit',
+            name: 'edit-posts',
+            meta: { title: '编辑文章', icon: ['fas', 'pencil-alt'] },
+            props: true,
+            component: () => import('@/views/ManagePost/EditPost.vue'),
+          },
         ],
       },
       // {

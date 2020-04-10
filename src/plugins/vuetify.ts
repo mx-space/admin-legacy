@@ -1,6 +1,8 @@
 // import Vue from 'vue'
-// import Vuetify from 'vuetify/lib'
+// import Vuetify, { VInput } from 'vuetify/lib'
 
 // Vue.use(Vuetify, {
-//   components: {},
+//   components: {
+//     VInput,
+//   },
 // })
