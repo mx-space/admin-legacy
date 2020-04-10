@@ -16,7 +16,7 @@
     "@types/inflection": "^1.5.28",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
-    "dayjs": "^1.8.23",
+    "dayjs": "^1.8.24",
     "element-ui": "^2.13.0",
     "immutable": "^4.0.0-rc.12",
     "inflection": "^1.12.0",
