@@ -14,6 +14,10 @@
 
     <main @click="handleClick">
       <slot />
+
+      <div class="end-center">
+        <slot name="end" />
+      </div>
     </main>
 
     <footer>
@@ -67,6 +71,11 @@ export default {
   margin: 0 3rem 0;
   main {
     padding: 0 0.8rem;
+    .end-center {
+      margin-top: 2rem;
+
+      text-align: center;
+    }
   }
   header {
     position: sticky;

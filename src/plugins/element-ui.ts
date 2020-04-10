@@ -1,32 +1,36 @@
-import Vue from 'vue'
 import {
+  Button,
+  Card,
+  Checkbox,
+  Col,
   Form,
   FormItem,
-  Card,
-  Row,
-  Col,
   Input,
-  Button,
-  Checkbox,
+  Pagination,
   Popconfirm,
+  Row,
   Table,
   TableColumn,
+  Loading,
 } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import Vue from 'vue'
 
 const components = [
-  FormItem,
-  Form,
-  Card,
-  Row,
-  Col,
-  Input,
   Button,
+  Card,
   Checkbox,
+  Col,
+  Form,
+  FormItem,
+  Input,
+  Loading,
+  Pagination,
   Popconfirm,
+  Row,
   Table,
   TableColumn,
 ]
-import 'element-ui/lib/theme-chalk/index.css'
 
 components.forEach((component) => {
   Vue.use(component)

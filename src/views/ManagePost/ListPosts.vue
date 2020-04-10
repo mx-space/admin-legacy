@@ -7,7 +7,14 @@
         @click.native="$router.push({ name: 'edit-posts' })"
       />
     </template>
-    <el-table :data="data" style="width: 100%;" max-height="650" stripe>
+    <el-table
+      :data="data"
+      style="width: 100%;"
+      max-height="650"
+      stripe
+      v-loading="loading"
+      border
+    >
       <el-table-column prop="title" label="标题">
         <template slot-scope="scope">
           <el-button
@@ -21,7 +28,7 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="title" label="分类" width="100">
+      <el-table-column prop="title" label="分类" width="200">
         <template slot-scope="scope">
           {{
             categories &&
@@ -45,16 +52,30 @@
 
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
-          <el-button
-            @click.native.prevent="deleteRow(scope.$index, tableData)"
-            type="text"
-            size="small"
-          >
-            移除
-          </el-button>
+          <el-popconfirm title="确定删除吗？">
+            <el-button
+              @click.native.prevent="deleteRow(scope.$index)"
+              type="text"
+              size="small"
+              slot="reference"
+            >
+              移除
+            </el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
+    <template #end>
+      <el-pagination
+        hide-on-single-page
+        layout="prev, pager, next"
+        :total="page.total"
+        @prev-click="handleTo(page.currentPage - 1)"
+        @next-click="handleTo(page.currentPage + 1)"
+        @current-change="handleTo"
+        class="el-pager"
+      />
+    </template>
   </PageLayout>
 </template>
 
@@ -86,6 +107,11 @@ export default {
     getCategoryName(id) {
       return this.categories.get(id)?.name
     },
+    async handleDelete(index) {
+      const _id = this.data[index]._id
+      await this.$api('Post').delete(_id)
+      this.getData()
+    },
     handleEdit(row) {
       this.$router.push({
         name: 'edit-posts',
@@ -106,8 +132,8 @@ export default {
     async getData(ops = {}) {
       this.loading = true
       const { page, data } = await this.$api('Post').gets({
-        page: ops.page || 1,
-        size: ops.size || 10,
+        page: ops.page || this.page?.currentPage || 1,
+        size: ops.size || this.page?.size || 10,
       })
       this.page = page
       this.data = data
@@ -145,5 +171,21 @@ $highlight: #ffcca8;
   &.danger {
     color: #e74c3c;
   }
+}
+.el-pager {
+  display: inline-block;
+}
+</style>
+
+<style lang="scss">
+.el-table {
+  * {
+    border-right: 0 !important;
+    border-left: 0 !important;
+    border-top: 0 !important;
+  }
+}
+.el-table--border {
+  border: 0 !important;
 }
 </style>
