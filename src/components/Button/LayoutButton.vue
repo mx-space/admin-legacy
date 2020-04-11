@@ -1,15 +1,27 @@
 <template>
-  <div class="btn" :style="{ background: backcolor, color: forecolor }">
-    <div class="name">
-      <div class>{{ name }}</div>
+  <div class="">
+    <div
+      class="btn"
+      :style="{ background: backcolor, color: forecolor }"
+      v-if="device !== 'mobile'"
+    >
+      <div class="name">
+        <div class>{{ name }}</div>
+      </div>
+      <div class="icon" :style="{ background: backcolor }">
+        <icon :icon="icon"></icon>
+      </div>
     </div>
-    <div class="icon" :style="{ background: backcolor }">
-      <icon :icon="icon"></icon>
+    <div v-else>
+      <button :style="{ background: backcolor, color: forecolor }">
+        <icon :icon="icon"></icon>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   props: {
     icon: {
@@ -25,6 +37,9 @@ export default {
       default: '#1188e8',
     },
     forecolor: String,
+  },
+  computed: {
+    ...mapGetters(['device']),
   },
 }
 </script>
@@ -58,17 +73,16 @@ export default {
     border-radius: 50%;
   }
 }
-@media (max-width: map-get($map: $viewport, $key: 'mobile')) {
-  .btn {
-    padding: 0;
-    margin-left: 2.4rem;
-    .name {
-      display: none;
-    }
-    .icon {
-      height: 3rem;
-      transform: scale(0.8);
-    }
-  }
+
+button {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  color: #fff;
+  margin-right: 20px;
 }
 </style>

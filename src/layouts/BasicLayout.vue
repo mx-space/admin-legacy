@@ -1,10 +1,8 @@
 <template>
-  <div class="bg">
-    <div class="wrap" ref="wrap">
-      <Sidebar />
-      <div class="content">
-        <router-view />
-      </div>
+  <div class="basic-wrap" ref="wrap">
+    <Sidebar />
+    <div class="content">
+      <router-view />
     </div>
   </div>
 </template>
@@ -37,29 +35,18 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: $deepBg;
-  // filter: blur(10px) brightness(0.8);
-}
-.wrap.full {
+.basic-wrap.full {
   transform: scale(1);
   border-radius: 0;
   .title .icon {
     display: none;
   }
 }
-.wrap {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+.basic-wrap {
   margin: 0;
+  height: 100%;
+  width: 100%;
+  position: relative;
   transform: scale(0.8);
   background: linear-gradient(to bottom, #1188e8, #16aae7);
   border-radius: 24px;
@@ -81,9 +68,9 @@ export default {
   }
 }
 @media (max-width: $small) {
-  .wrap {
+  .basic-wrap {
     display: flex;
-
+    transform: scale(1);
     .content {
       width: 100%;
       height: 100%;

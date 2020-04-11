@@ -1,12 +1,13 @@
 import { configs } from '@/configs'
 import { ViewportRecord } from '@/store/interfaces/viewport.interface'
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { MenuModel } from '@/utils/build-menus'
 
 @Module({ namespaced: true })
 export class AppModule extends VuexModule {
-  sidebar: boolean = Cookies.get('sidebarStatus') === '0' ? false : true
+  // sidebar: boolean = Cookies.get('sidebarStatus') === '0' ? false : true
+  sidebar = false
   menus: Array<MenuModel> = []
   title = configs.title || 'MX-Space'
   viewport: ViewportRecord | any = null
@@ -28,7 +29,7 @@ export class AppModule extends VuexModule {
 
   @Action({ commit: 'SET_SIDEBAR', rawError: true })
   setSidebarStatus(status: boolean) {
-    Cookies.set('sidebarStatus', String(Number(status)))
+    // Cookies.set('sidebarStatus', String(Number(status)))
     return status
   }
 
@@ -36,7 +37,7 @@ export class AppModule extends VuexModule {
   toggleSidebarStatus() {
     const toggle = !this.sidebar
 
-    Cookies.set('sidebarStatus', String(Number(toggle)))
+    // Cookies.set('sidebarStatus', String(Number(toggle)))
     return toggle
   }
 

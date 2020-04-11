@@ -22,4 +22,10 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import '@/assets/scss/main.scss';
+#app {
+  height: 100vh;
+  width: 100vw;
+  background-color: $deepBg;
+  position: relative;
+}
 </style>

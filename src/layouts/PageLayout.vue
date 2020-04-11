@@ -1,6 +1,10 @@
 <template>
   <div class="layout" ref="root">
-    <div class="toggle" @click="toggleSideBar" :class="{ active: sidebar }">
+    <div
+      class="toggle"
+      @click="toggleSidebarStatus"
+      :class="{ active: sidebar }"
+    >
       <icon :icon="['fas', 'sliders-h']"></icon>
     </div>
     <header :style="options.noPadding ? 'padding: 0.5rem 0;' : ''">
@@ -12,7 +16,7 @@
       </div>
     </header>
 
-    <main @click="handleClick">
+    <main @click="setSidebarStatus(false)">
       <slot />
 
       <div class="end-center">
@@ -34,10 +38,7 @@ export default {
     ...mapGetters(['sidebar']),
   },
   methods: {
-    ...mapActions('app', ['toggleSideBar', 'toggleSidebarStatus']),
-    handleClick() {
-      this.toggleSidebarStatus(false)
-    },
+    ...mapActions('app', ['toggleSidebarStatus', 'setSidebarStatus']),
   },
   props: {
     options: {
@@ -129,7 +130,7 @@ footer {
     left: 0;
     height: 30px;
     width: 30px;
-    z-index: 9;
+    z-index: 19;
     padding: 12px;
     border-radius: 0 0 12px 0;
     box-sizing: border-box;

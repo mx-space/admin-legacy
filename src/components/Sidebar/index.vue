@@ -52,7 +52,6 @@ import { mapGetters, mapActions } from 'vuex'
 import item from './item.vue'
 import Vue from 'vue'
 import { MenuModel } from '../../utils/build-menus'
-import { Route } from 'vue-router'
 
 export default Vue.extend({
   name: 'Sidebar',
@@ -85,16 +84,6 @@ export default Vue.extend({
       this.$router.push('/login')
     },
   },
-  mounted() {
-    // const routePath = this.$route.path
-    // const menus = this.items as Array<MenuModel>
-    // console.log(menus)
-    // this.activeItems = menus.findIndex((item) => {
-    //   const reg = new RegExp('^' + item.path, 'ig')
-    //   console.log(item.path, routePath)
-    //   return !!routePath.match(reg)
-    // })
-  },
 })
 </script>
 
@@ -105,10 +94,9 @@ $left-margin: 1.5rem;
 
 .side-bar {
   color: #fff;
-  // display: grid;
-  // grid-template-rows: 6rem auto 6rem;
   height: 100vh;
   position: relative;
+
   // overflow: hidden;
   > .title {
     height: 6rem;
@@ -127,7 +115,7 @@ $left-margin: 1.5rem;
     height: calc(100vh - 12rem);
     box-sizing: border-box;
     overflow: scroll;
-    // height: calc(100vh - 10rem - 12.875rem);
+
     transition: height 0.5s;
     border-radius: 0 0 24px 24px;
   }
@@ -222,7 +210,7 @@ $left-margin: 1.5rem;
     width: 175px;
     position: fixed;
     left: 0;
-    z-index: 4;
+    z-index: 14;
     background: linear-gradient(to bottom, #1188e8, #16aae7);
     transform: translateX(-100%);
     transition: transform 0.5s, box-shadow 0.5s;
