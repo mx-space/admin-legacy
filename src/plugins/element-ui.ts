@@ -12,6 +12,7 @@ import {
   Table,
   TableColumn,
   Loading,
+  Drawer,
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Vue from 'vue'
@@ -21,6 +22,7 @@ const components = [
   Card,
   Checkbox,
   Col,
+  Drawer,
   Form,
   FormItem,
   Input,

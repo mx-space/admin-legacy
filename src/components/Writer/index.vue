@@ -5,7 +5,9 @@
       :name="name"
       @change="handleChangeTitle"
     />
-    <slot />
+    <div class="middle-content">
+      <slot />
+    </div>
     <div
       :class="{
         'grid-half': !(device === 'mobile' || !preview),
@@ -57,7 +59,7 @@ import { ViewportRecord } from '../../store/interfaces/viewport.interface'
 const md = new MD({
   html: true,
   xhtmlOut: true,
-}).use(prism as any)
+}).use(prism)
 
 @Component({
   components: {
@@ -181,7 +183,7 @@ export default class Writer extends Vue {
   @Prop({ required: true })
   text!: string
 
-  preview = false
+  preview = true
 
   model = {
     title: '',
@@ -268,5 +270,9 @@ export default class Writer extends Vue {
 }
 .full .CodeMirror-fullscreen {
   right: 0;
+}
+
+.middle-content {
+  margin: 0.8rem 0;
 }
 </style>

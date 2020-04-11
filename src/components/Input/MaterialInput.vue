@@ -31,7 +31,6 @@ export default Vue.extend({
 }
 .group {
   position: relative;
-  margin-bottom: 45px;
   width: 100%;
 }
 input {
