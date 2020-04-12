@@ -53,9 +53,9 @@ export interface TextOnlyDto {
 }
 
 export interface NoteDto {
-  title?: string
+  title: string
 
-  text?: string
+  text: string
 
   mood?: EnumNoteDtoMood
 
@@ -64,9 +64,11 @@ export interface NoteDto {
   hide?: boolean
 
   password?: string
+
+  options?: Record<string, any>
 }
 
-export interface Page {
+export interface PageDto {
   /** Slug */
   slug?: string
 
@@ -107,6 +109,7 @@ export interface PostDto {
 
   options?: object
 }
+
 export enum EnumCategoryDtoType {
   'Category' = 'Category',
   'Tag' = 'Tag',

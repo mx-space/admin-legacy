@@ -38,6 +38,21 @@ const routes: Array<RouteConfig> = [
           },
         ],
       },
+      {
+        path: 'notes',
+        name: 'note',
+        meta: { title: '随记', icon: ['fas', 'book'] },
+        redirect: '/notes/view',
+        component: () => import('@/layouts/BlankLayout.vue'),
+        children: [
+          {
+            path: 'view',
+            name: 'view-notes',
+            meta: { title: '管理随记', icon: ['fas', 'eye'] },
+            component: () => import('@/views/ManageNote/ListNotes.vue'),
+          },
+        ],
+      },
       // {
       //   path: 'comments',
       //   name: 'comment',

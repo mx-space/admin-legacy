@@ -52,3 +52,32 @@ export interface PostRespDto extends BaseResp {
     options?: Record<string, any>
   }
 }
+
+export interface PagerDto {
+  total: number
+  size: number
+  currentPage: number
+  totalPage: number
+  hasPrevPage: boolean
+  hasNextPage: boolean
+}
+
+export interface NoteRecord {
+  _id: string
+  hide: boolean
+  count: {
+    read: number
+    like: number
+  }
+  title: string
+  text: string
+  mood?: string
+  weather?: string
+  created: string
+  modified: string
+  nid: number
+}
+
+export interface NotesRespDto extends BaseResp {
+  data: NoteRecord[]
+}
