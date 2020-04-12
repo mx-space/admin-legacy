@@ -81,3 +81,6 @@ export interface NoteRecord {
 export interface NotesRespDto extends BaseResp {
   data: NoteRecord[]
 }
+export interface NoteRespDto extends BaseResp {
+  data: NoteRecord
+}

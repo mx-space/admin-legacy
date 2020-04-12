@@ -52,12 +52,28 @@ export interface TextOnlyDto {
   text?: string
 }
 
+export enum Mood {
+  'happy' = '开心',
+  'sad' = '伤心',
+  'angry' = '生气',
+  'sorrow' = '悲哀',
+  'pain' = '痛苦',
+  'terrible' = '可怕',
+  'unhappy' = '不快',
+  'detestable' = '可恶',
+  'worry' = '担心',
+  'despair' = '绝望',
+  'anxiety' = '焦虑',
+  'excite' = '激动',
+}
+export type MoodValues = keyof typeof Mood
+
 export interface NoteDto {
   title: string
 
   text: string
 
-  mood?: EnumNoteDtoMood
+  mood?: keyof typeof Mood
 
   weather?: string
 
@@ -114,10 +130,7 @@ export enum EnumCategoryDtoType {
   'Category' = 'Category',
   'Tag' = 'Tag',
 }
-export enum EnumNoteDtoMood {
-  '开心' = '开心',
-  '伤心' = '伤心',
-}
+
 export enum EnumPageType {
   'md' = 'md',
   'html' = 'html',

@@ -51,6 +51,12 @@ const routes: Array<RouteConfig> = [
             meta: { title: '管理随记', icon: ['fas', 'eye'] },
             component: () => import('@/views/ManageNote/ListNotes.vue'),
           },
+          {
+            path: 'edit',
+            name: 'edit-notes',
+            meta: { title: '编辑随记', icon: ['fas', 'pencil-alt'] },
+            component: () => import('@/views/ManageNote/EditNote.vue'),
+          },
         ],
       },
       // {

@@ -20,8 +20,7 @@
       @change="onChange"
     >
       <div class="url">
-        <label class="prefix">{{ `${baseUrl}/${category.slug}/` }}</label>
-        <UInput :value="slug" @change="(e) => (slug = e)" />
+        <label class="prefix">{{ `${baseUrl}/notes/${nid || ''}` }}</label>
       </div>
     </Writer>
 
@@ -32,25 +31,19 @@
       class="drawer"
     >
       <label>
-        分类
+        心情
       </label>
-      <el-select v-model="categoryId" placeholder="请选择">
+      <el-select v-model="mood" placeholder="请选择">
         <el-option
-          v-for="(value, key) in categoryRecord"
+          v-for="(value, key) in moodSet"
           :key="key"
-          :label="value.name"
-          :value="value._id"
+          :label="value"
+          :value="key"
         >
         </el-option>
       </el-select>
-      <label>概要</label>
-      <el-input
-        type="textarea"
-        :autosize="{ minRows: 2, maxRows: 4 }"
-        placeholder="请输入概要(Option)"
-        v-model="summary"
-      >
-      </el-input>
+      <label>设定密码?</label>
+      <el-input v-model="password" type="password"> </el-input>
       <span>隐藏?</span>
       <el-switch v-model="hide" active-color="#13ce66" inactive-color="#ff4949">
       </el-switch>
@@ -72,10 +65,11 @@ import Button from '@/components/Button/LayoutButton.vue'
 import PageLayout from '@/layouts/PageLayout.vue'
 import Writer from '@/components/Writer/index.vue'
 import UnderlineInput from '@/components/Input/UnderlineInput.vue'
-import { Getter } from 'vuex-class'
-import { Map } from 'immutable'
-import { CategoryModel } from '../../store/interfaces/category.interface'
-import { PostRespDto } from '../../models/response.dto'
+
+import { NoteRespDto } from '../../models/response.dto'
+import { NoteDto, Mood, MoodValues } from '../../models'
+import { ConfirmLeave } from '@/mixins/confirm'
+
 @Component({
   components: {
     Button,
@@ -84,33 +78,26 @@ import { PostRespDto } from '../../models/response.dto'
     UInput: UnderlineInput,
   },
 })
-export default class PostWriteView extends Vue {
-  @Getter
-  categories!: Map<string, CategoryModel>
-
+export default class NoteWriteView extends ConfirmLeave {
   options = {
-    title: '撰写新文章',
+    title: '随便写点啥',
   }
   inputLabel = '想想取个什么题目比较好呢~'
-  model = {
-    title: '',
-    text: '',
-  }
+
   drawerOpen = false
 
   async handleSubmit() {
-    const model = {
+    const model: NoteDto = {
       ...this.model,
-      slug: this.slug,
-      categoryId: this.category._id,
-      summary: this.summary === '' ? undefined : this.summary,
       hide: this.hide,
+      password: this.password === '' ? undefined : this.password,
+      mood: this.mood,
     }
     this.id
-      ? await this.$api('Post').update(this.id as string, model)
-      : await this.$api('Post').post(model)
+      ? await this.$api('Note').update(this.id as string, model)
+      : await this.$api('Note').post(model)
     this.$notice.success('发布成功')
-    this.$router.push('/posts')
+    this.$router.push({ name: 'view-notes' })
   }
   onChange(model: { title: string; text: string }) {
     this.model = { ...model }
@@ -119,44 +106,7 @@ export default class PostWriteView extends Vue {
   get baseUrl() {
     return process.env.VUE_APP_WEB_URL
   }
-  categoryId = ''
-  get category() {
-    const category = this.categories.get(this.categoryId) || {
-      slug: '',
-      name: '',
-    }
-    return {
-      _id: this.categoryId,
-      slug: category.slug,
-      name: category.name,
-    }
-  }
-  categoryRecord: Record<string, CategoryModel> = {}
-  setDefaultCategory(): boolean {
-    const defaultCategory = this.categories.first<CategoryModel>()
-    if (!defaultCategory) {
-      return false
-    }
-    this.categoryId = defaultCategory._id
 
-    this.categoryRecord = this.categories.toObject()
-    return true
-  }
-  timer: number | null = null
-  mounted() {
-    this.timer = setInterval(() => {
-      const ok = this.setDefaultCategory()
-      if (ok) {
-        clearInterval(this.timer as number)
-        this.timer = null
-      }
-    }, 100)
-  }
-
-  beforeDestroy() {
-    clearInterval(this.timer as number)
-    this.timer = null
-  }
   get id() {
     return this.$route.query.id
   }
@@ -165,23 +115,24 @@ export default class PostWriteView extends Vue {
     if (!this.id) {
       return
     }
-    const { data } = await this.$api('Post').get<PostRespDto>(
+    const { data } = await this.$api('Note').get<NoteRespDto>(
       this.$route.query.id as string,
     )
 
-    this.slug = data.slug
-    this.summary = data.summary ?? ''
     this.model = {
       title: data.title,
       text: data.text,
     }
     this.hide = data.hide
-    this.categoryId = data.categoryId
+    this.mood = (data.mood as MoodValues) ?? 'happy'
+    this.nid = data.nid
   }
 
-  slug = ''
-  summary = ''
   hide = false
+  password = ''
+  nid: number | null = null
+  mood: MoodValues = 'happy'
+  moodSet = Object.fromEntries(Object.entries(Mood))
 }
 </script>
 <style lang="scss" scoped>
