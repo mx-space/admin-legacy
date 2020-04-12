@@ -164,7 +164,8 @@ $left-margin: 1.5rem;
 
   .select-menu {
     position: absolute;
-    right: -100px;
+    right: -70px;
+    top: -27px;
     z-index: 9;
     .i {
       width: 40px;

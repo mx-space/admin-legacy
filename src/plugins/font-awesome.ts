@@ -3,7 +3,7 @@ import {
   IconPack,
   library,
 } from '@fortawesome/fontawesome-svg-core'
-import { faGithub } from '@fortawesome/free-brands-svg-icons'
+import { faGithub, faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
 import { faSave } from '@fortawesome/free-regular-svg-icons'
 import {
   faKey,
@@ -41,6 +41,7 @@ export const Icons: IconType[] = [
   faChevronLeft,
   faChevronRight,
   faSlidersH,
+  faTelegramPlane,
 ]
 
 library.add(...Icons)

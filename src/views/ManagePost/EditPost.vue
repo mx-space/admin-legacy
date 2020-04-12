@@ -9,7 +9,7 @@
       />
       <Button
         @click.native="handleSubmit"
-        :icon="['far', 'save']"
+        :icon="['fab', 'telegram-plane']"
         :name="$route.query.id ? '更新' : '发布'"
       />
     </template>
@@ -25,8 +25,35 @@
       </div>
     </Writer>
 
-    <el-drawer title="我是标题" direction="rtl" :visible.sync="drawerOpen">
-      <span>我来啦!</span>
+    <el-drawer
+      title="文章设定"
+      direction="rtl"
+      :visible.sync="drawerOpen"
+      class="drawer"
+    >
+      <label>
+        分类
+      </label>
+      <el-select v-model="categoryId" placeholder="请选择">
+        <el-option
+          v-for="(value, key) in categoryRecord"
+          :key="key"
+          :label="value.name"
+          :value="value._id"
+        >
+        </el-option>
+      </el-select>
+      <label>概要</label>
+      <el-input
+        type="textarea"
+        :autosize="{ minRows: 2, maxRows: 4 }"
+        placeholder="请输入概要(Option)"
+        v-model="summary"
+      >
+      </el-input>
+      <span>隐藏?</span>
+      <el-switch v-model="hide" active-color="#13ce66" inactive-color="#ff4949">
+      </el-switch>
     </el-drawer>
 
     <template #footer>
@@ -48,12 +75,14 @@ import UnderlineInput from '@/components/Input/UnderlineInput.vue'
 import { Getter } from 'vuex-class'
 import { Map } from 'immutable'
 import { CategoryModel } from '../../store/interfaces/category.interface'
+import Drawer from '@/components/Drawer'
 @Component({
   components: {
     Button,
     PageLayout,
     Writer,
     UInput: UnderlineInput,
+    Drawer: Drawer,
   },
 })
 export default class PostWriteView extends Vue {
@@ -70,7 +99,17 @@ export default class PostWriteView extends Vue {
   }
   drawerOpen = false
 
-  handleSubmit() {}
+  async handleSubmit() {
+    await this.$api('Post').post({
+      ...this.model,
+      slug: this.slug,
+      categoryId: this.category._id,
+      summary: this.summary === '' ? undefined : this.summary,
+      hide: this.hide,
+    })
+    this.$notice.success('发布成功')
+    this.$router.push('/posts')
+  }
   onChange(model: { title: string; text: string }) {
     this.model = { ...model }
   }
@@ -78,17 +117,27 @@ export default class PostWriteView extends Vue {
   get baseUrl() {
     return process.env.VUE_APP_WEB_URL
   }
-  category: { name: string; slug: string } | {} = {}
-
+  categoryId = ''
+  get category() {
+    const category = this.categories.get(this.categoryId) || {
+      slug: '',
+      name: '',
+    }
+    return {
+      _id: this.categoryId,
+      slug: category.slug,
+      name: category.name,
+    }
+  }
+  categoryRecord: Record<string, CategoryModel> = {}
   setDefaultCategory(): boolean {
     const defaultCategory = this.categories.first<CategoryModel>()
     if (!defaultCategory) {
       return false
     }
-    this.category = {
-      name: defaultCategory.name,
-      slug: defaultCategory.slug,
-    }
+    this.categoryId = defaultCategory._id
+
+    this.categoryRecord = this.categories.toObject()
     return true
   }
 
@@ -103,6 +152,8 @@ export default class PostWriteView extends Vue {
   }
 
   slug = ''
+  summary = ''
+  hide = false
 }
 </script>
 <style lang="scss" scoped>
@@ -111,6 +162,19 @@ export default class PostWriteView extends Vue {
 
   input {
     width: 8rem;
+  }
+}
+.drawer {
+  label {
+    display: block;
+  }
+  label,
+  span {
+    margin: 1rem 0;
+  }
+  span {
+    display: inline-block;
+    margin-right: 3rem;
   }
 }
 </style>

@@ -13,6 +13,9 @@ import {
   TableColumn,
   Loading,
   Drawer,
+  Select,
+  Option,
+  Switch,
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Vue from 'vue'
@@ -32,6 +35,9 @@ const components = [
   Row,
   Table,
   TableColumn,
+  Select,
+  Switch,
+  Option,
 ]
 
 components.forEach((component) => {

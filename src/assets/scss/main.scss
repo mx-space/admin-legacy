@@ -146,3 +146,15 @@ input {
     opacity: 0;
   }
 }
+
+.v-modal {
+  display: none;
+}
+.el-drawer__wrapper {
+  * {
+    outline: none;
+  }
+  .el-drawer__body {
+    margin: 1rem;
+  }
+}
