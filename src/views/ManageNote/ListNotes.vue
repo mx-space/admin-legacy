@@ -31,7 +31,9 @@
 
       <el-table-column prop="mood" label="心情" width="100">
         <template slot-scope="scope">
-          {{ data[scope.$index].mood || '' }}
+          {{
+            moodSet[data[scope.$index].mood] || data[scope.$index].mood || ''
+          }}
         </template>
       </el-table-column>
 
@@ -81,7 +83,7 @@ import Button from '@/components/Button/LayoutButton.vue'
 
 import * as time from '@/utils/time'
 import { PagerDto, NotesRespDto, NoteRecord } from '../../models/response.dto'
-
+import { MoodSet } from '@/models'
 @Component({
   components: {
     PageLayout,
@@ -92,6 +94,9 @@ export default class ListNotes extends Vue {
   page: Partial<PagerDto> = {}
   data: NotesRespDto['data'] = []
   loading = true
+
+  moodSet = MoodSet
+
   async created() {
     await this.getData()
   }

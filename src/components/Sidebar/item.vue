@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     handleClick() {
-      if (!this.item.subItems) {
+      if (!this.item.subItems && this.item.fullPath !== this.$route.fullPath) {
         this.$router.push(this.item.fullPath)
       } else {
         this.extend = !this.extend

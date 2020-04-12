@@ -67,7 +67,7 @@ import Writer from '@/components/Writer/index.vue'
 import UnderlineInput from '@/components/Input/UnderlineInput.vue'
 
 import { NoteRespDto } from '../../models/response.dto'
-import { NoteDto, Mood, MoodValues } from '../../models'
+import { NoteDto, MoodSet, MoodValues } from '../../models'
 import { ConfirmLeave } from '@/mixins/confirm'
 
 @Component({
@@ -132,7 +132,7 @@ export default class NoteWriteView extends ConfirmLeave {
   password = ''
   nid: number | null = null
   mood: MoodValues = 'happy'
-  moodSet = Object.fromEntries(Object.entries(Mood))
+  moodSet = MoodSet
 }
 </script>
 <style lang="scss" scoped>

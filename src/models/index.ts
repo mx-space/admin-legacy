@@ -68,6 +68,7 @@ export enum Mood {
 }
 export type MoodValues = keyof typeof Mood
 
+export const MoodSet = Object.freeze(Object.fromEntries(Object.entries(Mood)))
 export interface NoteDto {
   title: string
 
