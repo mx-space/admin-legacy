@@ -38,7 +38,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import NormInput from '@/components/Input/NormalInput.vue'
 import MaterialInput from '../Input/MaterialInput.vue'
-import { Prop } from 'vue-property-decorator'
+import { Prop, Watch } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 import { codemirror } from 'vue-codemirror'
 import { Editor } from 'codemirror'
@@ -84,6 +84,15 @@ const md = new MD({
   },
 })
 export default class Writer extends Vue {
+  @Watch('title')
+  syncTitle(val: string) {
+    this.model.title = val
+  }
+
+  @Watch('text')
+  syncText(val: string) {
+    this.model.text = val
+  }
   cmOption = {
     tabSize: 2,
     styleActiveLine: true,
@@ -197,7 +206,7 @@ export default class Writer extends Vue {
     this.handleEmitChange()
   }
   handleChangeText(e: Editor) {
-    this.model.text = e.getValue()
+    // this.model.text = e.getValue()
     this.handleEmitChange()
   }
 

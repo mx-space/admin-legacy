@@ -34,3 +34,21 @@ export interface CategoryRespDto {
 export interface CategoriesRespDto extends BaseResp {
   data: CategoryRespDto[]
 }
+
+export interface PostRespDto extends BaseResp {
+  data: {
+    hide: boolean
+    commentsIndex: number
+    _id: string
+    created: string
+    modified: string
+    title: string
+    text: string
+    slug: string
+    categoryId: string
+    category: CategoryRespDto
+    id: string
+    summary?: string
+    options?: Record<string, any>
+  }
+}

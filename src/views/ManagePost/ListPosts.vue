@@ -52,13 +52,11 @@
 
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
-          <el-popconfirm title="确定删除吗？">
-            <el-button
-              @click.native.prevent="deleteRow(scope.$index)"
-              type="text"
-              size="small"
-              slot="reference"
-            >
+          <el-popconfirm
+            title="确定删除吗？"
+            @onConfirm="handleDelete(scope.$index)"
+          >
+            <el-button type="text" size="small" slot="reference">
               移除
             </el-button>
           </el-popconfirm>

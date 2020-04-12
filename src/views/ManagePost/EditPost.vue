@@ -75,14 +75,13 @@ import UnderlineInput from '@/components/Input/UnderlineInput.vue'
 import { Getter } from 'vuex-class'
 import { Map } from 'immutable'
 import { CategoryModel } from '../../store/interfaces/category.interface'
-import Drawer from '@/components/Drawer'
+import { PostRespDto } from '../../models/response.dto'
 @Component({
   components: {
     Button,
     PageLayout,
     Writer,
     UInput: UnderlineInput,
-    Drawer: Drawer,
   },
 })
 export default class PostWriteView extends Vue {
@@ -100,13 +99,16 @@ export default class PostWriteView extends Vue {
   drawerOpen = false
 
   async handleSubmit() {
-    await this.$api('Post').post({
+    const model = {
       ...this.model,
       slug: this.slug,
       categoryId: this.category._id,
       summary: this.summary === '' ? undefined : this.summary,
       hide: this.hide,
-    })
+    }
+    this.id
+      ? await this.$api('Post').update(this.id as string, model)
+      : await this.$api('Post').post(model)
     this.$notice.success('发布成功')
     this.$router.push('/posts')
   }
@@ -149,6 +151,28 @@ export default class PostWriteView extends Vue {
         timer = null
       }
     }, 100)
+  }
+
+  get id() {
+    return this.$route.query.id
+  }
+
+  async created() {
+    if (!this.id) {
+      return
+    }
+    const { data } = await this.$api('Post').get<PostRespDto>(
+      this.$route.query.id as string,
+    )
+
+    this.slug = data.slug
+    this.summary = data.summary ?? ''
+    this.model = {
+      title: data.title,
+      text: data.text,
+    }
+    this.hide = data.hide
+    this.categoryId = data.categoryId
   }
 
   slug = ''
