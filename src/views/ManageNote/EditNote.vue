@@ -42,6 +42,20 @@
         >
         </el-option>
       </el-select>
+
+      <label>
+        天气
+      </label>
+      <el-select v-model="weather" placeholder="请选择">
+        <el-option
+          v-for="(value, key) in weatherSet"
+          :key="key"
+          :label="value"
+          :value="key"
+        >
+        </el-option>
+      </el-select>
+
       <label>设定密码?</label>
       <el-input v-model="password" type="password"> </el-input>
       <span>隐藏?</span>
@@ -58,7 +72,6 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
 import Component from 'vue-class-component'
 
 import Button from '@/components/Button/LayoutButton.vue'
@@ -67,7 +80,13 @@ import Writer from '@/components/Writer/index.vue'
 import UnderlineInput from '@/components/Input/UnderlineInput.vue'
 
 import { NoteRespDto } from '../../models/response.dto'
-import { NoteDto, MoodSet, MoodValues } from '../../models'
+import {
+  NoteDto,
+  MoodSet,
+  WeatherSet,
+  MoodValues,
+  WeatherValues,
+} from '../../models'
 import { ConfirmLeave } from '@/mixins/confirm'
 
 @Component({
@@ -92,6 +111,7 @@ export default class NoteWriteView extends ConfirmLeave {
       hide: this.hide,
       password: this.password === '' ? undefined : this.password,
       mood: this.mood,
+      weather: this.weather ?? undefined,
     }
     this.id
       ? await this.$api('Note').update(this.id as string, model)
@@ -131,8 +151,12 @@ export default class NoteWriteView extends ConfirmLeave {
   hide = false
   password = ''
   nid: number | null = null
+
   mood: MoodValues = 'happy'
   moodSet = MoodSet
+
+  weather: WeatherValues | null = null
+  weatherSet = WeatherSet
 }
 </script>
 <style lang="scss" scoped>

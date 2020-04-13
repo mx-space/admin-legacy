@@ -37,6 +37,15 @@
         </template>
       </el-table-column>
 
+      <el-table-column prop="weather" label="天气" width="100">
+        <template slot-scope="scope">
+          {{
+            weatherSet[data[scope.$index].weather] ||
+            data[scope.$index].weather ||
+            ''
+          }}
+        </template>
+      </el-table-column>
       <el-table-column prop="created" label="创建时间" width="150">
         <template slot-scope="scope">
           {{ relativeTimeFromNow(data[scope.$index].created) }}
@@ -83,7 +92,7 @@ import Button from '@/components/Button/LayoutButton.vue'
 
 import * as time from '@/utils/time'
 import { PagerDto, NotesRespDto, NoteRecord } from '../../models/response.dto'
-import { MoodSet } from '@/models'
+import { MoodSet, WeatherSet } from '@/models'
 @Component({
   components: {
     PageLayout,
@@ -96,6 +105,7 @@ export default class ListNotes extends Vue {
   loading = true
 
   moodSet = MoodSet
+  weatherSet = WeatherSet
 
   async created() {
     await this.getData()

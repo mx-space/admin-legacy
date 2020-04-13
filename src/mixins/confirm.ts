@@ -14,4 +14,7 @@ export class ConfirmLeave extends Vue {
       }
     }
   }
+  beforeDestroy() {
+    window.onbeforeunload = null
+  }
 }

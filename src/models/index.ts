@@ -66,9 +66,22 @@ export enum Mood {
   'anxiety' = '焦虑',
   'excite' = '激动',
 }
+
+export enum Weather {
+  'sunshine' = '晴',
+  'cloudy' = '多云',
+  'rainy' = '雨',
+  'overcast' = '阴',
+  'snow' = '雪',
+}
+
+export type WeatherValues = keyof typeof Weather
 export type MoodValues = keyof typeof Mood
 
 export const MoodSet = Object.freeze(Object.fromEntries(Object.entries(Mood)))
+export const WeatherSet = Object.freeze(
+  Object.fromEntries(Object.entries(Weather)),
+)
 export interface NoteDto {
   title: string
 
