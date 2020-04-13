@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@types/codemirror": "^0.0.90",
-    "@types/js-cookie": "^2.2.5",
+    "@types/js-cookie": "^2.2.6",
     "@types/lodash": "^4.14.149",
     "@types/markdown-it": "^0.0.9",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
