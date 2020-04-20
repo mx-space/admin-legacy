@@ -84,3 +84,28 @@ export interface NotesRespDto extends BaseResp {
 export interface NoteRespDto extends BaseResp {
   data: NoteRecord
 }
+
+export interface CommentModel {
+  refType: string
+  state: number
+  children: CommentModel[]
+  commentsIndex: number
+  _id: string
+  author: string
+  text: string
+  mail: string
+  url: string
+  ip: string
+  agent: string
+  key: string
+  pid: string
+  created: string
+  modified: string
+  avatar: string
+  id: string
+}
+
+export interface CommentsRespDto extends BaseResp {
+  data: CommentModel[]
+  page: PagerDto
+}

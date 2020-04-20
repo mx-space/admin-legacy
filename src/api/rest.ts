@@ -11,19 +11,34 @@ export enum AccessRoutesEnum {
   Menu,
 }
 
+interface Gets {
+  page?: number
+  size?: number
+  select?: string
+  state?: 0 | 1 | 2
+}
+
 export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
   let pluralize = ['Master', 'Menu'].includes(rest)
     ? rest.toLowerCase()
     : inflection.pluralize(rest).toLowerCase()
   pluralize = prefix ? pluralize + `/${prefix}` : pluralize
+  pluralize = encodeURI(pluralize)
   const apis = {
-    async getRecently<T = unknown>({ page = 1, size = 10 } = {}): Promise<T> {
+    async getRecently<T = unknown>({
+      page,
+      size,
+      select,
+      state,
+    }: Gets = {}): Promise<T> {
       const data = await $axios({
         method: 'GET',
         url: `/${pluralize}`,
         params: {
-          page,
-          size,
+          page: page || 1,
+          size: size || 10,
+          select,
+          state,
         },
       })
       return data as any

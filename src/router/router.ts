@@ -59,12 +59,12 @@ const routes: Array<RouteConfig> = [
           },
         ],
       },
-      // {
-      //   path: 'comments',
-      //   name: 'comment',
-      //   meta: { title: '评论', icon: ['fas', 'comment'] },
-      //   component: () => import('@/views/ManageComment'),
-      // },
+      {
+        path: 'comments',
+        name: 'comment',
+        meta: { title: '评论', icon: ['fas', 'comment'] },
+        component: () => import('@/views/CommentList/index.vue'),
+      },
     ],
   },
 

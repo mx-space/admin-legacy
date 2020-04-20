@@ -16,11 +16,15 @@ import {
   Select,
   Option,
   Switch,
+  Tabs,
+  TabPane,
+  Avatar,
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Vue from 'vue'
 
 const components = [
+  Avatar,
   Button,
   Card,
   Checkbox,
@@ -38,6 +42,8 @@ const components = [
   Select,
   Switch,
   Option,
+  Tabs,
+  TabPane,
 ]
 
 components.forEach((component) => {
