@@ -17,7 +17,7 @@
         name="删除"
         :icon="['fa', 'times']"
         backcolor="#e74c3c"
-        @click.native="handleDeleteSelect"
+        @click.native="dialogVisible = true"
       />
     </template>
 
@@ -63,7 +63,10 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="内容">
+      <el-table-column
+        label="内容"
+        :width="viewport.mobile ? '300' : undefined"
+      >
         <template slot-scope="scope">
           <div class="gray time">
             {{ fromNow(scope.row.created) }} 于
@@ -113,6 +116,21 @@
       >
       </el-pagination>
     </div>
+
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+      <span>确定要删除么?</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button
+          type="primary"
+          @click="
+            handleDeleteSelect()
+            dialogVisible = false
+          "
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </PageLayout>
 </template>
 
@@ -130,6 +148,8 @@ import {
 import LayoutButton from '@/components/Button/LayoutButton.vue'
 
 import { relativeTimeFromNow } from '@/utils/time'
+import { Getter } from 'vuex-class'
+import { ViewportRecord } from '../../store/interfaces/viewport.interface'
 @Component({
   components: {
     LayoutButton,
@@ -142,6 +162,10 @@ export default class CommentList extends Vue {
   comments: CommentModel[] = []
   pager: PagerDto = {} as PagerDto
   loading = true
+  dialogVisible = false
+  @Getter
+  viewport!: ViewportRecord
+
   async created() {
     await this.fetchComments()
   }
@@ -207,13 +231,19 @@ export default class CommentList extends Vue {
     this.$message.success('删除成功')
   }
   handleReadSelect() {
-    this.changeState(this.multipleSelection, 1)
+    if (this.multipleSelection.length > 0) {
+      this.changeState(this.multipleSelection, 1)
+    }
   }
   handleGomiSelect() {
-    this.changeState(this.multipleSelection, 2)
+    if (this.multipleSelection.length > 0) {
+      this.changeState(this.multipleSelection, 2)
+    }
   }
   handleDeleteSelect() {
-    this.handleDelete(this.multipleSelection)
+    if (this.multipleSelection.length > 0) {
+      this.handleDelete(this.multipleSelection)
+    }
   }
 }
 </script>

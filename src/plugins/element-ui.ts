@@ -19,6 +19,7 @@ import {
   Tabs,
   TabPane,
   Avatar,
+  Dialog,
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Vue from 'vue'
@@ -29,21 +30,22 @@ const components = [
   Card,
   Checkbox,
   Col,
+  Dialog,
   Drawer,
   Form,
   FormItem,
   Input,
   Loading,
+  Option,
   Pagination,
   Popconfirm,
   Row,
-  Table,
-  TableColumn,
   Select,
   Switch,
-  Option,
-  Tabs,
   TabPane,
+  Table,
+  TableColumn,
+  Tabs,
 ]
 
 components.forEach((component) => {
