@@ -26,6 +26,8 @@ import {
   faBook,
   faComment,
   faTimes,
+  faAngleDoubleRight,
+  faFlask,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Vue from 'vue'
@@ -42,6 +44,8 @@ export const Icons: IconType[] = [
   faTrashAlt,
   faTimes,
   faSignOutAlt,
+  faAngleDoubleRight,
+  faFlask,
   faSlidersH,
   faTachometerAlt,
   faGlobeAsia,

@@ -2,13 +2,15 @@ import $axios from '@/utils/request'
 import inflection from 'inflection'
 
 export enum AccessRoutesEnum {
-  Post,
+  Aggregate,
   Category,
   Comment,
-  Note,
-  Page,
   Master,
   Menu,
+  Note,
+  Page,
+  Post,
+  Project,
 }
 
 interface Gets {
@@ -19,7 +21,7 @@ interface Gets {
 }
 
 export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
-  let pluralize = ['Master', 'Menu'].includes(rest)
+  let pluralize = ['Master', 'Menu', 'Aggregate'].includes(rest)
     ? rest.toLowerCase()
     : inflection.pluralize(rest).toLowerCase()
   pluralize = prefix ? pluralize + `/${prefix}` : pluralize
@@ -43,7 +45,8 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
       })
       return data as any
     },
-    async getOne<T = unknown>(id: string): Promise<T> {
+    async getOne<T = unknown>(_id: string): Promise<T> {
+      const id = encodeURI(_id)
       const data = await $axios.get(`${pluralize}/${id}`)
       return data as any
     },

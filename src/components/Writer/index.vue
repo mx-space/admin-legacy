@@ -16,7 +16,7 @@
     >
       <codemirror
         v-model="model.text"
-        :options="cmOption"
+        :options="cmOptions"
         :events="cmEvents"
         @scroll="handleScroll"
         @change="handleChangeText"
@@ -44,15 +44,7 @@ import { codemirror } from 'vue-codemirror'
 import { Editor } from 'codemirror'
 import MD from 'markdown-it'
 import prism from 'markdown-it-prism'
-
-import 'codemirror/mode/gfm/gfm.js'
-import 'codemirror/addon/display/fullscreen.js'
-import 'codemirror/theme/3024-day.css'
-import 'codemirror/keymap/sublime.js'
-import 'codemirror/addon/selection/active-line.js'
-// import 'codemirror-typewriter-scrolling/typewriter-scrolling.js'
-
-import 'codemirror/lib/codemirror.css'
+import { cmOptions } from '@/commom/editor'
 import '@/assets/scss/shizuku.scss'
 import { ViewportRecord } from '../../store/interfaces/viewport.interface'
 
@@ -93,85 +85,7 @@ export default class Writer extends Vue {
   syncText(val: string) {
     this.model.text = val
   }
-  cmOption = {
-    tabSize: 2,
-    styleActiveLine: true,
-    lineNumbers: true,
-    lineWrapping: true,
-    line: true,
-    mode: 'text/x-gfm',
-    theme: '3024-day',
-    tokenTypeOverrides: {
-      code: 'code',
-    },
-    // typewriterScrolling:
-    //   !!parseInt(localStorage.getItem(PERFER.typewriter)) || false,
-    highlightFormatting: true,
-    keymap: 'sublime',
-    extraKeys: {
-      // strong
-      'Cmd-B'(cm: Editor) {
-        const doc = cm.getDoc()
-        const selection = doc.getSelection()
-        if (selection) {
-          doc.replaceSelection(`**${selection}**`)
-        } else {
-          const cursor = doc.getCursor()
-          doc.replaceRange('****', cursor)
-          cursor.ch += 2
-          doc.setCursor(cursor)
-        }
-      },
-      // italic
-      'Cmd-I'(cm: Editor) {
-        const doc = cm.getDoc()
-        const selection = doc.getSelection()
-        if (selection) {
-          doc.replaceSelection(`*${selection}*`)
-        } else {
-          const cursor = doc.getCursor()
-          doc.replaceRange('**', cursor)
-          cursor.ch += 1
-          doc.setCursor(cursor)
-        }
-      },
-      // underline
-      'Cmd-U'(cm: Editor) {
-        const doc = cm.getDoc()
-        const selection = doc.getSelection()
-        if (selection) {
-          doc.replaceSelection(`<u>${selection}</u>`)
-        } else {
-          const cursor = doc.getCursor()
-          doc.replaceRange('<u></u>', cursor)
-          cursor.ch += 3
-          doc.setCursor(cursor)
-        }
-      },
-      // ref link
-      'Cmd-K'(cm: Editor) {
-        const doc = cm.getDoc()
-        const cursor = doc.getCursor()
-        doc.replaceRange('[]()', cursor)
-        cursor.ch += 1
-        doc.setCursor(cursor)
-      },
-      // code block
-      'Alt-`'(cm: Editor) {
-        const doc = cm.getDoc()
-        const cursor = doc.getCursor()
-        doc.replaceRange('```\n\n```', cursor)
-        cursor.ch += 3
-        doc.setCursor(cursor)
-      },
-      // tab to space
-      Tab(cm: Editor) {
-        const doc = cm.getDoc()
-        const cursor = doc.getCursor()
-        doc.replaceRange('  ', cursor)
-      },
-    },
-  }
+  cmOptions = cmOptions
   cmEvents = ['scroll', 'viewportChange', 'change']
 
   get md() {
@@ -205,7 +119,7 @@ export default class Writer extends Vue {
     this.model.title = e
     this.handleEmitChange()
   }
-  handleChangeText(e: Editor) {
+  handleChangeText() {
     // this.model.text = e.getValue()
     this.handleEmitChange()
   }

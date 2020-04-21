@@ -48,6 +48,17 @@ export interface CommentDto {
   url?: string
 }
 
+export interface ProjectDto {
+  name: string
+  previewUrl?: string
+  docUrl?: string
+  projectUrl?: string
+  images?: string[]
+  description: string
+  avatar?: string
+  text: string
+}
+
 export interface TextOnlyDto {
   text?: string
 }

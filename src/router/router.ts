@@ -65,6 +65,35 @@ const routes: Array<RouteConfig> = [
         meta: { title: '评论', icon: ['fas', 'comment'] },
         component: () => import('@/views/CommentList/index.vue'),
       },
+      {
+        path: 'extra',
+        name: 'extra',
+        redirect: '/extra/project',
+        meta: { title: '额外', icon: ['fas', 'angle-double-right'] },
+        component: () => import('@/layouts/BlankLayout.vue'),
+        children: [
+          {
+            path: 'project',
+            name: 'project',
+            meta: { title: '项目', icon: ['fas', 'flask'] },
+            component: () => import('@/layouts/BlankLayout.vue'),
+            children: [
+              {
+                path: 'list',
+                name: 'project-list',
+                meta: { title: '项目列表', icon: ['fas', 'eye'] },
+                component: () => import('@/views/Other/Project/List.vue'),
+              },
+              {
+                path: 'edit',
+                name: 'project-edit',
+                meta: { title: '编辑项目', icon: ['fas', 'pencil-alt'] },
+                component: () => import('@/views/Other/Project/Edit.vue'),
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
 

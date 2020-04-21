@@ -1,3 +1,5 @@
+import { ProjectDto } from '.'
+
 interface BaseResp {
   ok: 1 | 0
   timestamp: string
@@ -107,5 +109,10 @@ export interface CommentModel {
 
 export interface CommentsRespDto extends BaseResp {
   data: CommentModel[]
+  page: PagerDto
+}
+
+export interface ProjectRespDto extends BaseResp {
+  data: ProjectDto[]
   page: PagerDto
 }

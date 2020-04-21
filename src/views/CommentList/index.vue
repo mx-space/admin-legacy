@@ -178,12 +178,11 @@ export default class CommentList extends Vue {
     size?: number
   } = {}) {
     this.loading = true
-    const resp =
-      (await rest('Comment').gets({
-        page,
-        size,
-        state: this.activeName as any,
-      })) as CommentsRespDto
+    const resp = (await rest('Comment').gets({
+      page,
+      size,
+      state: this.activeName as any,
+    })) as CommentsRespDto
     this.comments = [...resp.data]
     this.pager = { ...resp.page }
     this.loading = false
