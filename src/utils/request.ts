@@ -35,7 +35,9 @@ service.interceptors.response.use(
     if (process.env.NODE_ENV === 'development') {
       console.log(error)
     }
-    Message.error(error.response.data.msg || error.message)
+    Message.error(
+      error.response.data.message || error.response.data.msg || error.message,
+    )
 
     if (error.response.status === 401) {
       router.push('/login')

@@ -1,5 +1,26 @@
 <template>
   <PageLayout>
+    <template #header>
+      <LayoutButton
+        name="已读"
+        :icon="['far', 'check-circle']"
+        backcolor="#27ae60"
+        @click.native="handleReadSelect"
+      />
+      <LayoutButton
+        name="垃圾"
+        :icon="['far', 'trash-alt']"
+        backcolor="#e67e22"
+        @click.native="handleGomiSelect"
+      />
+      <LayoutButton
+        name="删除"
+        :icon="['fa', 'times']"
+        backcolor="#e74c3c"
+        @click.native="handleDeleteSelect"
+      />
+    </template>
+
     <el-tabs v-model="activeName" @tab-click="handleToggle">
       <el-tab-pane label="待审核" name="0"></el-tab-pane>
       <el-tab-pane label="已发表" name="1"></el-tab-pane>
@@ -46,12 +67,37 @@
         <template slot-scope="scope">
           <div class="gray time">
             {{ fromNow(scope.row.created) }} 于
-            <span class="title">{{
-              scope.row.ref && scope.row.ref.title
-            }}</span>
+            <router-link
+              :to="{
+                name: `edit-${scope.row.refType.toLowerCase()}s`,
+                query: { id: scope.row.ref && scope.row.ref._id },
+              }"
+              class="title"
+              >{{ scope.row.ref && scope.row.ref.title }}</router-link
+            >
           </div>
           <div class="content">
             {{ scope.row.text }}
+          </div>
+          <blockquote class="parent" v-if="scope.row.parent">
+            {{ scope.row.parent.author }} 在
+            {{ fromNow(scope.row.parent.created) }} 说:
+            {{ scope.row.parent.text }}
+          </blockquote>
+          <div class="actions">
+            <span class="action green" @click="changeState(scope.row._id, 1)"
+              >已读</span
+            >
+            <span class="action yellow" @click="changeState(scope.row._id, 2)"
+              >垃圾</span
+            >
+
+            <el-popconfirm
+              title="确定删除吗？"
+              @onConfirm="handleDelete(scope.row._id)"
+            >
+              <span slot="reference" class="action red">删除</span>
+            </el-popconfirm>
           </div>
         </template>
       </el-table-column>
@@ -80,15 +126,19 @@ import {
   CommentModel,
   PagerDto,
 } from '../../models/response.dto'
+
+import LayoutButton from '@/components/Button/LayoutButton.vue'
+
 import { relativeTimeFromNow } from '@/utils/time'
 @Component({
   components: {
+    LayoutButton,
     PageLayout,
   },
 })
 export default class CommentList extends Vue {
   activeName = '0'
-  multipleSelection = [] as any[]
+  multipleSelection = [] as string[]
   comments: CommentModel[] = []
   pager: PagerDto = {} as PagerDto
   loading = true
@@ -129,11 +179,41 @@ export default class CommentList extends Vue {
       ;(this.$refs.multipleTable as any).clearSelection()
     }
   }
-  handleSelectionChange(val: any[]) {
-    this.multipleSelection = val
+  handleSelectionChange(val: CommentModel[]) {
+    this.multipleSelection = val.map((c) => c._id)
   }
   fromNow(date: string) {
     return relativeTimeFromNow(date)
+  }
+  parseCommentState(state: 0 | 1 | 2) {
+    return ['未读', '已读', '垃圾'][state]
+  }
+  async changeState(id: string | string[], state: 0 | 1 | 2) {
+    if (Array.isArray(id)) {
+      id.map(async (i) => {
+        await this.$api('Comment').patch(i, { state })
+      })
+    } else await this.$api('Comment').patch(id, { state })
+    this.$message.success('成功')
+    await this.fetchComments()
+  }
+  async handleDelete(id: string | string[]) {
+    if (Array.isArray(id)) {
+      id.map(async (i) => {
+        await this.$api('Comment').del(i)
+      })
+    } else await this.$api('Comment').del(id)
+    await this.fetchComments()
+    this.$message.success('删除成功')
+  }
+  handleReadSelect() {
+    this.changeState(this.multipleSelection, 1)
+  }
+  handleGomiSelect() {
+    this.changeState(this.multipleSelection, 2)
+  }
+  handleDeleteSelect() {
+    this.handleDelete(this.multipleSelection)
   }
 }
 </script>
@@ -157,6 +237,28 @@ export default class CommentList extends Vue {
 .body {
   .time {
     margin-bottom: 12px;
+  }
+}
+.actions {
+  margin-top: 6px;
+  > span {
+    margin-right: 8px;
+  }
+  .action {
+    cursor: pointer;
+  }
+}
+blockquote {
+  position: relative;
+  margin: 6px 24px;
+
+  &::before {
+    content: '';
+    border-left: 3px solid #3498db;
+    left: -12px;
+    top: 0;
+    bottom: 0;
+    position: absolute;
   }
 }
 </style>

@@ -74,6 +74,10 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
     get update() {
       return this.modifyOne
     },
+    async patch<T = unknown>(id: string, body: any): Promise<T> {
+      const data = await $axios.patch(`${pluralize}/${id}`, body)
+      return data as any
+    },
     get del() {
       return this.deleteOne
     },

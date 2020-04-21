@@ -4,7 +4,11 @@ import {
   library,
 } from '@fortawesome/fontawesome-svg-core'
 import { faGithub, faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
-import { faSave } from '@fortawesome/free-regular-svg-icons'
+import {
+  faSave,
+  faCheckCircle,
+  faTrashAlt,
+} from '@fortawesome/free-regular-svg-icons'
 import {
   faKey,
   faUser,
@@ -21,6 +25,7 @@ import {
   faEye,
   faBook,
   faComment,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Vue from 'vue'
@@ -33,6 +38,9 @@ export const Icons: IconType[] = [
   faSave,
   faGithub,
   faGlobe,
+  faCheckCircle,
+  faTrashAlt,
+  faTimes,
   faSignOutAlt,
   faSlidersH,
   faTachometerAlt,
