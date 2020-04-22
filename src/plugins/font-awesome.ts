@@ -8,6 +8,7 @@ import {
   faSave,
   faCheckCircle,
   faTrashAlt,
+  faComments,
 } from '@fortawesome/free-regular-svg-icons'
 import {
   faKey,
@@ -58,6 +59,7 @@ export const Icons: IconType[] = [
   faSlidersH,
   faTelegramPlane,
   faBook,
+  faComments,
 ]
 
 library.add(...Icons)

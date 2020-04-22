@@ -59,6 +59,12 @@ export interface ProjectDto {
   avatar?: string
   text: string
 }
+export interface SayDto {
+  _id?: string
+  text: string
+  source?: string
+  author?: string
+}
 
 export interface TextOnlyDto {
   text?: string

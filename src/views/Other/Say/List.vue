@@ -2,7 +2,7 @@
   <PageLayout>
     <template #header>
       <layout-button
-        @click.native="$router.push({ name: 'project-edit' })"
+        @click.native="$router.push({ name: 'say-edit' })"
         :icon="['fas', 'plus']"
         name="新增"
     /></template>
@@ -13,20 +13,20 @@
       stripe
       v-loading="loading"
     >
-      <el-table-column prop="title" label="项目名称" width="250">
+      <el-table-column prop="title" label="时间" width="250">
         <template slot-scope="scope">
           <el-button
             @click.native.prevent="
-              $router.push('/extra/project/edit?id=' + data[scope.$index]._id)
+              $router.push('/extra/say/edit?id=' + data[scope.$index]._id)
             "
             type="text"
             size="small"
           >
-            {{ scope.row.name }}
+            {{ scope.row.created }}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="description" label="项目描述"> </el-table-column>
+
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
           <el-popconfirm
@@ -60,7 +60,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import PageLayout from '@/layouts/PageLayout.vue'
 import LayoutButton from '@/components/Button/LayoutButton.vue'
-import { ProjectDto } from '../../../models'
+import { SayDto } from '../../../models'
 import { ProjectRespDto, PagerDto } from '../../../models/response.dto'
 
 @Component({
@@ -70,7 +70,7 @@ import { ProjectRespDto, PagerDto } from '../../../models/response.dto'
   },
 })
 export default class ProjectList extends Vue {
-  data: ProjectDto[] = []
+  data: SayDto[] = []
   loading = true
   page: PagerDto = {} as PagerDto
   async created() {
@@ -79,7 +79,7 @@ export default class ProjectList extends Vue {
 
   async fetchData(page = 1, size = 10) {
     this.loading = false
-    const resp = (await this.$api('Project').gets({
+    const resp = (await this.$api('Say').gets({
       page,
       size,
     })) as ProjectRespDto
@@ -89,7 +89,7 @@ export default class ProjectList extends Vue {
   }
   async handleDelete(index: number) {
     const _id = this.data[index]._id
-    await this.$api('Project').delete(_id as string)
+    await this.$api('Say').delete(_id as string)
     this.$notice.success('删除成功')
     this.fetchData()
   }

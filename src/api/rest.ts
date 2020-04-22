@@ -11,6 +11,7 @@ export enum AccessRoutesEnum {
   Page,
   Post,
   Project,
+  Say,
 }
 
 interface Gets {

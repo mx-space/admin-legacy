@@ -1,4 +1,4 @@
-import { ProjectDto } from '.'
+import { ProjectDto, SayDto } from '.'
 
 interface BaseResp {
   ok: 1 | 0
@@ -114,5 +114,9 @@ export interface CommentsRespDto extends BaseResp {
 
 export interface ProjectRespDto extends BaseResp {
   data: ProjectDto[]
+  page: PagerDto
+}
+export interface SayRespDto extends BaseResp {
+  data: SayDto[]
   page: PagerDto
 }

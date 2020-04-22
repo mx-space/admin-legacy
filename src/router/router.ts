@@ -92,6 +92,26 @@ const routes: Array<RouteConfig> = [
               },
             ],
           },
+          {
+            path: 'say',
+            name: 'say',
+            meta: { title: '说说', icon: ['far', 'comments'] },
+            component: () => import('@/layouts/BlankLayout.vue'),
+            children: [
+              {
+                path: 'list',
+                name: 'say-list',
+                meta: { title: '说什么了', icon: ['fas', 'eye'] },
+                component: () => import('@/views/Other/Say/List.vue'),
+              },
+              {
+                path: 'edit',
+                name: 'say-edit',
+                meta: { title: '我可没说过', icon: ['fas', 'pencil-alt'] },
+                component: () => import('@/views/Other/Say/Edit.vue'),
+              },
+            ],
+          },
         ],
       },
     ],

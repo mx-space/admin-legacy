@@ -3,7 +3,7 @@
     <div class="title" @click="$parent.$refs.wrap.classList.toggle('full')">
       {{ title }}
     </div>
-    <perfect-scrollbar class="items">
+    <perfect-scrollbar class="items" :suppressScrollX="true">
       <item
         :active="activeItems === index"
         :item="item"
