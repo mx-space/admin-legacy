@@ -3,7 +3,7 @@
     <div class="title" @click="$parent.$refs.wrap.classList.toggle('full')">
       {{ title }}
     </div>
-    <div class="items">
+    <perfect-scrollbar class="items">
       <item
         :active="activeItems === index"
         :item="item"
@@ -11,7 +11,7 @@
         v-for="(item, index) in items"
         :key="index"
       />
-    </div>
+    </perfect-scrollbar>
     <div class="user">
       <div
         class="block user-select"

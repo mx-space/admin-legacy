@@ -1,12 +1,14 @@
-import Vue, { VueConstructor } from 'vue'
+import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 
 import 'normalize.css/normalize.css'
 import '@/assets/fonts/stylesheet.css'
-import { PerfectScrollbar } from 'vue2-perfect-scrollbar'
-Vue.component('ps', PerfectScrollbar as VueConstructor<Vue>)
+import PerfectScrollbar from 'vue2-perfect-scrollbar'
+import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
+
+Vue.use(PerfectScrollbar)
 
 import './plugins/font-awesome'
 import './plugins/element-ui'

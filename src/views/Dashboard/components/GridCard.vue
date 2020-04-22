@@ -9,7 +9,7 @@
           <div class="text info" :title="name" style="font-weight: 600;">
             欢迎回来，{{ name }} ～
           </div>
-          <ps class="text hitokoto">
+          <perfect-scrollbar class="text hitokoto">
             <div
               :title="
                 hitokoto.id ? hitokoto.hitokoto + ' ———— ' + hitokoto.from : ''
@@ -21,7 +21,7 @@
                   : '请稍后 ...'
               }}
             </div>
-          </ps>
+          </perfect-scrollbar>
         </template>
       </Card>
 
