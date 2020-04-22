@@ -1,15 +1,19 @@
 <template>
   <PageLayout>
-    <template #header> </template>
+    <template #header>
+      <layout-button
+        @click.native="$router.push({ name: 'project-edit' })"
+        :icon="['fas', 'plus']"
+        name="新增"
+    /></template>
     <el-table
       :data="data"
       style="width: 100%;"
       max-height="650"
       stripe
       v-loading="loading"
-      border
     >
-      <el-table-column prop="title" label="项目名称">
+      <el-table-column prop="title" label="项目名称" width="250">
         <template slot-scope="scope">
           <el-button
             @click.native.prevent="
@@ -20,6 +24,19 @@
           >
             {{ scope.row.name }}
           </el-button>
+        </template>
+      </el-table-column>
+      <el-table-column prop="description" label="项目描述"> </el-table-column>
+      <el-table-column fixed="right" label="操作" width="100">
+        <template slot-scope="scope">
+          <el-popconfirm
+            title="确定删除吗？"
+            @onConfirm="handleDelete(scope.$index)"
+          >
+            <el-button type="text" size="small" slot="reference">
+              移除
+            </el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -55,6 +72,12 @@ export default class ProjectList extends Vue {
     })) as ProjectRespDto
     this.data = data
     this.loading = false
+  }
+  async handleDelete(index: number) {
+    const _id = this.data[index]._id
+    await this.$api('Project').delete(_id as string)
+    this.$notice.success('删除成功')
+    this.fetchProjects()
   }
 }
 </script>

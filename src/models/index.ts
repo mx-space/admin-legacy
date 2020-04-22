@@ -49,6 +49,7 @@ export interface CommentDto {
 }
 
 export interface ProjectDto {
+  _id?: string
   name: string
   previewUrl?: string
   docUrl?: string
