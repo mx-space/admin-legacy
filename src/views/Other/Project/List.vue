@@ -78,7 +78,7 @@ export default class ProjectList extends Vue {
   }
 
   async fetchData(page = 1, size = 10) {
-    this.loading = false
+    this.loading = true
     const resp = (await this.$api('Project').gets({
       page,
       size,

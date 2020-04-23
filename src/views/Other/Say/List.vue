@@ -13,7 +13,7 @@
       stripe
       v-loading="loading"
     >
-      <el-table-column prop="title" label="时间" width="250">
+      <el-table-column prop="created" label="创建于" width="150">
         <template slot-scope="scope">
           <el-button
             @click.native.prevent="
@@ -22,11 +22,11 @@
             type="text"
             size="small"
           >
-            {{ scope.row.created }}
+            {{ getRelativeTime(scope.row.created) }}
           </el-button>
         </template>
       </el-table-column>
-
+      <el-table-column prop="text" label="内容"> </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
           <el-popconfirm
@@ -62,6 +62,7 @@ import PageLayout from '@/layouts/PageLayout.vue'
 import LayoutButton from '@/components/Button/LayoutButton.vue'
 import { SayDto } from '../../../models'
 import { ProjectRespDto, PagerDto } from '../../../models/response.dto'
+import { relativeTimeFromNow } from '@/utils/time'
 
 @Component({
   components: {
@@ -78,7 +79,7 @@ export default class ProjectList extends Vue {
   }
 
   async fetchData(page = 1, size = 10) {
-    this.loading = false
+    this.loading = true
     const resp = (await this.$api('Say').gets({
       page,
       size,
@@ -92,6 +93,14 @@ export default class ProjectList extends Vue {
     await this.$api('Say').delete(_id as string)
     this.$notice.success('删除成功')
     this.fetchData()
+  }
+
+  getRelativeTime(time: string | Date) {
+    return relativeTimeFromNow(time)
+  }
+
+  handleTo(page: number) {
+    this.fetchData(page)
   }
 }
 </script>
