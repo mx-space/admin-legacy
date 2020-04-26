@@ -30,6 +30,7 @@ import {
   faTachometerAlt,
   faTimes,
   faUser,
+  faCode,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Vue from 'vue'
@@ -40,6 +41,7 @@ export const Icons: IconType[] = [
   faComment,
   faKey,
   faFile,
+  faCode,
   faSave,
   faGithub,
   faGlobe,

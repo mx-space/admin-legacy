@@ -2,7 +2,7 @@
   <PageLayout :options="options">
     <template #header>
       <Button
-        @click.native="handleSubmit"
+        @click.native="handleSave"
         :icon="['far', 'save']"
         backcolor="#2ecc71"
         name="保存"
@@ -75,7 +75,10 @@ import UnderlineInput from '@/components/Input/UnderlineInput.vue'
 import { Getter } from 'vuex-class'
 import { Map } from 'immutable'
 import { CategoryModel } from '../../store/interfaces/category.interface'
-import { PostRespDto } from '../../models/response.dto'
+import { PostRespDto } from '@/models/response.dto'
+import { MessageBox } from 'element-ui'
+import { AutoSave } from '@/mixins/autosave'
+
 @Component({
   components: {
     Button,
@@ -84,12 +87,12 @@ import { PostRespDto } from '../../models/response.dto'
     UInput: UnderlineInput,
   },
 })
-export default class PostWriteView extends Vue {
+export default class PostWriteView extends AutoSave {
   @Getter
   categories!: Map<string, CategoryModel>
 
   options = {
-    title: '撰写新文章',
+    title: '',
   }
   inputLabel = '想想取个什么题目比较好呢~'
   model = {
@@ -156,33 +159,79 @@ export default class PostWriteView extends Vue {
   beforeDestroy() {
     clearInterval(this.timer as number)
     this.timer = null
+    // this.autoSaveTimer = clearInterval(this.autoSaveTimer)
   }
   get id() {
     return this.$route.query.id
   }
 
   async created() {
+    this.options.title = this.id ? '修改文章' : '撰写新文章'
     if (!this.id) {
+      // const savedData = localStorage.getItem(this.prefix)
+      // if (savedData) {
+      //   MessageBox.confirm('检测到保存的版本，是否读取？', '提示', {
+      //     type: 'info',
+      //   })
+      //     .then(() => {
+      //       const parseData = JSON.parse(savedData) as SavedDataType
+      //       this.model = parseData.data
+      //     })
+      //     .catch(() => {})
+      // }
       return
-    }
-    const { data } = await this.$api('Post').get<PostRespDto>(
-      this.$route.query.id as string,
-    )
+    } else {
+      const { data } = await this.$api('Post').get<PostRespDto>(
+        this.$route.query.id as string,
+      )
 
-    this.slug = data.slug
-    this.summary = data.summary ?? ''
-    this.model = {
-      title: data.title,
-      text: data.text,
+      this.slug = data.slug
+      this.summary = data.summary ?? ''
+      this.model = {
+        title: data.title,
+        text: data.text,
+      }
+      this.hide = data.hide
+      this.categoryId = data.categoryId
+
+      // const savedData = localStorage.getItem(this.prefix + '-' + this.id)
+      // if (savedData) {
+      //   MessageBox.confirm('检测到保存的版本，是否读取？', '提示', {
+      //     type: 'info',
+      //   })
+      //     .then(() => {
+      //       this.model = (JSON.parse(savedData) as SavedDataType).data
+      //     })
+      //     .catch(() => {})
     }
-    this.hide = data.hide
-    this.categoryId = data.categoryId
   }
-
   slug = ''
   summary = ''
   hide = false
+
+  // autoSaveTimer: any
+  // handleSave() {
+  //   this.$message.success('自动保存已开启')
+  //   this.autoSaveTimer = setInterval(() => {
+  //     const data = JSON.stringify({
+  //       time: new Date().toISOString(),
+  //       data: this.model,
+  //     })
+  //     if (this.id) {
+  //       localStorage.setItem(this.prefix + '-' + this.id, data)
+  //     } else localStorage.setItem(this.prefix, data)
+  //   }, 3000)
+  // }
+
+  prefix = 'mx-space-post'
 }
+// interface SavedDataType {
+//   time: string
+//   data: {
+//     title: string
+//     text: string
+//   }
+// }
 </script>
 <style lang="scss" scoped>
 .url {

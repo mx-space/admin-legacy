@@ -2,7 +2,7 @@
   <PageLayout :options="options">
     <template #header>
       <Button
-        @click.native="handleSubmit"
+        @click.native="handleSave"
         :icon="['far', 'save']"
         backcolor="#2ecc71"
         name="保存"

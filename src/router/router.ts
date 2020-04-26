@@ -19,7 +19,7 @@ const routes: Array<RouteConfig> = [
       {
         path: 'posts',
         name: 'post',
-        meta: { title: '博文', icon: require('../assets/icons/code.svg') },
+        meta: { title: '博文', icon: ['fas', 'code'] },
         redirect: '/posts/view',
         component: () => import('@/layouts/BlankLayout.vue'),
         children: [
