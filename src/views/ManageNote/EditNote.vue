@@ -88,6 +88,7 @@ import {
   WeatherValues,
 } from '../../models'
 import { ConfirmLeave } from '@/mixins/confirm'
+import { AutoSave } from '@/mixins/autosave'
 
 @Component({
   components: {
@@ -97,14 +98,17 @@ import { ConfirmLeave } from '@/mixins/confirm'
     UInput: UnderlineInput,
   },
 })
-export default class NoteWriteView extends ConfirmLeave {
+export default class NoteWriteView extends AutoSave {
   options = {
     title: '随便写点啥',
   }
   inputLabel = '想想取个什么题目比较好呢~'
 
   drawerOpen = false
-
+  model = {
+    title: '',
+    text: '',
+  }
   async handleSubmit() {
     const model: NoteDto = {
       ...this.model,
@@ -157,6 +161,8 @@ export default class NoteWriteView extends ConfirmLeave {
 
   weather: WeatherValues | null = null
   weatherSet = WeatherSet
+
+  prefix = 'mx-space-note'
 }
 </script>
 <style lang="scss" scoped>
