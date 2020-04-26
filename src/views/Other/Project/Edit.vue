@@ -48,7 +48,7 @@ import { ElForm } from 'element-ui/types/form'
     codemirror,
   },
 })
-export default class ProjectList extends Vue {
+export default class ProjectEdit extends Vue {
   model: ProjectDto = {
     name: '',
     previewUrl: '',

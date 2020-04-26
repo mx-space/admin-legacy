@@ -1,5 +1,10 @@
 <template>
-  <input :type="type || 'text'" v-model="text" @change="handleChange" />
+  <input
+    :type="type || 'text'"
+    v-model="text"
+    @change="handleChange"
+    :placeholder="placeholder ? placeholder : ''"
+  />
 </template>
 
 <script lang="ts">
@@ -7,6 +12,9 @@ import Vue from 'vue'
 import BaseInput from '@/components/Input/BaseInputMixin.vue'
 export default Vue.extend({
   mixins: [BaseInput],
+  props: {
+    placeholder: String,
+  },
 })
 </script>
 

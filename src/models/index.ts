@@ -118,10 +118,10 @@ export interface NoteDto {
 
 export interface PageDto {
   /** Slug */
-  slug?: string
+  slug: string
 
   /** Title */
-  title?: string
+  title: string
 
   /** SubTitle */
   subtitle?: string
@@ -130,13 +130,10 @@ export interface PageDto {
   order?: number
 
   /** Text */
-  text?: string
+  text: string
 
   /** Type (MD | html | frame) */
   type?: EnumPageType
-
-  /** 留言 */
-  messages?: string[]
 
   /** Other Options */
   options?: object

@@ -93,5 +93,9 @@ export default class ProjectList extends Vue {
     this.$notice.success('删除成功')
     this.fetchData()
   }
+
+  handleTo(page: number) {
+    this.fetchData(page)
+  }
 }
 </script>

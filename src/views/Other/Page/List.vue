@@ -2,7 +2,7 @@
   <PageLayout>
     <template #header>
       <layout-button
-        @click.native="$router.push({ name: 'say-edit' })"
+        @click.native="$router.push({ name: 'page-edit' })"
         :icon="['fas', 'plus']"
         name="新增"
     /></template>
@@ -13,20 +13,31 @@
       stripe
       v-loading="loading"
     >
-      <el-table-column prop="created" label="创建于" width="150">
+      <el-table-column prop="title" label="标题" width="150">
         <template slot-scope="scope">
           <el-button
             @click.native.prevent="
-              $router.push('/extra/say/edit?id=' + data[scope.$index]._id)
+              $router.push('/extra/page/edit?id=' + data[scope.$index]._id)
             "
             type="text"
             size="small"
           >
-            {{ getRelativeTime(scope.row.created) }}
+            {{ scope.row.title }}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="text" label="内容"> </el-table-column>
+      <el-table-column prop="subtitle" label="子标题"> </el-table-column>
+      <el-table-column prop="created" label="创建于" width="250">
+        <template slot-scope="scope">{{
+          parseDate(scope.row.created)
+        }}</template>
+      </el-table-column>
+      <el-table-column prop="modified" label="修改于" width="150">
+        <template slot-scope="scope">{{
+          getRelativeTime(scope.row.modified)
+        }}</template>
+      </el-table-column>
+      <el-table-column prop="order" label="顺序" width="50"> </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
           <el-popconfirm
@@ -40,18 +51,6 @@
         </template>
       </el-table-column>
     </el-table>
-
-    <template #end>
-      <el-pagination
-        hide-on-single-page
-        layout="prev, pager, next"
-        :total="page.total"
-        @prev-click="handleTo(page.currentPage - 1)"
-        @next-click="handleTo(page.currentPage + 1)"
-        @current-change="handleTo"
-        class="el-pager"
-      />
-    </template>
   </PageLayout>
 </template>
 
@@ -60,9 +59,9 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import PageLayout from '@/layouts/PageLayout.vue'
 import LayoutButton from '@/components/Button/LayoutButton.vue'
-import { SayDto } from '../../../models'
-import { ProjectRespDto, PagerDto } from '../../../models/response.dto'
-import { relativeTimeFromNow } from '@/utils/time'
+import { PageDto } from '../../../models'
+import { PagesRespDto, PageModel } from '../../../models/response.dto'
+import { relativeTimeFromNow, parseDate } from '@/utils/time'
 
 @Component({
   components: {
@@ -70,27 +69,24 @@ import { relativeTimeFromNow } from '@/utils/time'
     LayoutButton,
   },
 })
-export default class SayList extends Vue {
-  data: SayDto[] = []
+export default class PageList extends Vue {
+  data: PageModel[] = []
   loading = true
-  page: PagerDto = {} as PagerDto
+
   async created() {
     await this.fetchData()
   }
 
-  async fetchData(page = 1, size = 10) {
+  async fetchData() {
     this.loading = true
-    const resp = (await this.$api('Say').gets({
-      page,
-      size,
-    })) as ProjectRespDto
+    const resp = (await this.$api('Page').get()) as PagesRespDto
     this.data = resp.data
-    this.page = resp.page
+
     this.loading = false
   }
   async handleDelete(index: number) {
     const _id = this.data[index]._id
-    await this.$api('Say').delete(_id as string)
+    await this.$api('Page').delete(_id as string)
     this.$notice.success('删除成功')
     this.fetchData()
   }
@@ -98,9 +94,8 @@ export default class SayList extends Vue {
   getRelativeTime(time: string | Date) {
     return relativeTimeFromNow(time)
   }
-
-  handleTo(page: number) {
-    this.fetchData(page)
+  get parseDate() {
+    return (date: string | Date) => parseDate(date, 'LLLL')
   }
 }
 </script>

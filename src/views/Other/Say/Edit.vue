@@ -54,7 +54,7 @@ import { ElForm } from 'element-ui/types/form'
     LayoutButton,
   },
 })
-export default class ProjectList extends Vue {
+export default class SayEdit extends Vue {
   model: SayDto = {
     source: '',
     text: '',

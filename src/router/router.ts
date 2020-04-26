@@ -112,6 +112,26 @@ const routes: Array<RouteConfig> = [
               },
             ],
           },
+          {
+            path: 'page',
+            name: 'page',
+            meta: { title: '页面', icon: ['far', 'file'] },
+            component: () => import('@/layouts/BlankLayout.vue'),
+            children: [
+              {
+                path: 'list',
+                name: 'page-list',
+                meta: { title: '独立页面', icon: ['fas', 'eye'] },
+                component: () => import('@/views/Other/Page/List.vue'),
+              },
+              {
+                path: 'edit',
+                name: 'page-edit',
+                meta: { title: '编辑页面', icon: ['fas', 'pencil-alt'] },
+                component: () => import('@/views/Other/Page/Edit.vue'),
+              },
+            ],
+          },
         ],
       },
     ],

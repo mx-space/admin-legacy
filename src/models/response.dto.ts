@@ -120,3 +120,18 @@ export interface SayRespDto extends BaseResp {
   data: SayDto[]
   page: PagerDto
 }
+
+export interface PageModel {
+  commentsIndex: number
+  order: number
+  _id: string
+  created: Date
+  modified: Date
+  title: string
+  slug: string
+  id: string
+  subtitle?: string
+}
+export interface PagesRespDto extends BaseResp {
+  data: PageModel[]
+}
