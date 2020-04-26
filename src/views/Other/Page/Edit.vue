@@ -29,7 +29,21 @@
         <label class="prefix">{{ `${baseUrl}/` }}</label>
         <UInput :value="model.slug" @change="(e) => (model.slug = e)" />
       </div>
-    </Writer> </PageLayout
+    </Writer>
+    <el-drawer
+      title="页面设定"
+      direction="rtl"
+      :visible.sync="drawerOpen"
+      class="drawer"
+    >
+      <label>页面顺序</label>
+      <el-input v-model="model.order"> </el-input>
+    </el-drawer>
+    <template #footer>
+      <button @click="() => (drawerOpen = !drawerOpen)">
+        <icon :icon="['fas', 'sliders-h']" />
+      </button>
+    </template> </PageLayout
 ></template>
 
 <script lang="ts">
@@ -59,7 +73,7 @@ export default class PageList extends Vue {
     slug: '',
     order: 0,
   }
-
+  drawerOpen = false
   rules = {
     text: [{ required: true, message: '请输入正文', trigger: 'blur' }],
   }
@@ -100,6 +114,19 @@ export default class PageList extends Vue {
   > input {
     width: 50%;
     color: #888;
+  }
+}
+.drawer {
+  label {
+    display: block;
+  }
+  label,
+  span {
+    margin: 1rem 0;
+  }
+  span {
+    display: inline-block;
+    margin-right: 3rem;
   }
 }
 </style>
