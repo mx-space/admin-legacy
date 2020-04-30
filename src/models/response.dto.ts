@@ -4,7 +4,11 @@ interface BaseResp {
   ok: 1 | 0
   timestamp: string
 }
-
+interface BaseModel {
+  created?: string
+  modified?: string
+  _id?: string
+}
 export interface LoginRespDto {
   ok: number
   timestamp: Date
@@ -134,4 +138,15 @@ export interface PageModel {
 }
 export interface PagesRespDto extends BaseResp {
   data: PageModel[]
+}
+
+export interface LinkModel extends BaseModel {
+  name: string
+  url: string
+  avatar: string
+}
+
+export interface LinkRespDto extends BaseResp {
+  page: PagerDto
+  data: LinkModel[]
 }

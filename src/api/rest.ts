@@ -5,6 +5,7 @@ export enum AccessRoutesEnum {
   Aggregate,
   Category,
   Comment,
+  Link,
   Master,
   Menu,
   Note,
@@ -51,14 +52,11 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
       const data = await $axios.get(`${pluralize}${id ? '/' + id : ''}`)
       return data as any
     },
-    async postNew<T = unknown>(body: Record<string, any>): Promise<T> {
+    async postNew<T = unknown, U = any>(body: T): Promise<U> {
       const data = await $axios.post(`${pluralize}`, body)
       return data as any
     },
-    async modifyOne<T = unknown>(
-      id: string,
-      body: Record<string, any>,
-    ): Promise<T> {
+    async modifyOne<T = unknown, U = any>(id: string, body: T): Promise<U> {
       const data = await $axios.put(`${pluralize}/${id}`, body)
       return data as any
     },
@@ -78,7 +76,7 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
     get update() {
       return this.modifyOne
     },
-    async patch<T = unknown>(id: string, body: any): Promise<T> {
+    async patch<T = unknown, U = any>(id: string, body: T): Promise<U> {
       const data = await $axios.patch(`${pluralize}/${id}`, body)
       return data as any
     },

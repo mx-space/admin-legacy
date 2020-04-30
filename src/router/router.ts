@@ -132,6 +132,12 @@ const routes: Array<RouteConfig> = [
               },
             ],
           },
+          {
+            name: 'friends',
+            path: 'friends',
+            meta: { title: '朋友们', icon: ['fas', 'user-friends'] },
+            component: () => import('@/views/Other/Friends/index.vue'),
+          },
         ],
       },
     ],

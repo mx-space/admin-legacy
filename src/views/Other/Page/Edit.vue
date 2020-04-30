@@ -53,7 +53,6 @@ import PageLayout from '@/layouts/PageLayout.vue'
 import LayoutButton from '@/components/Button/LayoutButton.vue'
 import { EnumPageType, PageDto } from '../../../models'
 import { pickNoEmpty } from '@/utils'
-import { ElForm } from 'element-ui/types/form'
 import Writer from '@/components/Writer/index.vue'
 import UnderlineInput from '@/components/Input/UnderlineInput.vue'
 @Component({
@@ -74,9 +73,7 @@ export default class PageList extends Vue {
     order: 0,
   }
   drawerOpen = false
-  rules = {
-    text: [{ required: true, message: '请输入正文', trigger: 'blur' }],
-  }
+
   get baseUrl() {
     return process.env.VUE_APP_WEB_URL
   }

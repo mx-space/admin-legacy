@@ -20,5 +20,6 @@ module.exports = {
     '@typescript-eslint/no-empty-function':
       process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',
+    '@typescript-eslint/camelcase': 'off',
   },
 }

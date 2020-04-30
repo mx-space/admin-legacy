@@ -14,6 +14,9 @@
 </template>
 <style lang="scss">
 .parallax-btn {
+  &:not(:last-child) {
+    margin-right: 12px;
+  }
   position: relative;
   display: inline-block;
   padding: 0.5rem 1rem;
