@@ -142,7 +142,6 @@ const routes: Array<RouteConfig> = [
       },
     ],
   },
-
   {
     path: '/login',
     name: 'login',

@@ -12,11 +12,22 @@ export default Vue.extend({
   created() {
     this.updateViewport()
     this.fetchMaster()
+    this.checkLogged()
     window.addEventListener('resize', debounce(this.updateViewport, 13))
   },
   methods: {
     ...mapActions('app', ['updateViewport']),
-    ...mapActions('user', ['fetchMaster']),
+    ...mapActions('user', ['fetchMaster', 'clearData']),
+    async checkLogged() {
+      const { ok } = await this.$api('Master').get('check_logged')
+      if (ok) {
+        return true
+      } else {
+        this.$router.push('/login')
+        this.clearData()
+        return false
+      }
+    },
   },
 })
 </script>
