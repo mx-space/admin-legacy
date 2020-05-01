@@ -139,11 +139,16 @@ export interface PageModel {
 export interface PagesRespDto extends BaseResp {
   data: PageModel[]
 }
-
+export enum LinkType {
+  Friend,
+  Collection,
+}
 export interface LinkModel extends BaseModel {
   name: string
   url: string
   avatar: string
+  description?: string
+  type: LinkType
 }
 
 export interface LinkRespDto extends BaseResp {
