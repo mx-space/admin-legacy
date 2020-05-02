@@ -1,5 +1,7 @@
+import { CategoryType } from '../../models/response.dto'
+
 export interface CategoryModel {
-  type: string
+  type: CategoryType
   count: number
   _id: string
   created: Date

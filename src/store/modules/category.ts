@@ -4,7 +4,7 @@ import { rest } from '@/api/rest'
 import { CategoriesRespDto, CategoryRespDto } from '@/models/response.dto'
 import { Map } from 'immutable'
 
-type CategoryMap = Map<string, CategoryModel>
+export type CategoryMap = Map<string, CategoryModel>
 
 @Module({ namespaced: true })
 export class CategoryModule extends VuexModule {

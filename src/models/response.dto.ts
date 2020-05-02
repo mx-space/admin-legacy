@@ -29,7 +29,7 @@ export enum CategoryType {
   Tag,
 }
 export interface CategoryRespDto {
-  type: keyof typeof CategoryType
+  type: CategoryType
   count: number
   _id: string
   created: string
