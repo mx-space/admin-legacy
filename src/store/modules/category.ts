@@ -11,8 +11,14 @@ export class CategoryModule extends VuexModule {
   categories?: CategoryMap = Map<string, CategoryModel>()
 
   @Action({ commit: 'SET_CATEGORY', rawError: true })
-  async fetchCategory() {
-    const { data }: CategoriesRespDto = await rest('Category').gets()
+  async fetchCategory(_data?: CategoryRespDto[]) {
+    let data
+    if (!_data) {
+      const resp: CategoriesRespDto = await rest('Category').gets()
+      data = resp.data
+    } else {
+      data = _data
+    }
     const map = Map<string, CategoryModel>()
     const newMap: CategoryMap = data.reduce(
       (prev: CategoryMap, item: CategoryRespDto) => {

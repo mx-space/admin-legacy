@@ -36,6 +36,12 @@ const routes: Array<RouteConfig> = [
             props: true,
             component: () => import('@/views/ManagePost/EditPost.vue'),
           },
+          {
+            path: 'category',
+            name: 'edit-category',
+            meta: { title: '管理分类', icon: ['fas', 'puzzle-piece'] },
+            component: () => import('@/views/Other/Categories/index.vue'),
+          },
         ],
       },
       {

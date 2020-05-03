@@ -32,6 +32,7 @@ import {
   faUser,
   faCode,
   faUserFriends,
+  faPuzzlePiece,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Vue from 'vue'
@@ -41,6 +42,7 @@ export const Icons: IconType[] = [
   faUser,
   faUserFriends,
   faComment,
+  faPuzzlePiece,
   faKey,
   faFile,
   faCode,

@@ -14,19 +14,7 @@
       v-loading="loading"
     >
       <el-table-column prop="name" label="名称"> </el-table-column>
-      <el-table-column prop="type" label="类型">
-        <template slot-scope="scope">
-          {{ getType(scope.row.type || 0) }}
-        </template>
-      </el-table-column>
-      <el-table-column label="网址">
-        <template slot-scope="scope">
-          <a :href="scope.row.url" nofollow>
-            {{ scope.row.url }}
-          </a>
-        </template>
-      </el-table-column>
-      <el-table-column prop="description" label="描述"> </el-table-column>
+      <el-table-column prop="slug" label="路径"> </el-table-column>
       <el-table-column label="操作" width="100" fixed="right">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="handleEdit(scope.row)">
@@ -92,10 +80,6 @@ import LayoutButtonVue from '../../../components/Button/LayoutButton.vue'
 import PageLayout from '@/layouts/PageLayout.vue'
 import pick from 'lodash/pick'
 import {
-  LinkModel,
-  LinkRespDto,
-  PagerDto,
-  LinkType,
   CategoryType,
   CategoryRespDto,
   CategoriesRespDto,
@@ -103,10 +87,8 @@ import {
 import { MessageBox } from 'element-ui'
 import ParallaxButton from '@/components/Button/ParallaxButton.vue'
 import { ElForm } from 'element-ui/types/form'
-// @ts-ignore
-import isURL from 'validator/lib/isURL'
 import { pickNoEmpty } from '../../../utils'
-import { Getter } from 'vuex-class'
+import { Action } from 'vuex-class'
 import { CategoryModel } from '../../../store/interfaces/category.interface'
 import { CategoryMap } from '@/store/modules/category'
 
@@ -118,8 +100,8 @@ import { CategoryMap } from '@/store/modules/category'
   },
 })
 export default class extends Vue {
-  @Getter('categories')
-  categories!: CategoryMap
+  @Action('category/fetchCategory')
+  fetchCategory!: Function
 
   data: CategoryRespDto[] = []
   model: Partial<CategoryModel> = {
@@ -143,10 +125,13 @@ export default class extends Vue {
   }
 
   dialogVisible = false
-  page: PagerDto = {} as PagerDto
+
   rules = {
-    name: [{ required: true, message: '名字不能为空' }],
-    url: [],
+    name: [{ required: true, message: '名称不能为空' }],
+    slug: [{ required: true, message: '路径不能为空' }],
+  }
+  async created() {
+    await this.fetch()
   }
 
   loading = false
@@ -154,7 +139,7 @@ export default class extends Vue {
     this.loading = true
     const resp = (await this.$api('Category').get()) as CategoriesRespDto
     this.data = resp.data
-
+    this.fetchCategory(resp.data)
     this.loading = false
   }
   handleAdd() {
@@ -171,6 +156,7 @@ export default class extends Vue {
           this.$message.success('添加成功')
         }
         this.fetch()
+
         this.dialogVisible = false
         this.model = {
           name: '',

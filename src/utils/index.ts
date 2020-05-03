@@ -19,7 +19,7 @@ export const pickNoEmpty = <T = any>(
         if (Array.isArray(val)) {
           return obj.length > 0
         }
-        return val && typeof val !== 'undefined'
+        return val !== '' && typeof val !== 'undefined'
       }),
     ) as T
   }
