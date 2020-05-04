@@ -155,3 +155,20 @@ export interface LinkRespDto extends BaseResp {
   page: PagerDto
   data: LinkModel[]
 }
+
+export interface MasterModel {
+  _id: string
+  introduce: string
+  mail: string
+  url: string
+  name: string
+  socialIds: {
+    [name: string]: string | number
+  }
+  username: string
+  created: string
+  modified: string
+  lastLoginIp: string
+  lastLoginTime: Date
+  avatar: string
+}

@@ -1,7 +1,7 @@
 import $axios from '@/utils/request'
 import inflection from 'inflection'
 
-export enum AccessRoutesEnum {
+declare enum AccessRoutesEnum {
   Aggregate,
   Category,
   Comment,
@@ -9,6 +9,7 @@ export enum AccessRoutesEnum {
   Master,
   Menu,
   Note,
+  Option,
   Page,
   Post,
   Project,
@@ -76,8 +77,18 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
     get update() {
       return this.modifyOne
     },
-    async patch<T = unknown, U = any>(id: string, body: T): Promise<U> {
-      const data = await $axios.patch(`${pluralize}/${id}`, body)
+    async patch<T = unknown, U = any>({
+      id,
+      body,
+    }: {
+      id?: string
+      body: U
+    }): Promise<U> {
+      const data = await $axios({
+        url: id ? `${pluralize}/${id}` : pluralize,
+        method: 'patch',
+        data: body,
+      })
       return data as any
     },
     get del() {

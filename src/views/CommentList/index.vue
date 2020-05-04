@@ -94,6 +94,16 @@
             <span class="action yellow" @click="changeState(scope.row._id, 2)"
               >垃圾</span
             >
+            <span
+              class="action"
+              v-if="activeName !== '2'"
+              @click="
+                replyDialogVisible = true
+                replyCid = scope.row._id
+              "
+            >
+              回复
+            </span>
 
             <el-popconfirm
               title="确定删除吗？"
@@ -116,6 +126,36 @@
       >
       </el-pagination>
     </div>
+
+    <el-dialog
+      :title="'回复 ' + replyContext.author"
+      :visible.sync="replyDialogVisible"
+      width="40%"
+    >
+      <el-form :model="model" label-width="90px">
+        <el-form-item :label="replyContext.author + ' 说: '">
+          <el-input
+            type="textarea"
+            :value="replyContext.text"
+            disabled
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="回复内容">
+          <el-input type="textarea" v-model="model.text" autosize></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <ParallaxButton
+          @click="
+            replyDialogVisible = false
+            replyCid = ''
+          "
+          title="取消"
+          type="warning"
+        />
+        <ParallaxButton title="提交" @click="handleReply" />
+      </span>
+    </el-dialog>
 
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
       <span>确定要删除么?</span>
@@ -146,14 +186,16 @@ import {
 } from '../../models/response.dto'
 
 import LayoutButton from '@/components/Button/LayoutButton.vue'
-
+import ParallaxButton from '@/components/Button/ParallaxButton.vue'
 import { relativeTimeFromNow } from '@/utils/time'
 import { Getter } from 'vuex-class'
 import { ViewportRecord } from '../../store/interfaces/viewport.interface'
+
 @Component({
   components: {
     LayoutButton,
     PageLayout,
+    ParallaxButton,
   },
 })
 export default class CommentList extends Vue {
@@ -165,6 +207,16 @@ export default class CommentList extends Vue {
   dialogVisible = false
   @Getter
   viewport!: ViewportRecord
+
+  replyDialogVisible = false
+  replyCid = ''
+  model = {
+    text: '',
+  }
+
+  get replyContext() {
+    return this.comments.find((item) => item._id === this.replyCid) || {}
+  }
 
   async created() {
     await this.fetchComments()
@@ -243,6 +295,16 @@ export default class CommentList extends Vue {
     if (this.multipleSelection.length > 0) {
       this.handleDelete(this.multipleSelection)
     }
+  }
+  async handleReply() {
+    await rest('Comment', 'master/reply/' + this.replyCid).post({
+      text: this.model.text,
+    })
+    this.model.text = ''
+    this.replyCid = ''
+    this.$message.success('回复成功了')
+    this.replyDialogVisible = false
+    await this.fetchComments()
   }
 }
 </script>

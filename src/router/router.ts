@@ -2,8 +2,17 @@ import BasicLayout from '@/layouts/BasicLayout.vue'
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 Vue.use(VueRouter)
+type Modify<T, R> = Omit<T, keyof R> & R
 
-const routes: Array<RouteConfig> = [
+type MenuRouteConfig = Modify<
+  RouteConfig,
+  {
+    meta?: { title: string; icon?: string[]; isPublic?: boolean }
+    children?: MenuRouteConfig[]
+  }
+>
+
+const routes: MenuRouteConfig[] = [
   {
     path: '/',
     name: 'home',
@@ -143,6 +152,27 @@ const routes: Array<RouteConfig> = [
             path: 'friends',
             meta: { title: '朋友们', icon: ['fas', 'user-friends'] },
             component: () => import('@/views/Other/Friends/index.vue'),
+          },
+        ],
+      },
+      {
+        path: 'setting',
+        name: 'setting',
+        meta: { title: '设定', icon: ['fas', 'cogs'] },
+        redirect: '/setting/profile',
+        component: () => import('@/layouts/BlankLayout.vue'),
+        children: [
+          {
+            path: 'profile',
+            name: 'setting-profile',
+            meta: { title: '主人设定', icon: ['fas', 'user-alt'] },
+            component: () => import('@/views/Setting/profile.vue'),
+          },
+          {
+            path: 'system',
+            name: 'setting-system',
+            meta: { title: '系统设定', icon: ['fas', 'cog'] },
+            component: () => import('@/views/Setting/system.vue'),
           },
         ],
       },
