@@ -6,7 +6,6 @@ import axios from 'axios'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API || 'http://localhost:2333',
-  // withCredentials: true,
   timeout: 5000,
 })
 
@@ -15,6 +14,7 @@ service.interceptors.request.use(
     if (store.getters.token) {
       config.headers['Authorization'] = 'bearer ' + getToken()
     }
+    config.url += '?timestamp=' + new Date().getTime()
     return config
   },
   (error) => {

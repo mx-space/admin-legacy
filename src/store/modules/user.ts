@@ -35,7 +35,6 @@ export class UserModule extends VuexModule {
   @Mutation
   SET_MASTER(payload: Partial<LoginRespDto>) {
     const { username, name, avatar } = payload
-    console.log(username, name, avatar)
 
     this.username = username
     this.name = name
