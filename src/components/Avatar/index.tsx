@@ -1,7 +1,5 @@
 import Component from 'vue-class-component'
 import { Prop, Vue } from 'vue-property-decorator'
-
-import { CreateElement } from 'vue/types/umd'
 import style from './index.module.scss'
 
 @Component
@@ -9,7 +7,7 @@ export default class Avatar extends Vue {
   @Prop({ default: 50 })
   size!: number
   load = false
-  handleLoadError(e: Event) {
+  handleLoadError() {
     ;(this.$refs.img as HTMLElement).remove()
   }
   handleLoad() {
@@ -17,7 +15,7 @@ export default class Avatar extends Vue {
   }
   @Prop({ required: true })
   src!: string
-  render(h: CreateElement) {
+  render() {
     return (
       <div
         class={style.avatar}

@@ -266,9 +266,9 @@ export default class CommentList extends Vue {
   async changeState(id: string | string[], state: 0 | 1 | 2) {
     if (Array.isArray(id)) {
       id.map(async (i) => {
-        await this.$api('Comment').patch(i, { state })
+        await this.$api('Comment').patch({ id: i, body: { state } })
       })
-    } else await this.$api('Comment').patch(id, { state })
+    } else await this.$api('Comment').patch({ id: id, body: { state } })
     this.$message.success('成功')
     await this.fetchComments()
   }

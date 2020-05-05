@@ -65,7 +65,6 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
 import Component from 'vue-class-component'
 
 import Button from '@/components/Button/LayoutButton.vue'
@@ -76,7 +75,7 @@ import { Getter } from 'vuex-class'
 import { Map } from 'immutable'
 import { CategoryModel } from '../../store/interfaces/category.interface'
 import { PostRespDto } from '@/models/response.dto'
-import { MessageBox } from 'element-ui'
+
 import { AutoSave } from '@/mixins/autosave'
 
 @Component({

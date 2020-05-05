@@ -87,7 +87,6 @@ import {
   MoodValues,
   WeatherValues,
 } from '../../models'
-import { ConfirmLeave } from '@/mixins/confirm'
 import { AutoSave } from '@/mixins/autosave'
 
 @Component({

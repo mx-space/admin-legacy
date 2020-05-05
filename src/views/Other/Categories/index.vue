@@ -84,13 +84,11 @@ import {
   CategoryRespDto,
   CategoriesRespDto,
 } from '../../../models/response.dto'
-import { MessageBox } from 'element-ui'
 import ParallaxButton from '@/components/Button/ParallaxButton.vue'
 import { ElForm } from 'element-ui/types/form'
 import { pickNoEmpty } from '../../../utils'
 import { Action } from 'vuex-class'
 import { CategoryModel } from '../../../store/interfaces/category.interface'
-import { CategoryMap } from '@/store/modules/category'
 
 @Component({
   components: {
@@ -135,7 +133,7 @@ export default class extends Vue {
   }
 
   loading = false
-  async fetch(page = 1) {
+  async fetch() {
     this.loading = true
     const resp = (await this.$api('Category').get()) as CategoriesRespDto
     this.data = resp.data

@@ -34,9 +34,9 @@ function buildSubMenus(route: RouteConfig, prevPath = '') {
 }
 
 const buildMenus = (routes: Array<RouteConfig>) =>
-  (
-    routes.find((item) => item.name === 'home' && item.path === '/') as any
-  ).children
+  (routes.find(
+    (item) => item.name === 'home' && item.path === '/',
+  ) as any).children
     .filter((item: RouteConfig) => item.path !== '*')
     .map((item: RouteConfig) => {
       return model(item, false, '')

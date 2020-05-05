@@ -45,9 +45,7 @@ export class UserModule extends VuexModule {
       lastLoginIp,
       lastLoginTime,
       username,
-      mail,
       name,
-      created,
       avatar,
       expiresIn,
     } = payload

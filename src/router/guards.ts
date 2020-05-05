@@ -2,7 +2,7 @@ import router from './router'
 import { progress } from '@/plugins/processbar'
 import getPageTitle from '@/utils/get-page-title'
 import { rest } from '../api/rest'
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _, next) => {
   progress.start()
   if (to.meta.isPublic) {
     next()
@@ -16,7 +16,7 @@ router.beforeEach(async (to, from, next) => {
   }
 })
 
-router.afterEach((to, from) => {
+router.afterEach((to, _) => {
   document.title = getPageTitle(to?.meta.title)
   progress.finish()
 })

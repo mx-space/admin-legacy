@@ -1,6 +1,5 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { MessageBox } from 'element-ui'
-import { PostRespDto } from '@/models/response.dto'
 
 export interface SavedDataType {
   time: string

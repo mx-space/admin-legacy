@@ -59,7 +59,6 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import PageLayout from '@/layouts/PageLayout.vue'
 import LayoutButton from '@/components/Button/LayoutButton.vue'
-import { PageDto } from '../../../models'
 import { PagesRespDto, PageModel } from '../../../models/response.dto'
 import { relativeTimeFromNow, parseDate } from '@/utils/time'
 
