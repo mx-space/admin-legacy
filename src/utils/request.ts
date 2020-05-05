@@ -5,7 +5,7 @@ import { getToken } from '@/utils/auth'
 import axios from 'axios'
 
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: process.env.VUE_APP_BASE_API || 'http://localhost:2333',
   // withCredentials: true,
   timeout: 5000,
 })

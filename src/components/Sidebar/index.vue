@@ -62,7 +62,7 @@ export default Vue.extend({
     }),
     ...mapGetters(['sidebar', 'title']),
     homePage() {
-      return process.env.VUE_APP_WEB_URL
+      return process.env.VUE_APP_WEB_URL || 'http://localhost:2323'
     },
     activeItems() {
       const routePath = this.$route.path

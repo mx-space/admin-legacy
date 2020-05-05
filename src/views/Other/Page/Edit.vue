@@ -75,7 +75,7 @@ export default class PageList extends Vue {
   drawerOpen = false
 
   get baseUrl() {
-    return process.env.VUE_APP_WEB_URL
+    return process.env.VUE_APP_WEB_URL || 'http://localhost:2323'
   }
   async created() {
     if (!this.id) {
