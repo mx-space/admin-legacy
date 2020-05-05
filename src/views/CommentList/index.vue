@@ -275,7 +275,9 @@ export default class CommentList extends Vue {
   async handleDelete(id: string | string[]) {
     if (Array.isArray(id)) {
       id.map(async (i) => {
-        await this.$api('Comment').del(i)
+        try {
+          await this.$api('Comment').del(i)
+        } catch {}
       })
     } else await this.$api('Comment').del(id)
     await this.fetchComments()

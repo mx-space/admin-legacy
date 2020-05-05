@@ -22,5 +22,6 @@ module.exports = {
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/interface-name-prefix': 'off',
+    'no-empty': 'off',
   },
 }
