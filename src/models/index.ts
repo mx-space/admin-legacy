@@ -165,3 +165,44 @@ export enum EnumPageType {
   'html' = 'html',
   'frame' = 'frame',
 }
+
+export interface IConfig {
+  seo: SEODto
+  url: UrlDto
+  imageBed: ImageBedDto
+  mailOptions: MailOptionsDto
+  commentOptions: CommentOptions
+}
+export declare class SEODto {
+  title: string
+  description: string
+  icon?: string
+  keywords?: string[]
+}
+export declare class UrlDto {
+  webUrl: string
+  adminUrl: string
+  serverUrl: string
+  wsUrl: string
+}
+export declare class ImageBedDto {
+  type: 'github'
+  token?: string
+  repo?: string
+  customUrl?: string
+}
+export declare class MailOptionsDto {
+  enable: boolean
+  user: string
+  pass: string
+  options?: {
+    name?: string
+    port?: number
+    host?: string
+    service?: string
+  }
+}
+export declare class CommentOptions {
+  antiSpam: boolean
+  akismetApiKey?: string
+}

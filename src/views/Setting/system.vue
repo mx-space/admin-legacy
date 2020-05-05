@@ -1,5 +1,137 @@
 <template>
-  <Layout> </Layout>
+  <Layout>
+    <template #header>
+      <layout-button
+        name="保存"
+        :icon="['far', 'check-circle']"
+        backcolor="#27ae60"
+        @click.native="handleSave"
+      ></layout-button>
+    </template>
+    <el-collapse v-model="activeName" accordion>
+      <el-collapse-item name="0" title="网站设置">
+        <el-form :model="configs" label-width="8rem">
+          <el-form-item label="前端地址">
+            <el-input
+              v-model="configs.url.webUrl"
+              v-if="configs.url"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="后端地址">
+            <el-input
+              v-model="configs.url.serverUrl"
+              v-if="configs.url"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="管理后台地址">
+            <el-input
+              v-model="configs.url.adminUrl"
+              v-if="configs.url"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="WebSocket 地址">
+            <el-input v-model="configs.url.wsUrl" v-if="configs.url"></el-input>
+          </el-form-item>
+        </el-form>
+      </el-collapse-item>
+
+      <el-collapse-item name="0-0" title="SEO 优化">
+        <el-form :model="configs" label-width="8rem" v-if="configs.seo">
+          <el-form-item label="网站标题">
+            <el-input v-model="configs.seo.title"></el-input>
+          </el-form-item>
+          <el-form-item label="网站描述">
+            <el-input v-model="configs.seo.description"></el-input>
+          </el-form-item>
+          <el-form-item label="关键字">
+            <el-tag
+              v-for="tag in (configs.seo.keywords || [])"
+              :key="tag"
+              closable
+              :disable-transitions="false"
+              @close="handleClose(tag)"
+              style="margin-right: 1rem;"
+            >
+              {{ tag }}
+            </el-tag>
+            <el-input
+              class="input-new-tag"
+              v-if="inputVisible"
+              v-model="inputValue"
+              ref="saveTagInput"
+              size="small"
+              @keyup.enter.native="handleInputConfirm"
+              @blur="handleInputConfirm"
+            >
+            </el-input>
+            <el-button
+              v-else
+              class="button-new-tag"
+              size="small"
+              @click="showInput"
+              >+ 新关键字</el-button
+            >
+          </el-form-item>
+        </el-form>
+      </el-collapse-item>
+
+      <el-collapse-item name="1" title="评论设置">
+        <el-form
+          :model="configs"
+          label-width="10rem"
+          v-if="configs.commentOptions"
+        >
+          <el-form-item label="反垃圾邮件">
+            <el-switch
+              v-model="configs.commentOptions.antiSpam"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            ></el-switch>
+          </el-form-item>
+          <el-form-item label="反垃圾邮件 ApiKey">
+            <el-input
+              v-model="configs.commentOptions.akismetApiKey"
+              placeholder="前往 https://akismet.com/ 注册"
+              :disabled="!configs.commentOptions.antiSpam"
+            ></el-input>
+          </el-form-item>
+        </el-form>
+      </el-collapse-item>
+      <el-collapse-item
+        name="2"
+        title="评论回复设置"
+        v-if="configs.mailOptions"
+      >
+        <el-form
+          :model="configs"
+          label-width="8rem"
+          v-if="configs.mailOptions"
+          label-position="left"
+        >
+          <el-form-item label="开启评论邮箱提醒">
+            <el-switch
+              v-model="configs.mailOptions.enable"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            ></el-switch>
+          </el-form-item>
+
+          <el-form-item label="邮箱地址">
+            <el-input
+              v-model="configs.mailOptions.user"
+              :disabled="!configs.mailOptions.enable"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱密码">
+            <el-input
+              v-model="configs.mailOptions.pass"
+              :disabled="!configs.mailOptions.enable"
+            ></el-input>
+          </el-form-item>
+        </el-form>
+      </el-collapse-item>
+    </el-collapse>
+  </Layout>
 </template>
 
 <script lang="ts">
@@ -9,23 +141,72 @@ import pick from 'lodash/pick'
 import omit from 'lodash/omit'
 import ParallaxButton from '@/components/Button/ParallaxButton.vue'
 import { pickNoEmpty } from '../../utils'
-
+import { IConfig } from '../../models'
+import cloneDeep from 'lodash/cloneDeep'
+import LayoutButton from '@/components/Button/LayoutButton.vue'
+import { ElInput } from 'element-ui/types/input'
 @Component({
   components: {
     Layout,
+    LayoutButton,
     ParallaxButton,
   },
 })
 export default class SystemSettingView extends Vue {
-  configs = {} as any
-
+  activeName = '0'
+  inputVisible = false
+  inputValue = ''
+  configs: IConfig = {} as IConfig
+  raw: IConfig = {} as IConfig
   async fetch() {
     const data = await this.$api('Option').get()
-    this.configs = omit(data as any, ['ok', 'timestamp'])
+    this.configs = omit(data as any, ['ok', 'timestamp']) as IConfig
+    this.raw = cloneDeep(this.configs)
   }
 
   created() {
     this.fetch()
   }
+  async handleSave() {}
+
+  handleClose(tag: string) {
+    this.configs.seo.keywords!.splice(
+      this.configs.seo.keywords!.indexOf(tag),
+      1,
+    )
+  }
+
+  showInput() {
+    this.inputVisible = true
+    this.$nextTick(() => {
+      ;((this.$refs.saveTagInput as ElInput).$refs as any).input.focus()
+    })
+  }
+
+  handleInputConfirm() {
+    const inputValue = this.inputValue
+    if (inputValue) {
+      if (!this.configs.seo.keywords) {
+        this.configs.seo.keywords = []
+      }
+      this.configs.seo.keywords.push(inputValue)
+    }
+    this.inputVisible = false
+    this.inputValue = ''
+  }
 }
 </script>
+<style lang="scss" scoped>
+.button-new-tag {
+  margin-left: 10px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.input-new-tag {
+  width: 90px;
+  margin-left: 10px;
+  vertical-align: bottom;
+}
+</style>

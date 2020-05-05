@@ -21,5 +21,6 @@ module.exports = {
       process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/interface-name-prefix': 'off',
   },
 }
