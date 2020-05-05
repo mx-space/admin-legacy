@@ -140,11 +140,12 @@ import { Vue, Component } from 'vue-property-decorator'
 import pick from 'lodash/pick'
 import omit from 'lodash/omit'
 import ParallaxButton from '@/components/Button/ParallaxButton.vue'
-import { pickNoEmpty } from '../../utils'
+import { pickNoEmpty, difference } from '../../utils'
 import { IConfig } from '../../models'
 import cloneDeep from 'lodash/cloneDeep'
 import LayoutButton from '@/components/Button/LayoutButton.vue'
 import { ElInput } from 'element-ui/types/input'
+import { isEmpty } from 'lodash/fp'
 @Component({
   components: {
     Layout,
@@ -167,7 +168,28 @@ export default class SystemSettingView extends Vue {
   created() {
     this.fetch()
   }
-  async handleSave() {}
+  async handleSave() {
+    const diff = difference(this.configs, this.raw)
+    if (!isEmpty(diff)) {
+      console.log(diff)
+
+      const entries = Object.entries(diff)
+
+      for await (const [key, value] of entries) {
+        if (key === 'seo') {
+          await this.$api('Option').patch({
+            id: key,
+            body: { ...(value as any), keywords: this.configs.seo.keywords },
+          })
+        } else {
+          await this.$api('Option').patch({ id: key, body: value })
+        }
+      }
+
+      await this.fetch()
+      this.$message.success('修改成功')
+    }
+  }
 
   handleClose(tag: string) {
     this.configs.seo.keywords!.splice(

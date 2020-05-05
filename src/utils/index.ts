@@ -1,3 +1,6 @@
+import isEqual from 'lodash/isEqual'
+import isObject from 'lodash/isObject'
+import transform from 'lodash/transform'
 export const sleep = (ms: number) => {
   return new Promise((resolve) => {
     setTimeout(resolve, ms)
@@ -24,4 +27,18 @@ export const pickNoEmpty = <T = any>(
     ) as T
   }
   return obj
+}
+
+export function difference(object, base) {
+  function changes(object, base) {
+    return transform(object, function (result: any, value, key) {
+      if (!isEqual(value, base[key])) {
+        result[key] =
+          isObject(value) && isObject(base[key])
+            ? changes(value, base[key])
+            : value
+      }
+    })
+  }
+  return changes(object, base)
 }
