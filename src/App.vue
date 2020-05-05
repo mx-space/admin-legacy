@@ -24,7 +24,7 @@ export default Vue.extend({
         return true
       } else {
         this.$router.push('/login')
-        this.clearData()
+
         return false
       }
     },

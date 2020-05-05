@@ -16,12 +16,15 @@ export class UserModule extends VuexModule {
 
   @Action({ commit: 'SET_USER', rawError: true })
   async login(data: LoginDto) {
-    return await rest('Master', 'login').post(data)
+    return await rest('Master', 'login').post({
+      ...data,
+      username: this.username,
+    })
   }
 
   @Action({ commit: 'SET_MASTER', rawError: true })
   async fetchMaster() {
-    return await rest('Master').gets()
+    return await rest('Master').get()
   }
 
   @Action({ commit: 'SET_USER', rawError: true })
@@ -32,6 +35,8 @@ export class UserModule extends VuexModule {
   @Mutation
   SET_MASTER(payload: Partial<LoginRespDto>) {
     const { username, name, avatar } = payload
+    console.log(username, name, avatar)
+
     this.username = username
     this.name = name
     this.avatar = avatar

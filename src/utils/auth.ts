@@ -9,6 +9,9 @@ export function getToken(): string | null {
 }
 
 export function setToken(token: string, expires: number | Date) {
+  if (!token) {
+    return
+  }
   return Cookies.set(TokenKey, JSON.stringify(token), { expires })
 }
 
