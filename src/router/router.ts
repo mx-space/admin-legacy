@@ -183,6 +183,12 @@ const routes: MenuRouteConfig[] = [
           },
         ],
       },
+      {
+        path: 'import',
+        name: 'import',
+        meta: { title: '导入', icon: ['fas', 'file-import'] },
+        component: () => import('@/views/Setting/import.vue'),
+      },
     ],
   },
   {

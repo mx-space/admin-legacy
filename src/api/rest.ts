@@ -101,3 +101,5 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
   }
   return apis
 }
+
+export default $axios
