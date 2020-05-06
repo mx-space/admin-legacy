@@ -1,6 +1,6 @@
 {
   "name": "mx-admin",
-  "version": "0.6.0",
+  "version": "0.7.0-alpha",
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint --fix",
