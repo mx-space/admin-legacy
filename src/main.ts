@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-
+import '@/socket'
 import 'normalize.css/normalize.css'
 import '@/assets/fonts/stylesheet.css'
 import PerfectScrollbar from 'vue2-perfect-scrollbar'
