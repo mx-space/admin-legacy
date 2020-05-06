@@ -130,6 +130,31 @@
           </el-form-item>
         </el-form>
       </el-collapse-item>
+
+      <el-collapse-item name="4" title="图床设定">
+        <el-form :model="configs" label-width="8rem">
+          <el-form-item label="图床类型">
+            <el-select v-model="configs.imageBed.type" placeholder="">
+              <el-option
+                v-for="item in imageBedType"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="仓库地址">
+            <el-input v-model="configs.imageBed.repo"></el-input>
+          </el-form-item>
+          <el-form-item label="Repo Token">
+            <el-input v-model="configs.imageBed.token"></el-input>
+          </el-form-item>
+          <el-form-item label="自定义前缀">
+            <el-input v-model="configs.imageBed.customUrl"></el-input>
+          </el-form-item>
+        </el-form>
+      </el-collapse-item>
     </el-collapse>
   </Layout>
 </template>
@@ -145,7 +170,7 @@ import { IConfig } from '../../models'
 import cloneDeep from 'lodash/cloneDeep'
 import LayoutButton from '@/components/Button/LayoutButton.vue'
 import { ElInput } from 'element-ui/types/input'
-import { isEmpty } from 'lodash/fp'
+import { isEmpty, merge } from 'lodash/fp'
 @Component({
   components: {
     Layout,
@@ -159,10 +184,52 @@ export default class SystemSettingView extends Vue {
   inputValue = ''
   configs: IConfig = {} as IConfig
   raw: IConfig = {} as IConfig
+
+  imageBedType = [
+    {
+      value: 'github',
+      label: 'GitHub',
+    },
+  ]
+
   async fetch() {
     const data = await this.$api('Option').get()
-    this.configs = omit(data as any, ['ok', 'timestamp']) as IConfig
+    const configs = this.fullConfigs(
+      omit(data as any, ['ok', 'timestamp']) as IConfig,
+    )
+
+    this.configs = configs
     this.raw = cloneDeep(this.configs)
+  }
+
+  fullConfigs(configs: object): IConfig {
+    return merge(
+      {
+        seo: { title: '', description: '', keywords: [] },
+        url: {
+          wsUrl: '',
+          adminUrl: '',
+          serverUrl: '',
+          webUrl: '',
+        },
+        imageBed: {
+          customUrl: '',
+          repo: '',
+          token: '',
+          type: 'github',
+        },
+        mailOptions: {
+          user: '',
+          pass: '',
+          enable: false,
+        },
+        commentOptions: {
+          antiSpam: false,
+          akismetApiKey: '',
+        },
+      },
+      configs,
+    ) as IConfig
   }
 
   created() {

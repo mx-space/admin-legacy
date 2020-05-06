@@ -102,7 +102,10 @@
         list-type="picture"
         :auto-upload="false"
         ref="upload"
+        :on-change="handleOnChange"
+        :file-list="fileList"
         :headers="headers"
+        :on-preview="handlePreview"
       >
         <div slot="tip" class="el-upload__tip">
           只能上传图片，且不超过5MB
@@ -139,11 +142,13 @@ import LayoutButton from '@/components/Button/LayoutButton.vue'
 import { ElUpload } from 'element-ui/types/upload'
 import { getToken } from '../../../utils/auth'
 import { parseDate } from '@/utils/time'
+import { urlResolve } from '../../../utils'
 @Component({
   components: { PageLayout, Button: LayoutButton },
 })
 export default class FilesView extends Vue {
   data: File[] = []
+  fileList = []
   uploadWeightShow = false
   uploadType = FileType.IMAGE
   types = [
@@ -183,9 +188,11 @@ export default class FilesView extends Vue {
 
     return row.locate === FileLocate.Online
       ? row.url
-      : new URL(
-          '/uploads/' + getImageType(row.type) + '/' + row.name,
+      : urlResolve(
           process.env.VUE_APP_BASE_API,
+          'uploads',
+          getImageType(row.type),
+          row.name,
         )
   }
   async handleDelete(id: string) {
@@ -194,10 +201,11 @@ export default class FilesView extends Vue {
     this.fetch()
   }
   get uploadUrl() {
-    return new URL(
-      '/uploads/image?type=' + this.uploadType,
+    return urlResolve(
       process.env.VUE_APP_BASE_API,
-    ).toString()
+      'uploads',
+      'image?type=' + this.uploadType,
+    )
   }
   handleAvatarSuccess(...rest) {
     console.log(rest)
@@ -218,6 +226,9 @@ export default class FilesView extends Vue {
   }
   get parseDate() {
     return parseDate
+  }
+  handleOnChange(file, fileList) {
+    this.fileList = fileList
   }
 }
 function getImageType(type: FileType) {

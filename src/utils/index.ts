@@ -1,6 +1,7 @@
 import isEqual from 'lodash/isEqual'
 import isObject from 'lodash/isObject'
 import transform from 'lodash/transform'
+import isURL from 'validator/lib/isURL'
 export const sleep = (ms: number) => {
   return new Promise((resolve) => {
     setTimeout(resolve, ms)
@@ -41,4 +42,13 @@ export function difference(object, base) {
     })
   }
   return changes(object, base)
+}
+
+export function urlResolve(base: string, ...path: string[]) {
+  if (!isURL(base, { require_protocol: true })) {
+    throw new TypeError('need protocol')
+  }
+  return (
+    (base.charAt(base.length - 1) === '/' ? base : base + '/') + path.join('/')
+  )
 }
