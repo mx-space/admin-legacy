@@ -23,5 +23,6 @@ module.exports = {
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/interface-name-prefix': 'off',
     'no-empty': 'off',
+    '@typescript-eslint/no-use-before-define': 'off',
   },
 }

@@ -9,6 +9,7 @@ type MenuRouteConfig = Modify<
   {
     meta?: { title: string; icon?: string[]; isPublic?: boolean }
     children?: MenuRouteConfig[]
+    component: RouteConfig['component']
   }
 >
 
@@ -152,6 +153,12 @@ const routes: MenuRouteConfig[] = [
             path: 'friends',
             meta: { title: '朋友们', icon: ['fas', 'user-friends'] },
             component: () => import('@/views/Other/Friends/index.vue'),
+          },
+          {
+            name: 'files',
+            path: 'files',
+            meta: { title: '文件', icon: ['far', 'file-alt'] },
+            component: () => import('@/views/Other/Files/index.vue'),
           },
         ],
       },

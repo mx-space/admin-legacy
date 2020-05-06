@@ -10,6 +10,7 @@ import {
   faFile,
   faSave,
   faTrashAlt,
+  faFileAlt,
 } from '@fortawesome/free-regular-svg-icons'
 import {
   faAngleDoubleRight,
@@ -36,6 +37,7 @@ import {
   faCogs,
   faUserAlt,
   faCog,
+  faUpload,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Vue from 'vue'
@@ -50,6 +52,7 @@ export const Icons: IconType[] = [
   faUserAlt,
   faCog,
   faKey,
+  faFileAlt,
   faFile,
   faCode,
   faSave,
@@ -74,6 +77,7 @@ export const Icons: IconType[] = [
   faTelegramPlane,
   faBook,
   faComments,
+  faUpload,
 ]
 
 library.add(...Icons)

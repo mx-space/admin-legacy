@@ -206,3 +206,30 @@ export declare class CommentOptions {
   antiSpam: boolean
   akismetApiKey?: string
 }
+
+export interface Dimensions {
+  height: number
+  width: number
+  type: string
+}
+export enum FileType {
+  IMAGE = 0,
+  AVATAR = 1,
+  BACKGROUND = 2,
+  PHOTO = 3,
+}
+export enum FileLocate {
+  Local = 0,
+  Online = 1,
+}
+
+export declare class File {
+  filename: string
+  name: string
+  mime: string
+  info?: Record<string, any>
+  dimensions?: Dimensions
+  type: number
+  locate: 0 | 1
+  url?: string
+}
