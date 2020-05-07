@@ -2,7 +2,7 @@ import { rest } from '@/api/rest'
 import { LoginDto } from '@/models'
 import { LoginRespDto } from '@/models/response.dto'
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
-import { setToken, getToken } from '@/utils/auth'
+import { setToken, getToken, removeToken } from '@/utils/auth'
 @Module({ namespaced: true })
 export class UserModule extends VuexModule {
   token: string | null = getToken() || null
@@ -29,7 +29,10 @@ export class UserModule extends VuexModule {
 
   @Action({ commit: 'SET_USER', rawError: true })
   clearData() {
-    return {}
+    removeToken()
+    return {
+      token: null,
+    }
   }
 
   @Mutation
@@ -39,6 +42,7 @@ export class UserModule extends VuexModule {
     this.username = username
     this.name = name
     this.avatar = avatar
+    this.raw = payload
   }
 
   @Mutation

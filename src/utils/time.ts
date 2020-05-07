@@ -9,7 +9,7 @@ dayjs.extend(LocalizedFormat)
 dayjs.locale('zh-cn')
 
 export enum DateFormat {
-  'MMM DD YYYY',
+  'YYYY年M月D日',
   'HH:mm',
   'LLLL',
   'H:mm:ss A',

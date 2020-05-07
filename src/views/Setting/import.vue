@@ -121,7 +121,6 @@ export default class ImportView extends Vue {
       type: this.importTo,
       data: this.parsedList,
     })
-    console.log(data)
     this.$message.success('上传成功!')
     this.fileList = []
   }

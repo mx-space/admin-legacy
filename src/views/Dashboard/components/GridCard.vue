@@ -29,27 +29,13 @@
         <template #left>
           <div class="bg svg clock full"></div>
         </template>
-        <template #right v-if="count.post">
+        <template #right>
           <div class="text info" :title="name" style="font-weight: 600;">
-            {{ '当前已有' }}
+            {{ '距离上次登陆' }}
           </div>
           <div class="box">
-            <span class="count">{{ count.post }}</span>
-            <span class="text">篇博文</span>
-          </div>
-        </template>
-      </Card>
-      <Card>
-        <template #left>
-          <div class="bg svg awareness-day full"></div>
-        </template>
-        <template #right v-if="count.post">
-          <div class="text info" :title="name" style="font-weight: 600;">
-            {{ '当前已有' }}
-          </div>
-          <div class="box">
-            <span class="count">{{ count.note }}</span>
-            <span class="text">篇随记</span>
+            <span class="count">{{ lastLoginTime }}</span>
+            <span class="text">天</span>
           </div>
         </template>
       </Card>
@@ -57,46 +43,49 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
 import { mapGetters } from 'vuex'
-import Card from '@/components/SvgCard'
-
-export default {
+import Card from '@/components/SvgCard/index.vue'
+import dayjs from 'dayjs'
+@Component({
   components: {
     Card,
   },
   computed: {
     ...mapGetters(['viewport', 'device']),
-    ...mapGetters(['username', 'name', 'avatar']),
+    ...mapGetters(['username', 'name', 'avatar', 'profile']),
   },
-  data() {
-    return {
-      hitokoto: {},
-      // TODO
-      count: {
-        post: 1,
-        note: 1,
-      },
-    }
-  },
+})
+export default class GridCard extends Vue {
+  get lastLoginTime() {
+    return dayjs(new Date()).diff(
+      dayjs((this as any).profile.raw.lastLoginTime),
+      'day',
+    )
+  }
+
+  hitokoto = {}
+
   created() {
     // get hitokoto
     import('axios').then((axios) => {
-      axios.get('https://v1.hitokoto.cn/').then((res) => {
+      ;(axios as any).get('https://v1.hitokoto.cn/').then((res) => {
         this.hitokoto = res.data
       })
     })
-  },
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-$row-height: 120px;
+$row-height: 160px;
 .grid {
   display: grid;
   position: relative;
   width: 100%;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(2, auto);
   grid-template-rows: $row-height;
   grid-gap: 12px 12px;
   &.m {
