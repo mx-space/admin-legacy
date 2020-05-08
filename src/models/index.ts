@@ -172,6 +172,7 @@ export interface IConfig {
   imageBed: ImageBedDto
   mailOptions: MailOptionsDto
   commentOptions: CommentOptions
+  backupOptions: BackupOptions
 }
 export declare class SEODto {
   title: string
@@ -232,4 +233,11 @@ export declare class File {
   type: number
   locate: 0 | 1
   url?: string
+}
+export declare class BackupOptions {
+  enable: boolean
+  SecretId?: string
+  SecretKey?: string
+  Bucket?: string
+  Region: string
 }

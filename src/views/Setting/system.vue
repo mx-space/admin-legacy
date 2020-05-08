@@ -92,6 +92,7 @@
             <el-input
               v-model="configs.commentOptions.akismetApiKey"
               placeholder="前往 https://akismet.com/ 注册"
+              type="password"
               :disabled="!configs.commentOptions.antiSpam"
             ></el-input>
           </el-form-item>
@@ -126,6 +127,7 @@
             <el-input
               v-model="configs.mailOptions.pass"
               :disabled="!configs.mailOptions.enable"
+              type="password"
             ></el-input>
           </el-form-item>
         </el-form>
@@ -148,10 +150,40 @@
             <el-input v-model="configs.imageBed.repo"></el-input>
           </el-form-item>
           <el-form-item label="Repo Token">
-            <el-input v-model="configs.imageBed.token"></el-input>
+            <el-input
+              v-model="configs.imageBed.token"
+              type="password"
+            ></el-input>
           </el-form-item>
           <el-form-item label="自定义前缀">
             <el-input v-model="configs.imageBed.customUrl"></el-input>
+          </el-form-item>
+        </el-form>
+      </el-collapse-item>
+      <el-collapse-item name="5" title="备份">
+        <el-form :model="configs" label-width="8rem">
+          <el-form-item label="开启备份">
+            <el-switch
+              v-model="configs.backupOptions.enable"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            ></el-switch>
+          </el-form-item>
+          <el-form-item label="地域">
+            <el-input v-model="configs.backupOptions.Region"></el-input>
+            <p><small>支持备份到 COS</small></p>
+          </el-form-item>
+          <el-form-item label="存储桶名称">
+            <el-input v-model="configs.backupOptions.Bucket"></el-input>
+          </el-form-item>
+          <el-form-item label="SecretId">
+            <el-input v-model="configs.backupOptions.SecretId"></el-input>
+          </el-form-item>
+          <el-form-item label="SecretKey">
+            <el-input
+              v-model="configs.backupOptions.SecretKey"
+              type="password"
+            ></el-input>
           </el-form-item>
         </el-form>
       </el-collapse-item>
@@ -226,6 +258,13 @@ export default class SystemSettingView extends Vue {
         commentOptions: {
           antiSpam: false,
           akismetApiKey: '',
+        },
+        backupOptions: {
+          enable: false,
+          SecretId: '',
+          SecretKey: '',
+          Bucket: '',
+          Region: '',
         },
       },
       configs,
