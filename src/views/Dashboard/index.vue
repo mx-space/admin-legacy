@@ -4,6 +4,7 @@
       <GridCard />
     </div>
     <h4>最近收到的评论</h4>
+
     <el-table :data="data">
       <el-table-column prop="created" label="时间" width="140px">
         <template slot-scope="scope">
@@ -18,9 +19,14 @@
         width="200px"
       >
       </el-table-column>
-      <el-table-column prop="text" label="内容" width="800px">
+      <el-table-column
+        prop="text"
+        label="内容"
+        :width="viewport.mobile && data.length > 0 ? '600px' : ''"
+      >
       </el-table-column>
     </el-table>
+
     <div class="card-wrap">
       <card class="card" @click="$router.push({ name: 'edit-posts' })">
         <icon :icon="['fas', 'pencil-alt']" />
@@ -50,6 +56,8 @@ import GridCard from './components/GridCard.vue'
 import Component from 'vue-class-component'
 import { parseDate } from '../../utils/time'
 import Card from '@/components/Card/index.vue'
+import { Getter } from 'vuex-class'
+import { ViewportRecord } from '../../store/interfaces/viewport.interface'
 @Component({
   components: {
     PageLayout,
@@ -61,7 +69,9 @@ import Card from '@/components/Card/index.vue'
   },
 })
 export default class Dashboard extends Vue {
-  data = {} as any[]
+  data = [] as any[]
+  @Getter
+  viewport!: ViewportRecord
   async created() {
     const { data } = await this.$api('Comment').gets({
       page: 1,
