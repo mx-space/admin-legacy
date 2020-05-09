@@ -123,6 +123,7 @@
         @prev-click="handleTo(pager.currentPage - 1)"
         @next-click="handleTo(pager.currentPage + 1)"
         @current-change="handleTo"
+        v-if="pager.totalPage > 1"
       >
       </el-pagination>
     </div>
@@ -130,7 +131,7 @@
     <el-dialog
       :title="'回复 ' + replyContext.author"
       :visible.sync="replyDialogVisible"
-      width="40%"
+      :width="viewport.mobile ? '360px' : '500px'"
     >
       <el-form :model="model" label-width="90px">
         <el-form-item :label="replyContext.author + ' 说: '">
@@ -157,7 +158,7 @@
       </span>
     </el-dialog>
 
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="300px">
       <span>确定要删除么?</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>

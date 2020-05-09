@@ -49,7 +49,11 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog title="新朋友" :visible.sync="dialogVisible" width="30%">
+    <el-dialog
+      title="新朋友"
+      :visible.sync="dialogVisible"
+      :width="viewport.mobile ? '360px' : '500px'"
+    >
       <el-form :model="model" label-width="80px" :rules="rules" ref="form">
         <el-form-item label="名字" prop="name">
           <el-input v-model="model.name"></el-input>
@@ -120,6 +124,8 @@ import { ElForm } from 'element-ui/types/form'
 // @ts-ignore
 import isURL from 'validator/lib/isURL'
 import { pickNoEmpty } from '../../../utils'
+import { Getter } from 'vuex-class'
+import { ViewportRecord } from '../../../store/interfaces/viewport.interface'
 
 const checkUrl = (rule: string, val: string, cb: Function) => {
   if (!val) {
@@ -139,6 +145,9 @@ const checkUrl = (rule: string, val: string, cb: Function) => {
   },
 })
 export default class extends Vue {
+  @Getter('viewport')
+  viewport!: ViewportRecord
+
   data: LinkModel[] = []
   model: LinkModel = {
     name: '',

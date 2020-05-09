@@ -45,7 +45,10 @@ export function difference(object, base) {
 }
 
 export function urlResolve(base: string, ...path: string[]) {
-  if (!isURL(base, { require_protocol: true })) {
+  if (
+    !isURL(base, { require_protocol: true }) &&
+    !base.match(/^http:\/\/localhost/)
+  ) {
     throw new TypeError('need protocol')
   }
   return (

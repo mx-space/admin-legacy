@@ -78,7 +78,7 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog title="上传图片" :visible.sync="uploadWeightShow" width="30%">
+    <el-dialog title="上传图片" :visible.sync="uploadWeightShow" width="360px">
       <el-select
         v-model="uploadType"
         :style="{

@@ -72,6 +72,7 @@ export default {
   margin: 0 3rem 0;
   main {
     padding: 0 0.8rem;
+    min-height: calc(100vh - 12rem);
     .end-center {
       margin-top: 2rem;
 

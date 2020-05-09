@@ -4,7 +4,7 @@
       <GridCard />
     </div>
     <h4>最近收到的评论</h4>
-    <el-table :data="data" style="width: 100%;">
+    <el-table :data="data">
       <el-table-column prop="created" label="时间" width="140px">
         <template slot-scope="scope">
           {{ parseTime(scope.row.created) }}
@@ -18,7 +18,8 @@
         width="200px"
       >
       </el-table-column>
-      <el-table-column prop="text" label="内容"> </el-table-column>
+      <el-table-column prop="text" label="内容" width="800px">
+      </el-table-column>
     </el-table>
     <div class="card-wrap">
       <card class="card" @click="$router.push({ name: 'edit-posts' })">

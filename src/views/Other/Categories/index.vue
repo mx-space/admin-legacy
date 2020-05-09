@@ -37,7 +37,7 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog title="新分类" :visible.sync="dialogVisible" width="30%">
+    <el-dialog title="新分类" :visible.sync="dialogVisible" width="360px">
       <el-form :model="model" label-width="80px" :rules="rules" ref="form">
         <el-form-item label="名字" prop="name">
           <el-input v-model="model.name"></el-input>
