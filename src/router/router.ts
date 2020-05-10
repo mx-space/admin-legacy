@@ -181,6 +181,12 @@ const routes: MenuRouteConfig[] = [
             meta: { title: '系统设定', icon: ['fas', 'cog'] },
             component: () => import('@/views/Setting/system.vue'),
           },
+          {
+            path: 'reset',
+            name: 'reset',
+            meta: { title: '重置', icon: ['fas', 'redo-alt'] },
+            component: () => import('@/views/Setting/reset.vue'),
+          },
         ],
       },
       {
