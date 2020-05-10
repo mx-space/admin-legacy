@@ -1,13 +1,13 @@
 <template>
   <div class="full bg">
     <img
-      class="wallpaper"
-      :class="{ loading }"
+      class="wallpaper-placeholder"
       src="https://i.loli.net/2020/04/08/OseRqS2jn7WaJKM.png"
       @load="loading = false"
       @error="loading = true"
+      :class="{ loading }"
     />
-
+    <div class="wallpaper" :class="{ loading }"></div>
     <div class="dialog">
       <Avatar :size="100" :src="avatar"></Avatar>
       <BlurInput
@@ -95,12 +95,12 @@ export default {
   position: relative;
   overflow: hidden;
 }
-.wallpaper {
-  z-index: 0;
-  max-width: 100%;
-  max-height: 100%;
-  transform: scale(2);
-  transform-origin: top;
+.wallpaper-placeholder {
+  opacity: 0;
+  z-index: -99;
+  height: 0;
+  width: 0;
+  position: absolute;
 }
 .dialog {
   position: absolute;
@@ -117,5 +117,25 @@ export default {
 }
 .form {
   padding: 0 0.5rem;
+}
+.wallpaper {
+  opacity: 1;
+  transition: opacity 0.5s;
+
+  &.loading {
+    opacity: 0;
+  }
+  &::before {
+    content: '';
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: url('https://i.loli.net/2020/04/08/OseRqS2jn7WaJKM.png') center;
+    background-size: cover;
+    filter: blur(5px);
+    transform: scale(1.2);
+  }
 }
 </style>
