@@ -1,6 +1,6 @@
 <template>
   <page-layout>
-    <div
+    <section
       :style="{
         columns: viewport.mobile ? 1 : 2,
       }"
@@ -13,23 +13,49 @@
       <div ref="month-chart"></div>
       <small>请求量</small>
       <div ref="pie-chart"></div>
-    </div>
+    </section>
+    <section>
+      <small> 今天 - 所有请求的 IP {{ todayIps.length }} 个 </small>
+      <div class="tags">
+        <el-tag v-for="ip in todayIps" :key="ip" effect="plain">
+          <el-popover placement="top" trigger="click" @show="getIpLocation(ip)">
+            <p v-html="ipLocation"></p>
+            <span slot="reference" style="cursor: pointer;">{{ ip }}</span>
+          </el-popover>
+        </el-tag>
+      </div>
+    </section>
 
-    <small>最近请求</small>
-    <el-table :data="tableData" style="width: 100%;">
-      <el-table-column prop="date" label="时间" width="120px">
-      </el-table-column>
-      <el-table-column prop="ip" label="IP" width="130px"> </el-table-column>
-      <el-table-column prop="browser" label="浏览器" width="120px">
-      </el-table-column>
-      <el-table-column prop="os" label="OS" width="120px"> </el-table-column>
-      <el-table-column
-        prop="ua"
-        label="UA"
-        :width="viewport.mobile ? '500px' : ''"
-      >
-      </el-table-column>
-    </el-table>
+    <section>
+      <small>最近请求</small>
+      <el-table :data="tableData" style="width: 100%;">
+        <el-table-column prop="date" label="时间" width="120px">
+        </el-table-column>
+        <el-table-column prop="ip" label="IP" width="130px">
+          <template slot-scope="scope">
+            <el-popover
+              placement="top"
+              trigger="click"
+              @show="getIpLocation(scope.row.ip)"
+            >
+              <p v-html="ipLocation"></p>
+              <el-button slot="reference" type="text">{{
+                scope.row.ip
+              }}</el-button>
+            </el-popover>
+          </template>
+        </el-table-column>
+        <el-table-column prop="browser" label="浏览器" width="120px">
+        </el-table-column>
+        <el-table-column prop="os" label="OS" width="120px"> </el-table-column>
+        <el-table-column
+          prop="ua"
+          label="UA"
+          :width="viewport.mobile ? '500px' : ''"
+        >
+        </el-table-column>
+      </el-table>
+    </section>
 
     <el-pagination
       layout="prev, pager, next"
@@ -67,7 +93,7 @@ import { ViewportRecord } from '../../store/interfaces/viewport.interface'
 export default class AnalyzeView extends Vue {
   @Getter
   viewport!: ViewportRecord
-
+  ipLocation = ''
   raw = [] as UA.Root[]
   total = {
     callTime: 0,
@@ -243,6 +269,21 @@ export default class AnalyzeView extends Vue {
 
     chart.render()
   }
+
+  async getIpLocation(ip: string) {
+    this.ipLocation = '获取中...'
+    const response = await fetch(
+      `https://api.ipgeolocation.io/ipgeo?apiKey=${process.env.VUE_APP_IP_APIKEY}&ip=${ip}`,
+    )
+    const data = await response.json()
+
+    this.ipLocation = `IP: ${data.ip}<br />
+    城市: ${data.city}<br />
+    ISP: ${data.isp}<br />
+    组织: ${data.organization}
+    `
+  }
+
   async handleTo(page: number) {
     await this.fetch(page)
   }
@@ -261,5 +302,9 @@ small {
   color: #888;
   display: inline-block;
   font-weight: 600;
+}
+.tags > * {
+  margin-right: 12px;
+  margin-top: 6px;
 }
 </style>
