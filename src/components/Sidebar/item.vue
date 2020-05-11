@@ -1,7 +1,7 @@
 <template>
   <div
     class="row-item"
-    :class="{ active: active, extend: extend }"
+    :class="{ active: active, expand: expand }"
     ref="row-item"
   >
     <div class="item" @click="handleClick">
@@ -18,7 +18,7 @@
     </div>
     <div
       class="insider"
-      :style="extend ? 'max-height: ' + height : ''"
+      :style="expand ? 'max-height: ' + height : ''"
       ref="insider"
       v-if="hasChild"
     >
@@ -56,13 +56,13 @@ export default {
     return {
       height: 0,
       activeItems: 0,
-      extend: false,
+      expand: false,
     }
   },
   watch: {
     active(val) {
       if (!val) {
-        this.extend = false
+        this.expand = false
       }
     },
   },
@@ -79,7 +79,7 @@ export default {
       if (!this.item.subItems && this.item.fullPath !== this.$route.fullPath) {
         this.$router.push(this.item.fullPath)
       } else {
-        this.extend = !this.extend
+        this.expand = !this.expand
       }
     },
     isArray(arr) {
@@ -103,17 +103,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.row-item.extend:not(.hide) {
+.row-item.expand:not(.hide) {
   > .item .down {
     transform: rotate(180deg);
   }
 }
-.row-item:not(.extend) {
+.row-item:not(.expand) {
   > .item .down {
     transform: rotate(0) !important;
   }
 }
-.row-item.active {
+.row-item.active,
+.row-item.expand {
   background: rgba(16, 133, 211, 0.5);
 }
 .row-item {
