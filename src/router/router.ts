@@ -163,6 +163,12 @@ const routes: MenuRouteConfig[] = [
         ],
       },
       {
+        path: 'analyze',
+        component: () => import('@/views/Analyze/index.vue'),
+        meta: { title: '数据', icon: ['fas', 'chart-line'] },
+        name: 'analyze',
+      },
+      {
         path: 'setting',
         name: 'setting',
         meta: { title: '设定', icon: ['fas', 'cogs'] },

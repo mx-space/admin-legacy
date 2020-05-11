@@ -24,5 +24,6 @@ module.exports = {
     '@typescript-eslint/interface-name-prefix': 'off',
     'no-empty': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
+    '@typescript-eslint/no-namespace': 'off',
   },
 }

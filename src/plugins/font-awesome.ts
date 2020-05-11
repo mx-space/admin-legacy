@@ -40,6 +40,7 @@ import {
   faUpload,
   faFileImport,
   faRedoAlt,
+  faChartLine,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Vue from 'vue'
@@ -82,6 +83,7 @@ export const Icons: IconType[] = [
   faUpload,
   faFileImport,
   faRedoAlt,
+  faChartLine,
 ]
 
 library.add(...Icons)

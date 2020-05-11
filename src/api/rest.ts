@@ -3,6 +3,7 @@ import inflection from 'inflection'
 
 declare enum AccessRoutesEnum {
   Aggregate,
+  Analyze,
   Category,
   Comment,
   Link,
@@ -25,7 +26,7 @@ interface Gets {
 }
 
 export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
-  let pluralize = ['Master', 'Menu', 'Aggregate'].includes(rest)
+  let pluralize = ['Master', 'Menu', 'Aggregate', 'Analyze'].includes(rest)
     ? rest.toLowerCase()
     : inflection.pluralize(rest).toLowerCase()
   pluralize = prefix ? pluralize + `/${prefix}` : pluralize
