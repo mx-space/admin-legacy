@@ -156,7 +156,8 @@ export default class AnalyzeView extends Vue {
   parseUATableData(raw: UA.Root[]) {
     return raw.map((i) => {
       return {
-        date: dayjs(i.created).format('MM-DD H:mm:ss'),
+        // TODO 一周后删除
+        date: dayjs(i.created || (i as any).timestamp).format('MM-DD H:mm:ss'),
         browser:
           (i.ua.browser && i.ua.browser.name + ' ' + i.ua.browser.major) || '',
         os: i.ua.os ? i.ua.os.name + ' ' + i.ua.os.version : '',
