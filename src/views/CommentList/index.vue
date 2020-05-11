@@ -48,7 +48,7 @@
       <el-table-column label="作者" width="200">
         <template slot-scope="scope">
           <div class="">
-            <a :href="scope.row.url || ''" class="name">{{
+            <a :href="scope.row.url || '#'" class="name">{{
               scope.row.author
             }}</a>
           </div>

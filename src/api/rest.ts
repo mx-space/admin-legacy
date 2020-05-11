@@ -63,8 +63,8 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
       const data = await $axios.put(`${pluralize}/${id}`, body)
       return data as any
     },
-    async deleteOne<T = unknown>(id: string): Promise<T> {
-      const data = await $axios.delete(`${pluralize}/${id}`)
+    async deleteOne<T = unknown>(id?: string): Promise<T> {
+      const data = await $axios.delete(`${pluralize}${id ? '/' + id : ''}`)
       return data as any
     },
     get gets() {

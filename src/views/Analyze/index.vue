@@ -1,5 +1,13 @@
 <template>
   <page-layout>
+    <template #header>
+      <LayoutButton
+        name="清空表"
+        :icon="['far', 'trash-alt']"
+        backcolor="#e74c3c"
+        @click.native="handleClearData"
+      />
+    </template>
     <section
       :style="{
         columns: viewport.mobile ? 1 : 2,
@@ -84,10 +92,11 @@ import { UA, PagerDto } from '../../models/response.dto'
 import dayjs from 'dayjs'
 import { Getter } from 'vuex-class'
 import { ViewportRecord } from '../../store/interfaces/viewport.interface'
-
+import LayoutButton from '@/components/Button/LayoutButton.vue'
 @Component({
   components: {
     PageLayout,
+    LayoutButton,
   },
 })
 export default class AnalyzeView extends Vue {
@@ -147,7 +156,7 @@ export default class AnalyzeView extends Vue {
   parseUATableData(raw: UA.Root[]) {
     return raw.map((i) => {
       return {
-        date: dayjs(i.timestamp).format('MM-DD H:mm:ss'),
+        date: dayjs(i.created).format('MM-DD H:mm:ss'),
         browser:
           (i.ua.browser && i.ua.browser.name + ' ' + i.ua.browser.major) || '',
         os: i.ua.os ? i.ua.os.name + ' ' + i.ua.os.version : '',
@@ -283,7 +292,11 @@ export default class AnalyzeView extends Vue {
     组织: ${data.organization}
     `
   }
-
+  async handleClearData() {
+    await this.$api('Analyze').del()
+    this.$message.success('清空完成')
+    await this.fetch()
+  }
   async handleTo(page: number) {
     await this.fetch(page)
   }
