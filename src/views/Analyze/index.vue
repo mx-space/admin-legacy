@@ -19,12 +19,11 @@
     <el-table :data="tableData" style="width: 100%;">
       <el-table-column prop="date" label="时间" width="120px">
       </el-table-column>
+      <el-table-column prop="ip" label="IP" width="130px"> </el-table-column>
       <el-table-column prop="browser" label="浏览器" width="120px">
       </el-table-column>
       <el-table-column prop="os" label="OS" width="120px"> </el-table-column>
       <el-table-column
-        header-align="left"
-        align="left"
         prop="ua"
         label="UA"
         :width="viewport.mobile ? '500px' : ''"
@@ -127,6 +126,7 @@ export default class AnalyzeView extends Vue {
           (i.ua.browser && i.ua.browser.name + ' ' + i.ua.browser.major) || '',
         os: i.ua.os ? i.ua.os.name + ' ' + i.ua.os.version : '',
         ua: i.ua.ua,
+        ip: i.ip,
       }
     })
   }
