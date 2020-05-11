@@ -89,7 +89,10 @@ export default class AnalyzeView extends Vue {
   chartWeek: null | Chart = null
   chartPie: null | Chart = null
   async created() {
-    await this.fetch()
+    await this.fetch().then(() => {
+      this.renderChart()
+      this.renderPie()
+    })
   }
 
   async fetch(page = 1, size = 50) {
@@ -114,8 +117,6 @@ export default class AnalyzeView extends Vue {
     const fragment = (await this.$api('Analyze').get('fragment')) as Fragment
     this.fragment = fragment
     this.parseChartData(fragment)
-    this.renderChart()
-    this.renderPie()
   }
 
   parseUATableData(raw: UA.Root[]) {
@@ -231,7 +232,7 @@ export default class AnalyzeView extends Vue {
 
     chart
       .interval()
-      .position('percent')
+      .position('count')
       .color('item')
       .label('percent', {
         content: (data) => {
