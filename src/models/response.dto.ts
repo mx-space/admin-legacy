@@ -201,5 +201,6 @@ export declare namespace UA {
     ip?: string
     ua: Ua
     created: Date
+    path?: string
   }
 }

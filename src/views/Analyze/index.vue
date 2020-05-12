@@ -53,6 +53,15 @@
             </el-popover>
           </template>
         </el-table-column>
+        <el-table-column
+          header-align="left"
+          align="left"
+          prop="path"
+          label="请求路径"
+          show-overflow-tooltip
+          width="200px"
+        >
+        </el-table-column>
         <el-table-column prop="browser" label="浏览器" width="120px">
         </el-table-column>
         <el-table-column prop="os" label="OS" width="120px"> </el-table-column>
@@ -156,27 +165,49 @@ export default class AnalyzeView extends Vue {
   parseUATableData(raw: UA.Root[]) {
     return raw.map((i) => {
       return {
-        // TODO 一周后删除
-        date: dayjs(i.created || (i as any).timestamp).format('MM-DD H:mm:ss'),
+        date: dayjs(i.created).format('MM-DD H:mm:ss'),
         browser:
           (i.ua.browser && i.ua.browser.name + ' ' + i.ua.browser.major) || '',
         os: i.ua.os ? i.ua.os.name + ' ' + i.ua.os.version : '',
         ua: i.ua.ua,
         ip: i.ip,
+        path: i.path,
       }
     })
   }
   parseChartData(fragment: Fragment) {
     const { today, weeks, months } = fragment
-    this.chartDataDay = this._parseChartValue(today, ['时刻', '访问次数'])
-    this.chartDataWeek = this._parseChartValue(weeks, ['本周天', '访问次数'])
-    this.chartDataMonth = this._parseChartValue(months, ['本月天', '访问次数'])
+    this.chartDataDay = this._parseChartValue(today, ['时刻', '访问次数'], {
+      postfix: '时',
+    })
+    this.chartDataWeek = this._parseChartValue(weeks, ['本周天', '访问次数'], {
+      customLable: (label) =>
+        dayjs(new Date())
+          .add(-~~label, 'day')
+          .fromNow(),
+    })
+    this.chartDataMonth = this._parseChartValue(
+      months,
+      ['本月天', '访问次数'],
+      { prefix: new Date().getMonth() + 1 + '-' },
+    )
   }
 
-  _parseChartValue(data: Record<string, number>, label: [string, string]) {
+  _parseChartValue(
+    data: Record<string, number>,
+    label: [string, string],
+    options?: {
+      prefix?: string
+      postfix?: string
+      customLable?: (lebal: string) => string
+    },
+  ) {
+    const { prefix, postfix, customLable } = options || {}
     return Object.entries(data).map(([k, v]) => {
       return {
-        [label[0]]: ~~k,
+        [label[0]]: customLable
+          ? customLable(label[0])
+          : (prefix ?? '') + k + (postfix ?? ''),
         [label[1]]: v,
       }
     })
