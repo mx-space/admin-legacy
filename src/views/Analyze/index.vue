@@ -2,6 +2,12 @@
   <page-layout>
     <template #header>
       <LayoutButton
+        name="刷新"
+        :icon="['fas', 'sync-alt']"
+        backcolor="#27ae60"
+        @click.native="refresh"
+      />
+      <LayoutButton
         name="清空表"
         :icon="['far', 'trash-alt']"
         backcolor="#e74c3c"
@@ -153,7 +159,12 @@ export default class AnalyzeView extends Vue {
       this.renderPie()
     })
   }
-
+  async refresh() {
+    await this.fetch(1)
+    this.chartDay?.changeData(this.chartDataDay)
+    this.chartMonth?.changeData(this.chartDataMonth)
+    this.chartWeek?.changeData(this.chartDataWeek)
+  }
   async fetch(page = 1, size = 50) {
     const resp = (await this.$api('Analyze').gets({
       page,
@@ -193,74 +204,80 @@ export default class AnalyzeView extends Vue {
   }
   parseChartData(fragment: Fragment) {
     const { today, weeks, months } = fragment
-    this.chartDataDay = this._parseChartValue(today, ['时刻', '访问次数'], {
-      postfix: '时',
-    })
-    this.chartDataWeek = this._parseChartValue(weeks, ['本周天', '访问次数'], {
-      customLable: (label) => {
-        // return ~~label
-        //   ? dayjs(new Date())
-        //       .add(-~~label, 'date')
-        //       .set('hour', 0)
-        //       .set('minute', 0)
-        //       .set('millisecond', 0)
-        //       .fromNow()
-        //   : '今天'
-        return `${-label}`
-      },
-    })
-    this.chartDataMonth = this._parseChartValue(
-      months,
-      ['本月天', '访问次数'],
-      { prefix: new Date().getMonth() + 1 + '-' },
-    )
+    this.chartDataDay = today
+    this.chartDataWeek = weeks
+    this.chartDataMonth = months
+    // this.chartDataDay = this._parseChartValue(today, ['时刻', '访问次数'], {
+    //   postfix: '时',
+    // })
+    // this.chartDataWeek = this._parseChartValue(weeks, ['本周天', '访问次数'], {
+    //   customLable: (label) => {
+    //     // return ~~label
+    //     //   ? dayjs(new Date())
+    //     //       .add(-~~label, 'date')
+    //     //       .set('hour', 0)
+    //     //       .set('minute', 0)
+    //     //       .set('millisecond', 0)
+    //     //       .fromNow()
+    //     //   : '今天'
+    //     return `${-label}`
+    //   },
+    // })
+    // this.chartDataMonth = this._parseChartValue(
+    //   months,
+    //   ['本月天', '访问次数'],
+    //   { prefix: new Date().getMonth() + 1 + '-' },
+    // )
   }
 
-  _parseChartValue(
-    data: Record<string, number>,
-    label: [string, string],
-    options?: {
-      prefix?: string
-      postfix?: string
-      customLable?: (lebal: string) => string
-    },
-  ) {
-    const { prefix, postfix, customLable } = options || {}
-    return Object.entries(data).map(([k, v]) => {
-      return {
-        [label[0]]: customLable
-          ? customLable(k)
-          : (prefix ?? '') + k + (postfix ?? ''),
-        [label[1]]: v,
-      }
-    })
-  }
-
+  // _parseChartValue(
+  //   data: Record<string, number>,
+  //   label: [string, string],
+  //   options?: {
+  //     prefix?: string
+  //     postfix?: string
+  //     customLable?: (lebal: string) => string
+  //   },
+  // ) {
+  //   const { prefix, postfix, customLable } = options || {}
+  //   return Object.entries(data).map(([k, v]) => {
+  //     return {
+  //       [label[0]]: customLable
+  //         ? customLable(k)
+  //         : (prefix ?? '') + k + (postfix ?? ''),
+  //       [label[1]]: v,
+  //     }
+  //   })
+  // }
+  _parseChartValue(data: any[]) {}
   renderChart() {
     this._renderChart(
       this.$refs['day-chart'] as HTMLElement,
       'chartDay',
       this.chartDataDay,
-      ['时刻', '访问次数'],
+      // ['时刻', '访问次数'],
+      ['hour', 'key', 'value'],
     )
     this._renderChart(
       this.$refs['week-chart'] as HTMLElement,
       'chartWeek',
       this.chartDataWeek,
-      ['本周天', '访问次数'],
+      // ['本周天', '访问次数'],
+      ['day', 'key', 'value'],
     )
     this._renderChart(
       this.$refs['month-chart'] as HTMLElement,
       'chartMonth',
       this.chartDataMonth,
-      ['本月天', '访问次数'],
+      // ['本月天', '访问次数'],
+      ['date', 'key', 'value'],
     )
   }
   _renderChart(
     element: HTMLElement,
     field: 'chartDay' | 'chartWeek' | 'chartMonth',
     data: any,
-    label: [string, string],
+    label: [string, string, string],
   ) {
     this[field] = new Chart({
       container: element,
@@ -278,16 +295,24 @@ export default class AnalyzeView extends Vue {
       [label[0]]: {
         range: [0, 1],
       },
-      [label[1]]: {
+      [label[2]]: {
         min: 0,
         nice: true,
       },
     })
     this[field]!.line()
-      .position(label[0] + '*' + label[1])
-      .label(label[1])
+      .position(label[0] + '*' + label[2])
+      .label(label[2])
+      .color(label[1])
       .shape('smooth')
-    this[field]!.point().position(label[0] + '*' + label[1])
+    this[field]!.point()
+      .position(label[0] + '*' + label[2])
+      .label(label[2])
+      .color(label[1])
+      .shape('circle')
+
+    // this[field]!.point().position(label[0] + '*' + label[1])
+    // this[field]!.point().position(label[0] + '*' + label[2])
     this[field]!.render()
   }
   renderPie() {
@@ -358,10 +383,15 @@ export default class AnalyzeView extends Vue {
   }
 }
 
+interface AccessRecord {
+  ip: number
+  pv: number
+}
+
 interface Fragment {
-  today: Record<string, number>
-  weeks: Record<string, number>
-  months: Record<string, number>
+  today: ({ hour: number } & AccessRecord)[]
+  weeks: ({ day: number } & AccessRecord)[]
+  months: ({ date: number } & AccessRecord)[]
 }
 </script>
 
