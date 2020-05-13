@@ -5,7 +5,7 @@
         name="清空表"
         :icon="['far', 'trash-alt']"
         backcolor="#e74c3c"
-        @click.native="handleClearData"
+        @click.native="dialogVisible = true"
       />
     </template>
     <section
@@ -68,7 +68,7 @@
         <el-table-column
           prop="ua"
           label="UA"
-          :width="viewport.mobile ? '500px' : ''"
+          :width="!viewport.desktop ? '500px' : ''"
         >
         </el-table-column>
       </el-table>
@@ -89,6 +89,21 @@
       }"
     >
     </el-pagination>
+
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="300px">
+      <span>确定要清空表么?</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button
+          type="primary"
+          @click="
+            handleClearData()
+            dialogVisible = false
+          "
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </page-layout>
 </template>
 
@@ -109,6 +124,7 @@ import LayoutButton from '@/components/Button/LayoutButton.vue'
   },
 })
 export default class AnalyzeView extends Vue {
+  dialogVisible = false
   @Getter
   viewport!: ViewportRecord
   ipLocation = ''
@@ -181,10 +197,17 @@ export default class AnalyzeView extends Vue {
       postfix: '时',
     })
     this.chartDataWeek = this._parseChartValue(weeks, ['本周天', '访问次数'], {
-      customLable: (label) =>
-        dayjs(new Date())
-          .add(-~~label, 'day')
-          .fromNow(),
+      customLable: (label) => {
+        // return ~~label
+        //   ? dayjs(new Date())
+        //       .add(-~~label, 'date')
+        //       .set('hour', 0)
+        //       .set('minute', 0)
+        //       .set('millisecond', 0)
+        //       .fromNow()
+        //   : '今天'
+        return `${-label}`
+      },
     })
     this.chartDataMonth = this._parseChartValue(
       months,
@@ -206,7 +229,7 @@ export default class AnalyzeView extends Vue {
     return Object.entries(data).map(([k, v]) => {
       return {
         [label[0]]: customLable
-          ? customLable(label[0])
+          ? customLable(k)
           : (prefix ?? '') + k + (postfix ?? ''),
         [label[1]]: v,
       }
@@ -243,6 +266,7 @@ export default class AnalyzeView extends Vue {
       container: element,
       autoFit: true,
       height: 250,
+      padding: [30, 20, 70, 30],
     })
 
     this[field]!.data(data)
