@@ -23,6 +23,35 @@
       <el-form-item label="项目描述" prop="description" required>
         <el-input v-model="model.description" auto-complete="off"></el-input>
       </el-form-item>
+      <el-form-item label="项目图标" prop="avatar">
+        <el-input v-model="model.avatar" auto-complete="off"></el-input>
+      </el-form-item>
+
+      <el-form-item label="预览图片" prop="images">
+        <el-tag
+          :key="image"
+          v-for="image in model.images"
+          closable
+          :disable-transitions="false"
+          @close="handleClose(tag)"
+        >
+          {{ image }}
+        </el-tag>
+        <el-input
+          class="input-new-tag"
+          v-if="inputVisible"
+          v-model="inputValue"
+          ref="saveTagInput"
+          size="small"
+          @keyup.enter.native="handleInputConfirm"
+          @blur="handleInputConfirm"
+        >
+        </el-input>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput"
+          >+ New
+        </el-button>
+      </el-form-item>
+
       <el-form-item label="正文" prop="text" required>
         <codemirror v-model="model.text" ref="code" :options="cmOptions" />
       </el-form-item>
@@ -41,6 +70,7 @@ import { cmOptions } from '@/commom/editor'
 import { Editor } from 'codemirror'
 import { pickNoEmpty } from '@/utils'
 import { ElForm } from 'element-ui/types/form'
+import { ElInput } from 'element-ui/types/input'
 @Component({
   components: {
     PageLayout,
@@ -54,12 +84,13 @@ export default class ProjectEdit extends Vue {
     previewUrl: '',
     docUrl: '',
     projectUrl: '',
-    images: [], // todo
+    images: [],
     description: '',
-    avatar: '', // todo
+    avatar: '',
     text: '',
   }
-
+  inputVisible = false
+  inputValue = ''
   rules = {
     name: [{ required: true, message: '请输入项目名称', trigger: 'blur' }],
     description: [
@@ -89,12 +120,12 @@ export default class ProjectEdit extends Vue {
     ;(this.$refs['form'] as ElForm).validate(async (valid) => {
       if (valid) {
         if (!this.id) {
-          await this.$api('Project').post(pickNoEmpty(this.model) as ProjectDto)
+          await this.$api('Project').post(this.model as ProjectDto)
           this.$message.success('发送成功~')
         } else {
           await this.$api('Project').update(
             this.id as string,
-            pickNoEmpty(this.model) as ProjectDto,
+            this.model as ProjectDto,
           )
           this.$message.success('修改成功~')
         }
@@ -105,10 +136,51 @@ export default class ProjectEdit extends Vue {
   get id() {
     return this.$route.query.id
   }
+
+  handleClose(tag) {
+    this.model.images!.splice(this.model.images!.indexOf(tag), 1)
+  }
+
+  showInput() {
+    this.inputVisible = true
+    this.$nextTick(() => {
+      ;(this.$refs.saveTagInput as any).$refs.input.focus()
+    })
+  }
+
+  handleInputConfirm() {
+    const inputValue = this.inputValue
+    if (inputValue) {
+      if (this.model.images) {
+        this.model.images.push(inputValue)
+      } else {
+        this.model.images = [inputValue]
+      }
+    }
+    this.inputVisible = false
+    this.inputValue = ''
+  }
 }
 </script>
 <style>
 .el-form-item__content .vue-codemirror {
   line-height: 1.3 !important;
+}
+</style>
+<style scoped>
+.el-tag + .el-tag {
+  margin-left: 10px;
+}
+.button-new-tag {
+  margin-left: 10px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.input-new-tag {
+  width: 90px;
+  margin-left: 10px;
+  vertical-align: bottom;
 }
 </style>
