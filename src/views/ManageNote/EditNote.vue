@@ -30,37 +30,44 @@
       :visible.sync="drawerOpen"
       class="drawer"
     >
-      <label>
-        心情
-      </label>
-      <el-select v-model="mood" placeholder="请选择">
-        <el-option
-          v-for="(value, key) in moodSet"
-          :key="key"
-          :label="value"
-          :value="key"
-        >
-        </el-option>
-      </el-select>
+      <el-form :model="model" label-width="80px" label-position="top">
+        <el-form-item label="心情">
+          <el-select v-model="mood" placeholder="请选择">
+            <el-option
+              v-for="(value, key) in moodSet"
+              :key="key"
+              :label="value"
+              :value="key"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
 
-      <label>
-        天气
-      </label>
-      <el-select v-model="weather" placeholder="请选择">
-        <el-option
-          v-for="(value, key) in weatherSet"
-          :key="key"
-          :label="value"
-          :value="key"
-        >
-        </el-option>
-      </el-select>
-
-      <label>设定密码?</label>
-      <el-input v-model="password" type="password"> </el-input>
-      <span>隐藏?</span>
-      <el-switch v-model="hide" active-color="#13ce66" inactive-color="#ff4949">
-      </el-switch>
+        <el-form-item label="天气">
+          <el-select v-model="weather" placeholder="请选择">
+            <el-option
+              v-for="(value, key) in weatherSet"
+              :key="key"
+              :label="value"
+              :value="key"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="设定密码?">
+          <el-input v-model="password" type="password"> </el-input>
+        </el-form-item>
+      </el-form>
+      <el-form>
+        <el-form-item label="隐藏?">
+          <el-switch
+            v-model="hide"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+          >
+          </el-switch>
+        </el-form-item>
+      </el-form>
     </el-drawer>
 
     <template #footer>
@@ -170,19 +177,6 @@ export default class NoteWriteView extends AutoSave {
 
   input {
     width: 8rem;
-  }
-}
-.drawer {
-  > label {
-    display: block;
-  }
-  > label,
-  > span {
-    margin: 1rem 0;
-  }
-  > span {
-    display: inline-block;
-    margin-right: 3rem;
   }
 }
 </style>

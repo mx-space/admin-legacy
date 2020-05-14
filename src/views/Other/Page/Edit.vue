@@ -36,8 +36,11 @@
       :visible.sync="drawerOpen"
       class="drawer"
     >
-      <label>页面顺序</label>
-      <el-input v-model="model.order"> </el-input>
+      <el-form>
+        <el-form-item label="页面顺序">
+          <el-input v-model="model.order"> </el-input>
+        </el-form-item>
+      </el-form>
     </el-drawer>
     <template #footer>
       <button @click="() => (drawerOpen = !drawerOpen)">
@@ -111,19 +114,6 @@ export default class PageList extends Vue {
   > input {
     width: 50%;
     color: #888;
-  }
-}
-.drawer {
-  > label {
-    display: block;
-  }
-  > label,
-  > span {
-    margin: 1rem 0;
-  }
-  > span {
-    display: inline-block;
-    margin-right: 3rem;
   }
 }
 </style>

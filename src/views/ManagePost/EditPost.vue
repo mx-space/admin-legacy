@@ -31,29 +31,39 @@
       :visible.sync="drawerOpen"
       class="drawer"
     >
-      <label>
-        分类
-      </label>
-      <el-select v-model="categoryId" placeholder="请选择">
-        <el-option
-          v-for="(value, key) in categoryRecord"
-          :key="key"
-          :label="value.name"
-          :value="value._id"
-        >
-        </el-option>
-      </el-select>
-      <label>概要</label>
-      <el-input
-        type="textarea"
-        :autosize="{ minRows: 2, maxRows: 4 }"
-        placeholder="请输入概要(Option)"
-        v-model="summary"
-      >
-      </el-input>
-      <span>隐藏?</span>
-      <el-switch v-model="hide" active-color="#13ce66" inactive-color="#ff4949">
-      </el-switch>
+      <el-form :model="model" label-width="80px" label-position="top">
+        <el-form-item label="分类">
+          <el-select v-model="categoryId" placeholder="请选择">
+            <el-option
+              v-for="(value, key) in categoryRecord"
+              :key="key"
+              :label="value.name"
+              :value="value._id"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="概要">
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 4 }"
+            placeholder="请输入概要(Option)"
+            v-model="summary"
+          >
+          </el-input>
+        </el-form-item>
+      </el-form>
+
+      <el-form>
+        <el-form-item label="隐藏?">
+          <el-switch
+            v-model="hide"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+          >
+          </el-switch>
+        </el-form-item>
+      </el-form>
     </el-drawer>
 
     <template #footer>
@@ -244,19 +254,6 @@ export default class PostWriteView extends AutoSave {
 
   input {
     width: 8rem;
-  }
-}
-.drawer {
-  > label {
-    display: block;
-  }
-  > label,
-  > span {
-    margin: 1rem 0;
-  }
-  > span {
-    display: inline-block;
-    margin-right: 3rem;
   }
 }
 </style>
