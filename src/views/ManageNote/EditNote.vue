@@ -173,14 +173,14 @@ export default class NoteWriteView extends AutoSave {
   }
 }
 .drawer {
-  label {
+  > label {
     display: block;
   }
-  label,
-  span {
+  > label,
+  > span {
     margin: 1rem 0;
   }
-  span {
+  > span {
     display: inline-block;
     margin-right: 3rem;
   }

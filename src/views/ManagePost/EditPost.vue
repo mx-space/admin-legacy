@@ -135,6 +135,9 @@ export default class PostWriteView extends AutoSave {
   }
   categoryRecord: Record<string, CategoryModel> = {}
   setDefaultCategory(): boolean {
+    if (this.categoryId) {
+      return true
+    }
     const defaultCategory = this.categories.first<CategoryModel>()
     if (!defaultCategory) {
       return false
@@ -146,6 +149,9 @@ export default class PostWriteView extends AutoSave {
   }
   timer: number | null = null
   mounted() {
+    if (this.categoryId) {
+      return
+    }
     this.timer = setInterval(() => {
       const ok = this.setDefaultCategory()
       if (ok) {
@@ -241,14 +247,14 @@ export default class PostWriteView extends AutoSave {
   }
 }
 .drawer {
-  label {
+  > label {
     display: block;
   }
-  label,
-  span {
+  > label,
+  > span {
     margin: 1rem 0;
   }
-  span {
+  > span {
     display: inline-block;
     margin-right: 3rem;
   }
