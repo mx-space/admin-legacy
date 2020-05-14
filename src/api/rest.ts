@@ -1,9 +1,11 @@
 import $axios from '@/utils/request'
 import inflection from 'inflection'
+import { AxiosRequestConfig } from 'axios'
 
 declare enum AccessRoutesEnum {
   Aggregate,
   Analyze,
+  Backup,
   Category,
   Comment,
   Link,
@@ -63,8 +65,14 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
       const data = await $axios.put(`${pluralize}/${id}`, body)
       return data as any
     },
-    async deleteOne<T = unknown>(id?: string): Promise<T> {
-      const data = await $axios.delete(`${pluralize}${id ? '/' + id : ''}`)
+    async deleteOne<T = unknown>(
+      id?: string,
+      config?: AxiosRequestConfig,
+    ): Promise<T> {
+      const data = await $axios.delete(
+        `${pluralize}${id ? '/' + id : ''}`,
+        config,
+      )
       return data as any
     },
     get gets() {

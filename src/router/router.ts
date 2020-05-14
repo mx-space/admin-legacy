@@ -85,7 +85,7 @@ const routes: MenuRouteConfig[] = [
         path: 'extra',
         name: 'extra',
         redirect: '/extra/project',
-        meta: { title: '额外', icon: ['fas', 'angle-double-right'] },
+        meta: { title: '其他', icon: ['fas', 'angle-double-right'] },
         component: () => import('@/layouts/BlankLayout.vue'),
         children: [
           {
@@ -194,6 +194,12 @@ const routes: MenuRouteConfig[] = [
             component: () => import('@/views/Setting/reset.vue'),
           },
         ],
+      },
+      {
+        path: 'backup',
+        name: 'backup',
+        meta: { title: '备份', icon: ['fas', 'undo-alt'] },
+        component: () => import('@/views/Backup/index.vue'),
       },
       {
         path: 'import',
