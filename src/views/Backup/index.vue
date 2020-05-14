@@ -50,7 +50,8 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import LayoutButton from '@/components/Button/LayoutButton.vue'
 import PageLayout from '@/layouts/PageLayout.vue'
-
+import axios from 'axios'
+import $axios from '../../api/rest'
 @Component({
   components: {
     LayoutButton,
@@ -85,11 +86,19 @@ export default class BackupView extends Vue {
   handleDeleteMore() {
     this.deleteMore(this.multipleSelection)
   }
-  async handleDownload(row) {
-    location.href =
-      (process.env.VUE_APP_BASE_API || 'http://localhost:2333') +
-      '/backups/' +
-      row.filename
+  handleDownload(row) {
+    this.$api('Backup')
+      .get(row.filename, {
+        responseType: 'blob',
+      })
+      .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response as any]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', row.filename + '.zip')
+        document.body.appendChild(link)
+        link.click()
+      })
   }
   multipleSelection = []
   handleSelectionChange(val) {
