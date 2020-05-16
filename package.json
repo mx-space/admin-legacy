@@ -41,7 +41,7 @@
     "vuex-module-decorators": "^0.17.0"
   },
   "devDependencies": {
-    "@types/codemirror": "^0.0.91",
+    "@types/codemirror": "^0.0.93",
     "@types/js-cookie": "^2.2.6",
     "@types/lodash": "^4.14.151",
     "@types/markdown-it": "^0.0.9",
