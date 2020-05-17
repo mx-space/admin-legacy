@@ -8,6 +8,7 @@
     <div class="middle-content">
       <slot />
     </div>
+
     <div
       :class="{
         'grid-half': !(device === 'mobile' || !preview),
@@ -47,35 +48,50 @@ import prism from 'markdown-it-prism'
 import { cmOptions } from '@/commom/editor'
 import '@/assets/scss/shizuku.scss'
 import { ViewportRecord } from '../../store/interfaces/viewport.interface'
-
+import 'codemirror/addon/display/fullscreen'
+import 'codemirror/addon/display/fullscreen.css'
 const md = new MD({
   html: true,
   xhtmlOut: true,
 }).use(prism)
-
+declare const window: any
 @Component({
   components: {
     NormInput,
     MaterialInput,
     codemirror,
   },
+})
+export default class Writer extends Vue {
   created() {
     const model = {
       title: this.$props.title,
       text: this.$props.text,
     }
     this.$data.model = model
-  },
+  }
   mounted() {
-    // window.cm = this.$refs.code.codemirror
+    const Editor: Editor = (this.$refs.code as any)?.codemirror
+    document.onkeydown = (e) => {
+      if (e.keyCode === 27) {
+        e.stopPropagation()
+        e.preventDefault()
+        Editor.setOption('fullScreen' as any, false)
+      }
+    }
+
     setTimeout(() => {
-      const Editor: Editor = (this.$refs.code as any)?.codemirror
       Editor.setSize(null, null)
       Editor.refresh()
+      if (this.fullscreen) {
+        this.toggleFullscreen(this.fullscreen)
+        return
+      }
     }, 2000)
-  },
-})
-export default class Writer extends Vue {
+  }
+  beforeDestroy() {
+    document.onkeydown = null
+  }
   @Watch('title')
   syncTitle(val: string) {
     this.model.title = val
@@ -105,6 +121,15 @@ export default class Writer extends Vue {
 
   @Prop({ required: true })
   text!: string
+
+  @Prop({ default: false })
+  fullscreen!: boolean
+
+  @Watch('fullscreen')
+  toggleFullscreen(val: boolean) {
+    const Editor: Editor = (this.$refs.code as any)?.codemirror
+    Editor.setOption('fullScreen' as any, val)
+  }
 
   preview = true
 
@@ -154,7 +179,7 @@ export default class Writer extends Vue {
   grid-template-columns: 1fr 1fr;
 }
 .preview {
-  height: 300px;
+  height: calc(100vh - 16.7rem);
   overflow: auto;
   padding: 12px 2rem;
 }
@@ -181,6 +206,7 @@ export default class Writer extends Vue {
 }
 .CodeMirror {
   border-radius: 4px;
+  height: calc(100vh - 15rem);
 }
 @media (max-width: $small) {
   .CodeMirror-fullscreen {

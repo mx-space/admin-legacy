@@ -18,6 +18,7 @@
       :title="model.title"
       :text="model.text"
       @change="onChange"
+      :fullscreen="fullscreen"
     >
       <div class="url">
         <label class="prefix">{{ `${baseUrl}/${category.slug}/` }}</label>
@@ -70,6 +71,9 @@
       <button @click="() => (drawerOpen = !drawerOpen)">
         <icon :icon="['fas', 'sliders-h']" />
       </button>
+      <button @click="toggleFullscreen">
+        <icon :icon="['fas', 'arrows-alt']" />
+      </button>
     </template>
   </PageLayout>
 </template>
@@ -87,6 +91,8 @@ import { CategoryModel } from '../../store/interfaces/category.interface'
 import { PostRespDto } from '@/models/response.dto'
 
 import { AutoSave } from '@/mixins/autosave'
+import { Mixins } from 'vue-property-decorator'
+import { FullScreenProperty } from '@/mixins/fullscreen'
 
 @Component({
   components: {
@@ -96,7 +102,10 @@ import { AutoSave } from '@/mixins/autosave'
     UInput: UnderlineInput,
   },
 })
-export default class PostWriteView extends AutoSave {
+export default class PostWriteView extends Mixins(
+  AutoSave,
+  FullScreenProperty,
+) {
   @Getter
   categories!: Map<string, CategoryModel>
 

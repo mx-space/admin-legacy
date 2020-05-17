@@ -17,6 +17,7 @@
           ;(model.title = title), (model.text = text)
         }
       "
+      :fullscreen="fullscreen"
     >
       <div class="subtitle">
         <UInput
@@ -46,6 +47,9 @@
       <button @click="() => (drawerOpen = !drawerOpen)">
         <icon :icon="['fas', 'sliders-h']" />
       </button>
+      <button @click="toggleFullscreen">
+        <icon :icon="['fas', 'arrows-alt']" />
+      </button>
     </template> </PageLayout
 ></template>
 
@@ -58,6 +62,9 @@ import { EnumPageType, PageDto } from '../../../models'
 import { pickNoEmpty } from '@/utils'
 import Writer from '@/components/Writer/index.vue'
 import UnderlineInput from '@/components/Input/UnderlineInput.vue'
+import { Mixins } from 'vue-property-decorator'
+
+import { FullScreenProperty } from '@/mixins/fullscreen'
 @Component({
   components: {
     PageLayout,
@@ -66,7 +73,7 @@ import UnderlineInput from '@/components/Input/UnderlineInput.vue'
     UInput: UnderlineInput,
   },
 })
-export default class PageList extends Vue {
+export default class PageList extends Mixins(FullScreenProperty) {
   model: PageDto = {
     title: '',
     subtitle: '',
@@ -95,7 +102,10 @@ export default class PageList extends Vue {
     } else {
       await this.$api('Page').update(
         this.id as string,
-        pickNoEmpty(this.model) as PageDto,
+        {
+          ...pickNoEmpty(this.model),
+          subtitle: this.model.subtitle || null,
+        } as PageDto,
       )
       this.$message.success('修改成功~')
     }

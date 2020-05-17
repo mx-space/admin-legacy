@@ -18,6 +18,7 @@
       :title="model.title"
       :text="model.text"
       @change="onChange"
+      :fullscreen="fullscreen"
     >
       <div class="url">
         <label class="prefix">{{ `${baseUrl}/notes/${nid || ''}` }}</label>
@@ -74,6 +75,9 @@
       <button @click="() => (drawerOpen = !drawerOpen)">
         <icon :icon="['fas', 'sliders-h']" />
       </button>
+      <button @click="toggleFullscreen">
+        <icon :icon="['fas', 'arrows-alt']" />
+      </button>
     </template>
   </PageLayout>
 </template>
@@ -95,7 +99,8 @@ import {
   WeatherValues,
 } from '../../models'
 import { AutoSave } from '@/mixins/autosave'
-
+import { Mixins } from 'vue-property-decorator'
+import { FullScreenProperty } from '@/mixins/fullscreen'
 @Component({
   components: {
     Button,
@@ -104,7 +109,10 @@ import { AutoSave } from '@/mixins/autosave'
     UInput: UnderlineInput,
   },
 })
-export default class NoteWriteView extends AutoSave {
+export default class NoteWriteView extends Mixins(
+  AutoSave,
+  FullScreenProperty,
+) {
   options = {
     title: '随便写点啥',
   }
