@@ -45,7 +45,7 @@
     "@types/js-cookie": "^2.2.6",
     "@types/lodash": "^4.14.151",
     "@types/markdown-it": "^0.0.9",
-    "@types/socket.io-client": "^1.4.32",
+    "@types/socket.io-client": "^1.4.33",
     "@types/validator": "^13.0.0",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.33.0",
