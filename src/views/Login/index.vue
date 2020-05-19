@@ -14,6 +14,7 @@
         type="password"
         :value="password"
         @keyup.enter.native="onSubmit"
+        ref="input"
         @change="(e) => (password = e)"
       />
       <footer style="text-align: center;">
@@ -40,7 +41,7 @@ export default {
       logging: false,
       loading: true,
       error: '',
-      remberPassword: true,
+      // remberPassword: true,
       password: '',
     }
   },
@@ -49,9 +50,17 @@ export default {
   },
   created() {
     // this.username = localStorage.getItem('focus_username') || ''
-    this.password = localStorage.getItem('focus_password') || ''
+    // this.password = localStorage.getItem('focus_password') || ''
+    document.onkeydown = (e) => {
+      try {
+        const $input = this.$refs.input.$el.querySelector('input')
+        $input.focus()
+      } catch {}
+    }
   },
-
+  beforeDestroy() {
+    document.onkeydown = null
+  },
   methods: {
     handleChange(e) {
       this.password = e
@@ -70,10 +79,10 @@ export default {
         })
         .then(() => {
           this.logging = false
-          if (this.remberPassword) {
-            // localStorage.setItem('focus_username', this.user.username)
-            localStorage.setItem('focus_password', this.password)
-          }
+          // if (this.remberPassword) {
+          // localStorage.setItem('focus_username', this.user.username)
+          // localStorage.setItem('focus_password', this.password)
+          // }
           this.$message.success('欢迎回来!')
           this.$router.push({ path: this.redirect || '/' })
         })

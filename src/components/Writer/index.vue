@@ -26,10 +26,11 @@
       <article
         id="markdown-render"
         class="preview"
-        v-html="md"
         v-if="device !== 'mobile' && preview"
         ref="preview"
-      ></article>
+      >
+        <vue-markdown @rendered="update" :source="model.text"> </vue-markdown>
+      </article>
     </div>
   </el-form>
 </template>
@@ -43,23 +44,23 @@ import { Prop, Watch } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 import { codemirror } from 'vue-codemirror'
 import { Editor } from 'codemirror'
-import MD from 'markdown-it'
-import prism from 'markdown-it-prism'
+
 import { cmOptions } from '@/commom/editor'
 import '@/assets/scss/shizuku.scss'
 import { ViewportRecord } from '../../store/interfaces/viewport.interface'
 import 'codemirror/addon/display/fullscreen'
 import 'codemirror/addon/display/fullscreen.css'
-const md = new MD({
-  html: true,
-  xhtmlOut: true,
-}).use(prism)
+
+import VueMarkdown from 'vue-markdown'
+import Prism from 'prismjs'
+
 declare const window: any
 @Component({
   components: {
     NormInput,
     MaterialInput,
     codemirror,
+    VueMarkdown,
   },
 })
 export default class Writer extends Vue {
@@ -104,8 +105,10 @@ export default class Writer extends Vue {
   cmOptions = cmOptions
   cmEvents = ['scroll', 'viewportChange', 'change']
 
-  get md() {
-    return md.render(this.text)
+  update() {
+    this.$nextTick(() => {
+      Prism.highlightAll()
+    })
   }
 
   @Getter
