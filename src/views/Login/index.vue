@@ -14,6 +14,7 @@
         type="password"
         :value="password"
         @keyup.enter.native="onSubmit"
+        @blur="$refs.input.$el.querySelector('input').focus()"
         ref="input"
         @change="(e) => (password = e)"
       />

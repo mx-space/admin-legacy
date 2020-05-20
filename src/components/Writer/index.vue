@@ -1,9 +1,10 @@
 <template>
-  <el-form ref="form" :model="model" label-width="80px">
+  <el-form ref="form" :model="model" label-width="80px" @submit.native.prevent>
     <material-input
       :value="model.title"
       :name="name"
       @change="handleChangeTitle"
+      @keydown.enter.native.prevent="$refs.code.codemirror.focus()"
     />
     <div class="middle-content">
       <slot />
