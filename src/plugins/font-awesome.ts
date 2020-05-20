@@ -3,7 +3,11 @@ import {
   IconPack,
   library,
 } from '@fortawesome/fontawesome-svg-core'
-import { faGithub, faTelegramPlane } from '@fortawesome/free-brands-svg-icons'
+import {
+  faGithub,
+  faTelegramPlane,
+  faSlackHash,
+} from '@fortawesome/free-brands-svg-icons'
 import {
   faCheckCircle,
   faComments,
@@ -90,6 +94,7 @@ export const Icons: IconType[] = [
   faSyncAlt,
   faUndoAlt,
   faArrowsAlt,
+  faSlackHash,
 ]
 
 library.add(...Icons)

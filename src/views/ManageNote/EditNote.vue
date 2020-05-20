@@ -2,6 +2,12 @@
   <PageLayout :options="options">
     <template #header>
       <Button
+        @click.native="dialogVisible = true"
+        :icon="['fab', 'slack-hash']"
+        name="解析"
+        backcolor="#34495e"
+      />
+      <Button
         @click.native="handleSave"
         :icon="['far', 'save']"
         backcolor="#2ecc71"
@@ -71,6 +77,14 @@
       </el-form>
     </el-drawer>
 
+    <el-dialog title="解析" :visible.sync="dialogVisible" width="60rem">
+      <el-input type="textarea" v-model="unparsed" rows="15"></el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="unparsed = ''">重置</el-button>
+        <el-button type="primary" @click="handleParse">确 定</el-button>
+      </span>
+    </el-dialog>
+
     <template #footer>
       <button @click="() => (drawerOpen = !drawerOpen)">
         <icon :icon="['fas', 'sliders-h']" />
@@ -123,6 +137,23 @@ export default class NoteWriteView extends Mixins(
     title: '',
     text: '',
   }
+  unparsed = ''
+  dialogVisible = false
+  handleParse() {
+    const str = this.unparsed.trim()
+    const lines = str.split('\n')
+    const title = lines.slice(0, 1)[0]
+
+    const res = title.replace('# ', '')
+
+    this.model.title = res
+    lines.shift()
+
+    this.model.text = lines.filter(Boolean).join('\n\n')
+    this.dialogVisible = false
+    this.unparsed = ''
+  }
+
   async handleSubmit() {
     const model: NoteDto = {
       ...this.model,
