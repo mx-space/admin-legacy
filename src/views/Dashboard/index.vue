@@ -58,6 +58,8 @@ import { parseDate } from '../../utils/time'
 import Card from '@/components/Card/index.vue'
 import { Getter } from 'vuex-class'
 import { ViewportRecord } from '../../store/interfaces/viewport.interface'
+import { EventTypes } from '../../socket/types'
+
 @Component({
   components: {
     PageLayout,
@@ -79,6 +81,14 @@ export default class Dashboard extends Vue {
       state: 0,
     })
     this.data = data
+
+    // handle event
+    this.$events.$on(EventTypes.COMMENT_CREATE, (data) => {
+      this.data.unshift(data)
+    })
+  }
+  beforeDestroy() {
+    this.$events.$off(EventTypes.COMMENT_CREATE)
   }
   parseTime(date) {
     return parseDate(date, 'YYYY年M月D日')

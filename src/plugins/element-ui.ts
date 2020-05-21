@@ -15,6 +15,7 @@ import {
   Option,
   Pagination,
   Popconfirm,
+  Popover,
   Row,
   Select,
   Switch,
@@ -23,7 +24,6 @@ import {
   TableColumn,
   Tabs,
   Tag,
-  Popover,
   Upload,
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'

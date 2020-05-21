@@ -1,3 +1,3 @@
 export const configs = {
-  title: 'MX-Space',
+  title: '静かな森',
 }
