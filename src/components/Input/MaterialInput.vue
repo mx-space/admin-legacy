@@ -5,6 +5,7 @@
       required
       v-model="text"
       @change="handleChange"
+      ref="input"
     />
     <span class="bar"></span>
     <label>{{ name }}</label>
@@ -21,6 +22,20 @@ export default Vue.extend({
       type: String,
       required: true,
     },
+  },
+  mounted() {
+    ;(this.$refs.input as HTMLInputElement).addEventListener(
+      'compositionstart',
+      () => {
+        this.$emit('composition', true)
+      },
+    )
+    ;(this.$refs.input as HTMLInputElement).addEventListener(
+      'compositionend',
+      () => {
+        this.$emit('composition', false)
+      },
+    )
   },
 })
 </script>

@@ -4,7 +4,8 @@
       :value="model.title"
       :name="name"
       @change="handleChangeTitle"
-      @keydown.enter.native.prevent="$refs.code.codemirror.focus()"
+      @keydown.enter.native.prevent="handleFocus"
+      @composition="(b) => (composition = b)"
     />
     <div class="middle-content">
       <slot />
@@ -172,6 +173,12 @@ export default class Writer extends Vue {
         left: 0,
         top: curPos * previewHeight * 1.2,
       })
+    }
+  }
+  composition = false
+  handleFocus() {
+    if (!this.composition) {
+      ;((this.$refs.code as any).codemirror as Editor).focus()
     }
   }
 }
