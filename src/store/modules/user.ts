@@ -28,7 +28,7 @@ export class UserModule extends VuexModule {
   }
 
   @Action({ commit: 'SET_USER', rawError: true })
-  clearData() {
+  clearToken() {
     removeToken()
     return {
       token: null,

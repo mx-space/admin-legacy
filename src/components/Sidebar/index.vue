@@ -78,9 +78,9 @@ export default Vue.extend({
     item,
   },
   methods: {
-    ...mapActions('user', ['clearData']),
+    ...mapActions('user', ['clearToken']),
     handleLogout() {
-      // this.clearData()
+      this.clearToken()
       this.$router.push('/login')
     },
   },

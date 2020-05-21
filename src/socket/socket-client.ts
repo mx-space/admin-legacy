@@ -12,9 +12,6 @@ export class SocketClient {
   #title = configs.title
   #notice = new Notice()
   constructor() {
-    this.initIO()
-  }
-  initIO() {
     this.socket = io(process.env.VUE_APP_GATEWAY || 'http://localhost:2333', {
       timeout: 10000,
       reconnectionDelay: 3000,
@@ -23,6 +20,12 @@ export class SocketClient {
         token: getToken(),
       },
     })
+    this.initIO()
+  }
+  initIO() {
+    if (!this.socket) {
+      return
+    }
     this.socket.open()
     this.socket.on(
       'message',
@@ -42,7 +45,7 @@ export class SocketClient {
     this.socket.io.opts.query = {
       token: getToken(),
     }
-    this.socket.open()
+    this.initIO()
   }
   handleEvent(type: EventTypes, data: any) {
     switch (type) {

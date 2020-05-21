@@ -18,7 +18,7 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions('app', ['updateViewport']),
-    ...mapActions('user', ['fetchMaster', 'clearData']),
+    ...mapActions('user', ['fetchMaster']),
     async checkLogged() {
       const { ok } = await this.$api('Master').get('check_logged')
       if (ok) {
