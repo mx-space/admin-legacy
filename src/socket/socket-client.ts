@@ -8,22 +8,23 @@ import { Notice } from '../utils/notice'
 import router from '../router'
 
 export class SocketClient {
-  public socket: SocketIOClient.Socket
+  public socket!: SocketIOClient.Socket
   #title = configs.title
   #notice = new Notice()
   constructor() {
+    this.initIO()
+  }
+  initIO() {
     this.socket = io(
       (process.env.VUE_APP_GATEWAY || 'http://localhost:2333') +
         '?token=' +
         getToken(),
       {
-        timeout: 3000,
+        timeout: 10000,
         reconnectionDelay: 3000,
-        reconnectionAttempts: 5,
         autoConnect: false,
       },
     )
-
     this.socket.open()
     this.socket.on(
       'message',
@@ -39,7 +40,6 @@ export class SocketClient {
       },
     )
   }
-
   handleEvent(type: EventTypes, data: any) {
     switch (type) {
       case EventTypes.GATEWAY_CONNECT: {
@@ -48,6 +48,11 @@ export class SocketClient {
       }
       case EventTypes.GATEWAY_DISCONNECT: {
         Notification.warning(data)
+        break
+      }
+      case EventTypes.AUTH_FAILED: {
+        console.log('等待登陆中...')
+        this.socket.close()
         break
       }
       case EventTypes.COMMENT_CREATE: {

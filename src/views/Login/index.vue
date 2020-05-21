@@ -34,6 +34,7 @@ import Button from '@/components/Button/ParallaxButton'
 import Avatar from '@/components/Avatar'
 import BlurInput from '@/components/Input/BlurInput'
 import { mapGetters } from 'vuex'
+import client from '../../socket'
 export default {
   name: 'Login',
   components: { Button, Avatar, BlurInput },
@@ -85,6 +86,7 @@ export default {
           // localStorage.setItem('focus_password', this.password)
           // }
           this.$message.success('欢迎回来!')
+          client.socket.initIO()
           this.$router.push({ path: this.redirect || '/' })
         })
     },
