@@ -1,10 +1,10 @@
 #!sh
 cd
 cd admin
+rm -rf ./dist
 git pull
 yarn 
 yarn build
-rm -rf ./dist
 cd dist
 git init
 git add .
