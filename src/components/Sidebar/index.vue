@@ -211,7 +211,7 @@ $left-margin: 1.5rem;
     width: 175px;
     position: fixed;
     left: 0;
-    z-index: 14;
+    z-index: 999999999999;
     background: linear-gradient(to bottom, #1188e8, #16aae7);
     transform: translateX(-100%);
     transition: transform 0.5s, box-shadow 0.5s;
