@@ -86,7 +86,7 @@ export default {
           // localStorage.setItem('focus_password', this.password)
           // }
           this.$message.success('欢迎回来!')
-          client.socket.initIO()
+          client.reconnect()
           this.$router.push({ path: this.redirect || '/' })
         })
     },

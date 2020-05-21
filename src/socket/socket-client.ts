@@ -3,9 +3,9 @@ import { Notification } from 'element-ui'
 import io from 'socket.io-client'
 import { configs } from '../configs'
 import { $events } from '../main'
-import { EventTypes } from './types'
-import { Notice } from '../utils/notice'
 import router from '../router'
+import { Notice } from '../utils/notice'
+import { EventTypes } from './types'
 
 export class SocketClient {
   public socket!: SocketIOClient.Socket
@@ -15,16 +15,14 @@ export class SocketClient {
     this.initIO()
   }
   initIO() {
-    this.socket = io(
-      (process.env.VUE_APP_GATEWAY || 'http://localhost:2333') +
-        '?token=' +
-        getToken(),
-      {
-        timeout: 10000,
-        reconnectionDelay: 3000,
-        autoConnect: false,
+    this.socket = io(process.env.VUE_APP_GATEWAY || 'http://localhost:2333', {
+      timeout: 10000,
+      reconnectionDelay: 3000,
+      autoConnect: false,
+      query: {
+        token: getToken(),
       },
-    )
+    })
     this.socket.open()
     this.socket.on(
       'message',
@@ -39,6 +37,12 @@ export class SocketClient {
         this.handleEvent(type, data)
       },
     )
+  }
+  reconnect() {
+    this.socket.io.opts.query = {
+      token: getToken(),
+    }
+    this.socket.open()
   }
   handleEvent(type: EventTypes, data: any) {
     switch (type) {
