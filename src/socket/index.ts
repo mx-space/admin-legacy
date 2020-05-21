@@ -1,6 +1,5 @@
-// import { SocketClient } from './socket-client'
+import { SocketClient } from './socket-client'
 
-// const client = new SocketClient()
+const client = new SocketClient()
 
-// export default client
-export {}
+export default client

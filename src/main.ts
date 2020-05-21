@@ -17,8 +17,10 @@ import './plugins/kico-message'
 import { rest } from '@/api/rest'
 import 'vue-tsx-support/enable-check'
 
-Vue.prototype.$api = rest
+export const $events = new Vue()
 
+Vue.prototype.$api = rest
+Vue.prototype.$events = $events
 Vue.config.productionTip = false
 
 new Vue({
