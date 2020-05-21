@@ -2,7 +2,7 @@
   "name": "mx-admin",
   "version": "0.10.0-alpha",
   "scripts": {
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --modern",
     "lint": "vue-cli-service lint --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
     "start": "vue-cli-service serve"

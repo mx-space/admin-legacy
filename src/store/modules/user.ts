@@ -27,12 +27,17 @@ export class UserModule extends VuexModule {
     return await rest('Master').get()
   }
 
-  @Action({ commit: 'SET_USER', rawError: true })
+  @Action({ commit: 'REMOVE_TOKEN', rawError: true })
   clearToken() {
     removeToken()
     return {
       token: null,
     }
+  }
+
+  @Mutation
+  REMOVE_TOKEN() {
+    this.token = null
   }
 
   @Mutation

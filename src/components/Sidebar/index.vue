@@ -50,11 +50,11 @@
 <script lang="ts">
 import { mapGetters, mapActions } from 'vuex'
 import item from './item.vue'
-import Vue from 'vue'
+import { Vue, Component } from 'vue-property-decorator'
 import { MenuModel } from '../../utils/build-menus'
-
-export default Vue.extend({
-  name: 'Sidebar',
+import { Getter } from 'vuex-class'
+import client from '../../socket'
+@Component({
   computed: {
     ...mapGetters({
       user: 'profile',
@@ -64,27 +64,35 @@ export default Vue.extend({
     homePage() {
       return process.env.VUE_APP_WEB_URL || 'http://localhost:2323'
     },
-    activeItems() {
-      const routePath = this.$route.path
-      const menus = this.items as Array<MenuModel>
-
-      return menus.findIndex((item) => {
-        const reg = new RegExp('^' + item.path, 'ig')
-        return !!routePath.match(reg)
-      })
-    },
   },
   components: {
     item,
   },
   methods: {
     ...mapActions('user', ['clearToken']),
-    handleLogout() {
-      this.clearToken()
-      this.$router.push('/login')
-    },
   },
 })
+export default class SideBar extends Vue {
+  name = 'Sidebar'
+
+  @Getter('menus')
+  items!: any
+
+  get activeItems() {
+    const routePath = this.$route.path
+    const menus = this.items as Array<MenuModel>
+
+    return menus.findIndex((item) => {
+      const reg = new RegExp('^' + item.path, 'ig')
+      return !!routePath.match(reg)
+    })
+  }
+  handleLogout() {
+    ;(this as any).clearToken()
+    this.$router.push('/login')
+    client.socket.close()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

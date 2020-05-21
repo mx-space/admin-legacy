@@ -9,17 +9,22 @@ import { EventTypes } from './types'
 
 export class SocketClient {
   public socket!: SocketIOClient.Socket
+
   #title = configs.title
   #notice = new Notice()
   constructor() {
-    this.socket = io(process.env.VUE_APP_GATEWAY || 'http://localhost:2333', {
-      timeout: 10000,
-      reconnectionDelay: 3000,
-      autoConnect: false,
-      query: {
-        token: getToken(),
+    this.socket = io(
+      (process.env.VUE_APP_GATEWAY || 'http://localhost:2333') + '/admin',
+      {
+        timeout: 10000,
+        reconnectionDelay: 3000,
+        autoConnect: false,
+        forceNew: true,
+        query: {
+          token: getToken(),
+        },
       },
-    })
+    )
     this.initIO()
   }
   initIO() {
@@ -45,7 +50,7 @@ export class SocketClient {
     this.socket.io.opts.query = {
       token: getToken(),
     }
-    this.initIO()
+    this.socket.open()
   }
   handleEvent(type: EventTypes, data: any) {
     switch (type) {
