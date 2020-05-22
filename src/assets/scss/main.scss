@@ -176,3 +176,6 @@ input {
 // .el-table--border {
 //   border: 0 !important;
 // }
+.CodeMirror-fullscreen {
+  z-index: 9999999 !important;
+}

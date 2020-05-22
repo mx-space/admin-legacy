@@ -21,7 +21,8 @@
         v-model="model.text"
         :options="cmOptions"
         :events="cmEvents"
-        @scroll="handleScroll"
+        @mousedown="handleUpdatePosition"
+        @keydown="handleUpdatePosition"
         @change="handleChangeText"
         ref="code"
       />
@@ -105,7 +106,7 @@ export default class Writer extends Vue {
     this.model.text = val
   }
   cmOptions = cmOptions
-  cmEvents = ['scroll', 'viewportChange', 'change']
+  cmEvents = ['mousedown', 'keydown', 'viewportChange', 'change']
 
   update() {
     this.$nextTick(() => {
@@ -154,25 +155,45 @@ export default class Writer extends Vue {
     this.handleEmitChange()
   }
 
-  handleScroll(e: Editor) {
+  handleUpdatePosition(e: Editor) {
     if (this.device !== 'mobile' && this.preview) {
-      const viewport = {
-        top: e.lineAtHeight(
-          (e as any).display.scroller.getBoundingClientRect().top,
-        ),
-        bottom: e.lineAtHeight(
-          (e as any).display.scroller.getBoundingClientRect().bottom,
-        ),
-      }
+      // console.log(e.getCursor().line)
 
-      const lineConut = e.lineCount()
-      const curPos = viewport.top / lineConut
       const preview = this.$refs.preview as HTMLElement
-      const previewHeight = preview.scrollHeight
-      preview.scrollTo({
-        left: 0,
-        top: curPos * previewHeight * 1.2,
-      })
+
+      const allRootNodes: HTMLElement[] = [
+        ...preview.querySelectorAll(
+          'div > *:not(ul):not(blockquote), div > ul > li, div > blockquote > *',
+        ),
+      ] as HTMLElement[]
+
+      // const blockquoteNode = [
+      //   ...preview.querySelectorAll('div > blockquote > *'),
+      // ]
+      // const allRootNodeLength = allRootNodes.length
+
+      const cur = e.getCursor().line
+      const lines = this.model.text.split('\n')
+      const thisLine = getPrevNotBlankLine(lines, cur)
+      const notEmptyLines = lines.filter(Boolean)
+      const shouldScrollToLine = notEmptyLines.findIndex((t) => t === thisLine)
+      try {
+        // console.log(allRootNodes[shouldScrollToLine].innerText)
+
+        const top = allRootNodes[shouldScrollToLine].offsetTop
+        const half = preview.getBoundingClientRect().height / 2
+
+        preview.scrollTop = top - half - 30
+      } catch {}
+
+      // console.log(allRootNodes[cur])
+
+      // const shouldScrollTop = pos
+      // preview.scrollTo({
+      //   left: 0,
+      //   // top: curPos * previewHeight * 1.2,
+      //   top: shouldScrollTop,
+      // })
     }
   }
   composition = false
@@ -181,6 +202,13 @@ export default class Writer extends Vue {
       ;((this.$refs.code as any).codemirror as Editor).focus()
     }
   }
+}
+
+function getPrevNotBlankLine(lines: string[], pos: number) {
+  if (pos < 0) {
+    return null
+  }
+  return lines[pos] || getPrevNotBlankLine(lines, pos - 1)
 }
 </script>
 <style lang="scss" scoped>
