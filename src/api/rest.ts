@@ -34,12 +34,10 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
   pluralize = prefix ? pluralize + `/${prefix}` : pluralize
   pluralize = encodeURI(pluralize)
   const apis = {
-    async getRecently<T = unknown>({
-      page,
-      size,
-      select,
-      state,
-    }: Gets = {}): Promise<T> {
+    async getRecently<T = unknown>(
+      { page, size, select, state }: Gets = {},
+      params: Record<string, any> = {},
+    ): Promise<T> {
       const data = await $axios({
         method: 'GET',
         url: `/${pluralize}`,
@@ -48,6 +46,7 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
           size: size || 10,
           select,
           state,
+          ...params,
         },
       })
       return data as any

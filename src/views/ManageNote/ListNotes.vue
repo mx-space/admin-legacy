@@ -13,9 +13,9 @@
       max-height="650"
       stripe
       v-loading="loading"
-      border
+      @sort-change="handleSort"
     >
-      <el-table-column prop="title" label="标题">
+      <el-table-column prop="title" label="标题" sortable="custom">
         <template slot-scope="scope">
           <el-button
             @click.native.prevent="
@@ -29,7 +29,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="mood" label="心情" width="100">
+      <el-table-column prop="mood" label="心情" width="100" sortable="custom">
         <template slot-scope="scope">
           {{
             moodSet[data[scope.$index].mood] || data[scope.$index].mood || ''
@@ -37,7 +37,12 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="weather" label="天气" width="100">
+      <el-table-column
+        prop="weather"
+        label="天气"
+        width="100"
+        sortable="custom"
+      >
         <template slot-scope="scope">
           {{
             weatherSet[data[scope.$index].weather] ||
@@ -46,13 +51,23 @@
           }}
         </template>
       </el-table-column>
-      <el-table-column prop="created" label="创建时间" width="150">
+      <el-table-column
+        prop="created"
+        label="创建时间"
+        width="150"
+        sortable="custom"
+      >
         <template slot-scope="scope">
           {{ relativeTimeFromNow(data[scope.$index].created) }}
         </template>
       </el-table-column>
 
-      <el-table-column prop="modified" label="修改于" width="150">
+      <el-table-column
+        prop="modified"
+        label="修改于"
+        width="150"
+        sortable="custom"
+      >
         <template slot-scope="scope">
           {{ parseDate(data[scope.$index].modified) }}
         </template>
@@ -131,17 +146,29 @@ export default class ListNotes extends Vue {
     return time.relativeTimeFromNow(val)
   }
   parseDate(val: string) {
-    return time.parseDate(val, 'H:mm:ss A')
+    return time.parseDate(val, 'YYYY年M月D日')
   }
+  sortBy = ''
+  sortOrder = 0
   async getData(ops: { page?: number; size?: number } = {}) {
     this.loading = true
-    const { page, data } = await this.$api('Note').gets({
-      page: ops.page || this.page?.currentPage || 1,
-      size: ops.size || this.page?.size || 10,
-    })
+    const { page, data } = await this.$api('Note').gets(
+      {
+        page: ops.page || this.page?.currentPage || 1,
+        size: ops.size || this.page?.size || 10,
+      },
+      this.sortBy ? { sortBy: this.sortBy, sortOrder: this.sortOrder } : {},
+    )
     this.page = page
     this.data = data
     this.loading = false
+  }
+
+  async handleSort({ prop, order }) {
+    this.sortOrder = order ? { descending: -1, ascending: 1 }[order] : 0
+
+    this.sortBy = !this.sortOrder ? '' : prop
+    await this.getData()
   }
 }
 </script>
@@ -167,18 +194,5 @@ $highlight: #ffcca8;
 }
 .el-pager {
   display: inline-block;
-}
-</style>
-
-<style lang="scss">
-.el-table {
-  * {
-    border-right: 0 !important;
-    border-left: 0 !important;
-    border-top: 0 !important;
-  }
-}
-.el-table--border {
-  border: 0 !important;
 }
 </style>

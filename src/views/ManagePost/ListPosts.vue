@@ -13,9 +13,10 @@
       max-height="650"
       stripe
       v-loading="loading"
-      border
+      @sort-change="handleSort"
+      @filter-change="filterHandler"
     >
-      <el-table-column prop="title" label="标题">
+      <el-table-column prop="title" label="标题" sortable="custom">
         <template slot-scope="scope">
           <el-button
             @click.native.prevent="
@@ -28,7 +29,14 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="title" label="分类" width="200">
+      <el-table-column
+        prop="category"
+        label="分类"
+        sortable="custom"
+        width="200"
+        :filters="categoryFilters"
+        column-key="category"
+      >
         <template slot-scope="scope">
           {{
             categories &&
@@ -38,13 +46,23 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="created" label="创建时间" width="150">
+      <el-table-column
+        prop="created"
+        label="创建时间"
+        width="150"
+        sortable="custom"
+      >
         <template slot-scope="scope">
           {{ relativeTimeFromNow(data[scope.$index].created) }}
         </template>
       </el-table-column>
 
-      <el-table-column prop="modified" label="修改于" width="150">
+      <el-table-column
+        prop="modified"
+        label="修改于"
+        width="150"
+        sortable="custom"
+      >
         <template slot-scope="scope">
           {{ parseDate(data[scope.$index].modified) }}
         </template>
@@ -72,6 +90,7 @@
         @next-click="handleTo(page.currentPage + 1)"
         @current-change="handleTo"
         class="el-pager"
+        v-if="!isFilter"
       />
     </template>
   </PageLayout>
@@ -81,7 +100,7 @@
 import PageLayout from '@/layouts/PageLayout.vue'
 import { mapGetters } from 'vuex'
 import Button from '@/components/Button/LayoutButton'
-
+import { omit } from 'lodash'
 import * as time from '@/utils/time'
 export default {
   components: {
@@ -92,7 +111,11 @@ export default {
     return {
       page: {},
       data: [],
+      raw: [],
       loading: true,
+      isFilter: false,
+      sortBy: '',
+      sortOrder: 0,
     }
   },
   async created() {
@@ -100,6 +123,11 @@ export default {
   },
   computed: {
     ...mapGetters(['categories']),
+    categoryFilters() {
+      return this.categories.toArray().map(([id, val]) => {
+        return { text: val.name, value: id }
+      })
+    },
   },
   methods: {
     getCategoryName(id) {
@@ -126,18 +154,52 @@ export default {
       return time.relativeTimeFromNow(val)
     },
     parseDate(val) {
-      return time.parseDate(val, 'H:mm:ss A')
+      return time.parseDate(val, 'YYYY年M月D日')
     },
     async getData(ops = {}) {
       this.loading = true
-      const { page, data } = await this.$api('Post').gets({
-        page: ops.page || this.page?.currentPage || 1,
-        size: ops.size || this.page?.size || 10,
-      })
+      const { page, data } = await this.$api('Post').gets(
+        {
+          page: ops.page || this.page?.currentPage || 1,
+          size: ops.size || this.page?.size || 10,
+        },
+        this.sortBy ? { sortBy: this.sortBy, sortOrder: this.sortOrder } : {},
+      )
       this.page = page
       this.data = data
-
+      this.raw = [...data]
       this.loading = false
+    },
+    async filterHandler(filters) {
+      const categories = filters['category']
+      if (!categories.length) {
+        this.data = [...this.raw]
+        this.isFilter = false
+        return
+      }
+      const serialization = categories.join(',')
+      let { data } = await this.$api('Category').get(undefined, {
+        params: { ids: serialization },
+      })
+      data = data
+        .map((c) => {
+          return c.category.children.map((ch) => ({
+            ...ch,
+            categoryId: c.category._id,
+            ...omit(c.category, 'children'),
+          }))
+        })
+        .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
+        .flat()
+      // console.log(data)
+      this.data = data
+      this.isFilter = true
+    },
+    async handleSort({ prop, order }) {
+      this.sortOrder = order ? { descending: -1, ascending: 1 }[order] : 0
+
+      this.sortBy = !this.sortOrder ? '' : prop
+      await this.getData()
     },
   },
 }
@@ -164,18 +226,5 @@ $highlight: #ffcca8;
 }
 .el-pager {
   display: inline-block;
-}
-</style>
-
-<style lang="scss">
-.el-table {
-  * {
-    border-right: 0 !important;
-    border-left: 0 !important;
-    border-top: 0 !important;
-  }
-}
-.el-table--border {
-  border: 0 !important;
 }
 </style>

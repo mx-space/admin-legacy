@@ -28,7 +28,7 @@
       <article
         id="markdown-render"
         class="preview"
-        v-if="device !== 'mobile' && preview"
+        v-if="(device !== 'mobile' && preview && !fullscreen)"
         ref="preview"
       >
         <vue-markdown @rendered="update" :source="model.text"> </vue-markdown>
