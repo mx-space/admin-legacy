@@ -1,3 +1,12 @@
+/*
+ * @Author: Innei
+ * @Date: 2020-05-21 17:01:09
+ * @LastEditTime: 2020-05-26 19:45:11
+ * @LastEditors: Innei
+ * @FilePath: /mx-admin/src/socket/socket-client.ts
+ * @MIT
+ */
+
 import { getToken } from '@/utils/auth'
 import { Notification } from 'element-ui'
 import io from 'socket.io-client'

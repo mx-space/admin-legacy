@@ -22,7 +22,9 @@ module.exports = {
    */
   publicPath:
     process.env.NODE_ENV === 'production'
-      ? 'https://cdn.jsdelivr.net/gh/Innei/admin-cdn@master'
+      ? !process.env.VUE_APP_PUBLIC_URL
+        ? 'https://cdn.jsdelivr.net/gh/Innei/admin-cdn@master'
+        : ''
       : '/',
 
   outputDir: 'dist',

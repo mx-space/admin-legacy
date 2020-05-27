@@ -138,11 +138,16 @@
           <el-input
             type="textarea"
             :value="replyContext.text"
+            :autosize="{ minRows: 4, maxRows: 10 }"
             disabled
           ></el-input>
         </el-form-item>
         <el-form-item label="回复内容">
-          <el-input type="textarea" v-model="model.text" autosize></el-input>
+          <el-input
+            type="textarea"
+            v-model="model.text"
+            :autosize="{ minRows: 4, maxRows: 10 }"
+          ></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
