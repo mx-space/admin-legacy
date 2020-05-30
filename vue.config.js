@@ -1,3 +1,12 @@
+/*
+ * @Author: Innei
+ * @Date: 2020-05-27 19:10:07
+ * @LastEditTime: 2020-05-30 12:45:15
+ * @LastEditors: Innei
+ * @FilePath: /mx-admin/vue.config.js
+ * @Code with Love
+ */
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 'use strict'
@@ -30,7 +39,12 @@ module.exports = {
   outputDir: 'dist',
   assetsDir: 'static',
   productionSourceMap: false,
-
+  pwa: {
+    name: 'mx-space-admin',
+    themeColor: '#1681e1',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black',
+  },
   devServer: {
     port: port,
     open: true,

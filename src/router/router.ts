@@ -188,6 +188,12 @@ const routes: MenuRouteConfig[] = [
             component: () => import('@/views/Setting/system.vue'),
           },
           {
+            path: 'security',
+            name: 'setting-security',
+            meta: { title: '安全', icon: ['fas', 'lock-open'] },
+            component: () => import('@/views/Setting/security.vue'),
+          },
+          {
             path: 'reset',
             name: 'reset',
             meta: { title: '重置', icon: ['fas', 'redo-alt'] },

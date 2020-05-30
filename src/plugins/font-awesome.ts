@@ -48,6 +48,7 @@ import {
   faSyncAlt,
   faUndoAlt,
   faArrowsAlt,
+  faLockOpen,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Vue from 'vue'
@@ -95,6 +96,7 @@ export const Icons: IconType[] = [
   faUndoAlt,
   faArrowsAlt,
   faSlackHash,
+  faLockOpen,
 ]
 
 library.add(...Icons)

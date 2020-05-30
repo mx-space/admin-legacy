@@ -241,3 +241,15 @@ export declare class BackupOptions {
   Bucket?: string
   Region: string
 }
+
+export interface TokenModel {
+  created: string
+
+  token: string
+
+  expired?: Date
+
+  name: string
+
+  id: string
+}

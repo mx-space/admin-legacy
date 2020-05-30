@@ -1,3 +1,11 @@
+<!--
+ * @Author: Innei
+ * @Date: 2020-04-11 19:47:00
+ * @LastEditTime: 2020-05-30 13:32:26
+ * @LastEditors: Innei
+ * @FilePath: /mx-admin/src/layouts/BasicLayout.vue
+ * @Coding with Love
+-->
 <template>
   <div class="basic-wrap" ref="wrap">
     <Sidebar />
@@ -47,7 +55,7 @@ export default {
   height: 100%;
   width: 100%;
   position: relative;
-  transform: scale(0.8);
+  transform: scale(0.95);
   background: linear-gradient(to bottom, #1188e8, #16aae7);
   border-radius: 24px;
   display: grid;

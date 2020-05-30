@@ -1,3 +1,12 @@
+/*
+ * @Author: Innei
+ * @Date: 2020-04-20 21:39:10
+ * @LastEditTime: 2020-05-30 13:31:05
+ * @LastEditors: Innei
+ * @FilePath: /mx-admin/src/plugins/element-ui.ts
+ * @Coding with Love
+ */
+
 import {
   Avatar,
   Button,
@@ -25,6 +34,7 @@ import {
   Tabs,
   Tag,
   Upload,
+  DatePicker,
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Vue from 'vue'
@@ -56,6 +66,7 @@ const components = [
   Tabs,
   Popover,
   Upload,
+  DatePicker,
 ]
 
 components.forEach((component) => {

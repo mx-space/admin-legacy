@@ -4,6 +4,7 @@ import { AxiosRequestConfig } from 'axios'
 
 declare enum AccessRoutesEnum {
   Aggregate,
+  Auth,
   Analyze,
   Backup,
   Category,
@@ -28,7 +29,9 @@ interface Gets {
 }
 
 export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
-  let pluralize = ['Master', 'Menu', 'Aggregate', 'Analyze'].includes(rest)
+  let pluralize = ['Master', 'Menu', 'Aggregate', 'Analyze', 'Auth'].includes(
+    rest,
+  )
     ? rest.toLowerCase()
     : inflection.pluralize(rest).toLowerCase()
   pluralize = prefix ? pluralize + `/${prefix}` : pluralize
