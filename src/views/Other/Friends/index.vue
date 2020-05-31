@@ -97,6 +97,7 @@
       <el-pagination
         hide-on-single-page
         layout="prev, pager, next"
+        :page-size="50"
         :total="page.total"
         @prev-click="handleTo(page.currentPage - 1)"
         @next-click="handleTo(page.currentPage + 1)"
