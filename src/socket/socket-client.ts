@@ -1,7 +1,7 @@
 /*
  * @Author: Innei
  * @Date: 2020-05-21 17:01:09
- * @LastEditTime: 2020-05-26 19:45:11
+ * @LastEditTime: 2020-05-31 19:32:10
  * @LastEditors: Innei
  * @FilePath: /mx-admin/src/socket/socket-client.ts
  * @MIT
@@ -28,7 +28,6 @@ export class SocketClient {
         timeout: 10000,
         reconnectionDelay: 3000,
         autoConnect: false,
-        forceNew: true,
         query: {
           token: getToken(),
         },

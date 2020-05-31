@@ -213,6 +213,12 @@ const routes: MenuRouteConfig[] = [
         meta: { title: '导入', icon: ['fas', 'file-import'] },
         component: () => import('@/views/Setting/import.vue'),
       },
+      {
+        path: 'optimize',
+        name: 'optimize',
+        meta: { title: '优化', icon: ['fas', 'wrench'] },
+        component: () => import('@/views/Optimize/index.vue'),
+      },
     ],
   },
   {
