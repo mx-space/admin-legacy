@@ -89,7 +89,7 @@
       <button @click="() => (drawerOpen = !drawerOpen)">
         <icon :icon="['fas', 'sliders-h']" />
       </button>
-      <button @click="toggleFullscreen">
+      <button @click="toggleFullscreen(true)">
         <icon :icon="['fas', 'arrows-alt']" />
       </button>
     </template>

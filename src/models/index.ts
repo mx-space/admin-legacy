@@ -140,18 +140,18 @@ export interface PageDto {
 }
 
 export interface PostDto {
-  title?: string
+  title: string
 
-  text?: string
+  text: string
 
-  slug?: string
+  slug: string
 
-  categoryId?: string
+  categoryId: string
 
   summary?: string
 
   hide?: boolean
-
+  copyright?: boolean
   options?: object
 }
 

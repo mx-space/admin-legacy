@@ -80,7 +80,8 @@ export default class Writer extends Vue {
       if (e.keyCode === 27) {
         e.stopPropagation()
         e.preventDefault()
-        Editor.setOption('fullScreen' as any, false)
+
+        this.fullscreen = false
       }
     }
 
@@ -135,6 +136,7 @@ export default class Writer extends Vue {
   toggleFullscreen(val: boolean) {
     const Editor: Editor = (this.$refs.code as any)?.codemirror
     Editor.setOption('fullScreen' as any, val)
+    this.fullscreen = val
   }
 
   preview = true

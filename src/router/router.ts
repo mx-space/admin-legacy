@@ -42,7 +42,7 @@ const routes: MenuRouteConfig[] = [
           {
             path: 'edit',
             name: 'edit-posts',
-            meta: { title: '编辑文章', icon: ['fas', 'pencil-alt'] },
+            meta: { title: '撰写文章', icon: ['fas', 'pencil-alt'] },
             props: true,
             component: () => import('@/views/ManagePost/EditPost.vue'),
           },
@@ -70,7 +70,7 @@ const routes: MenuRouteConfig[] = [
           {
             path: 'edit',
             name: 'edit-notes',
-            meta: { title: '编辑随记', icon: ['fas', 'pencil-alt'] },
+            meta: { title: '撰写随记', icon: ['fas', 'pencil-alt'] },
             component: () => import('@/views/ManageNote/EditNote.vue'),
           },
         ],

@@ -55,10 +55,19 @@
         </el-form-item>
       </el-form>
 
-      <el-form>
+      <el-form label-width="100px">
         <el-form-item label="隐藏?">
           <el-switch
             v-model="hide"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+          >
+          </el-switch>
+        </el-form-item>
+
+        <el-form-item label="Copyright?">
+          <el-switch
+            v-model="copyright"
             active-color="#13ce66"
             inactive-color="#ff4949"
           >
@@ -71,7 +80,7 @@
       <button @click="() => (drawerOpen = !drawerOpen)">
         <icon :icon="['fas', 'sliders-h']" />
       </button>
-      <button @click="toggleFullscreen">
+      <button @click="toggleFullscreen(true)">
         <icon :icon="['fas', 'arrows-alt']" />
       </button>
     </template>
@@ -93,6 +102,7 @@ import { PostRespDto } from '@/models/response.dto'
 import { AutoSave } from '@/mixins/autosave'
 import { Mixins } from 'vue-property-decorator'
 import { FullScreenProperty } from '@/mixins/fullscreen'
+import { PostDto } from '../../models'
 
 @Component({
   components: {
@@ -120,12 +130,13 @@ export default class PostWriteView extends Mixins(
   drawerOpen = false
 
   async handleSubmit() {
-    const model = {
+    const model: PostDto = {
       ...this.model,
       slug: this.slug,
       categoryId: this.category._id,
       summary: this.summary === '' ? undefined : this.summary,
       hide: this.hide,
+      copyright: this.copyright,
     }
     this.id
       ? await this.$api('Post').update(this.id as string, model)
@@ -232,30 +243,9 @@ export default class PostWriteView extends Mixins(
   slug = ''
   summary = ''
   hide = false
-
-  // autoSaveTimer: any
-  // handleSave() {
-  //   this.$message.success('自动保存已开启')
-  //   this.autoSaveTimer = setInterval(() => {
-  //     const data = JSON.stringify({
-  //       time: new Date().toISOString(),
-  //       data: this.model,
-  //     })
-  //     if (this.id) {
-  //       localStorage.setItem(this.prefix + '-' + this.id, data)
-  //     } else localStorage.setItem(this.prefix, data)
-  //   }, 3000)
-  // }
-
+  copyright = true
   prefix = 'mx-space-post'
 }
-// interface SavedDataType {
-//   time: string
-//   data: {
-//     title: string
-//     text: string
-//   }
-// }
 </script>
 <style lang="scss" scoped>
 .url {
