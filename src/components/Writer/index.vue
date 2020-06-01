@@ -76,14 +76,6 @@ export default class Writer extends Vue {
   }
   mounted() {
     const Editor: Editor = (this.$refs.code as any)?.codemirror
-    document.onkeydown = (e) => {
-      if (e.keyCode === 27) {
-        e.stopPropagation()
-        e.preventDefault()
-
-        this.fullscreen = false
-      }
-    }
 
     setTimeout(() => {
       Editor.setSize(null, null)
@@ -94,9 +86,7 @@ export default class Writer extends Vue {
       }
     }, 2000)
   }
-  beforeDestroy() {
-    document.onkeydown = null
-  }
+
   @Watch('title')
   syncTitle(val: string) {
     this.model.title = val
@@ -136,7 +126,6 @@ export default class Writer extends Vue {
   toggleFullscreen(val: boolean) {
     const Editor: Editor = (this.$refs.code as any)?.codemirror
     Editor.setOption('fullScreen' as any, val)
-    this.fullscreen = val
   }
 
   preview = true

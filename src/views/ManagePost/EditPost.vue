@@ -165,6 +165,7 @@ export default class PostWriteView extends Mixins(
   }
   categoryRecord: Record<string, CategoryModel> = {}
   setDefaultCategory(): boolean {
+    this.categoryRecord = this.categories.toObject()
     if (this.categoryId) {
       return true
     }
@@ -174,7 +175,6 @@ export default class PostWriteView extends Mixins(
     }
     this.categoryId = defaultCategory._id
 
-    this.categoryRecord = this.categories.toObject()
     return true
   }
   timer: number | null = null
