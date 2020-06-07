@@ -1,7 +1,7 @@
 /*
  * @Author: Innei
  * @Date: 2020-05-21 17:01:09
- * @LastEditTime: 2020-05-31 19:32:10
+ * @LastEditTime: 2020-06-07 15:16:07
  * @LastEditors: Innei
  * @FilePath: /mx-admin/src/socket/socket-client.ts
  * @MIT
@@ -14,8 +14,8 @@ import { configs } from '../configs'
 import { $events } from '../main'
 import router from '../router'
 import { Notice } from '../utils/notice'
-import { EventTypes } from './types'
-
+import { EventTypes, NotificationTypes } from './types'
+Notification['warn'] = Notification['warning']
 export class SocketClient {
   public socket!: SocketIOClient.Socket
 
@@ -60,14 +60,13 @@ export class SocketClient {
     }
     this.socket.open()
   }
-  handleEvent(type: EventTypes, data: any) {
+  handleEvent(type: EventTypes, payload: any) {
     switch (type) {
       case EventTypes.GATEWAY_CONNECT: {
-        Notification.success(data)
         break
       }
       case EventTypes.GATEWAY_DISCONNECT: {
-        Notification.warning(data)
+        Notification.warning(payload)
         break
       }
       case EventTypes.AUTH_FAILED: {
@@ -76,7 +75,7 @@ export class SocketClient {
         break
       }
       case EventTypes.COMMENT_CREATE: {
-        const body = data.author + ': ' + data.text
+        const body = payload.author + ': ' + payload.text
         const notice = Notification.success({
           title: '新的评论',
           message: body,
@@ -89,8 +88,24 @@ export class SocketClient {
         this.#notice.notice(this.#title + ' 收到新的评论', body)
         break
       }
+      case EventTypes.ADMIN_NOTIFICATION: {
+        const { type, message } = payload as {
+          type: NotificationTypes
+          message: string
+        }
+
+        Notification[type](message)
+        break
+      }
+      case EventTypes.CONTENT_REFRESH: {
+        Notification.warning('将在 1 秒后重载页面')
+        setTimeout(() => {
+          location.reload()
+        }, 1000)
+        break
+      }
     }
 
-    $events.$emit(type, data)
+    $events.$emit(type, payload)
   }
 }

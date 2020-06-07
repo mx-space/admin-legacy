@@ -27,6 +27,20 @@
             下载
           </el-button>
           <el-popconfirm
+            :title="`确定回退到 ${scope.row.filename} 吗?`"
+            @onConfirm="handleRollback(scope.row)"
+          >
+            <el-button
+              type="text"
+              size="small"
+              slot="reference"
+              style="color: #f77c38;"
+            >
+              回退
+            </el-button>
+          </el-popconfirm>
+
+          <el-popconfirm
             title="确定删除吗?"
             @onConfirm="handleDelete(scope.row)"
           >
@@ -50,8 +64,8 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import LayoutButton from '@/components/Button/LayoutButton.vue'
 import PageLayout from '@/layouts/PageLayout.vue'
-import axios from 'axios'
-import $axios from '../../api/rest'
+import client from '../../socket'
+
 @Component({
   components: {
     LayoutButton,
@@ -85,6 +99,15 @@ export default class BackupView extends Vue {
   }
   handleDeleteMore() {
     this.deleteMore(this.multipleSelection)
+  }
+  async handleRollback(row) {
+    const { filename } = row
+    await this.$api('Backup').api(filename, {
+      method: 'patch',
+      params: {
+        sid: client.socket.id,
+      },
+    })
   }
   handleDownload(row) {
     this.$api('Backup')

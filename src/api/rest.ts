@@ -1,6 +1,6 @@
 import $axios from '@/utils/request'
-import inflection from 'inflection'
 import { AxiosRequestConfig } from 'axios'
+import inflection from 'inflection'
 
 declare enum AccessRoutesEnum {
   Aggregate,
@@ -97,7 +97,7 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
       body,
     }: {
       id?: string
-      body: U
+      body?: U
     }): Promise<U> {
       const data = await $axios({
         url: id ? `${pluralize}/${id}` : pluralize,
@@ -111,6 +111,10 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
     },
     get delete() {
       return this.deleteOne
+    },
+    get api() {
+      return (path: string, rest: AxiosRequestConfig) =>
+        $axios.request({ url: pluralize + '/' + path, ...rest })
     },
   }
   return apis

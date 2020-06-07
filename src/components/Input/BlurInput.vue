@@ -1,3 +1,11 @@
+<!--
+ * @Author: Innei
+ * @Date: 2020-04-08 15:03:08
+ * @LastEditTime: 2020-06-07 13:50:00
+ * @LastEditors: Innei
+ * @FilePath: /mx-admin/src/components/Input/BlurInput.vue
+ * @Coding with Love
+-->
 <template>
   <div class="input-wrap">
     <input
@@ -28,7 +36,7 @@ export default Vue.extend({
     -webkit-text-fill-color: #eee;
     color: #eee;
 
-    padding: 1px 8px;
+    padding: 3px 12px;
     line-height: 1.8;
   }
   .blur {
@@ -47,6 +55,6 @@ export default Vue.extend({
 }
 * {
   outline: none;
-  border-radius: 3px;
+  border-radius: 8px;
 }
 </style>
