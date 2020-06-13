@@ -106,10 +106,10 @@
     "@antv/util" "~2.0.0"
     detect-browser "^4.6.0"
 
-"@antv/g2@4.0.8":
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/@antv/g2/-/g2-4.0.8.tgz#adc459da368da3625e94244dbf0f0bf73bf02feb"
-  integrity sha512-op5xjArjAsGp8tIpm/AClrHfnguV4tI7xnVSoE+koVnSksQZ9OQzz3GIYvLX7FhbUBWPaQjUoD+ulx+/uexp5Q==
+"@antv/g2@4.0.10":
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/@antv/g2/-/g2-4.0.10.tgz#dd60edaf919d9033ccf7ad7d4b4aeef975d392ee"
+  integrity sha512-TINhRO5E9SfVuPTICK78VHZy0PSy1nRPO0UWK0B15WvJTWUjoLs2htfJ1aDLjxBy599LwD/KTC25s9aSg/sN+w==
   dependencies:
     "@antv/adjust" "^0.2.1"
     "@antv/attr" "^0.3.1"
