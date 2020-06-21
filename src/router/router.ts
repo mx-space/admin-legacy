@@ -1,5 +1,5 @@
 import BasicLayout from '@/layouts/BasicLayout.vue'
-import Vue from 'vue'
+import Vue, { AsyncComponent, ComponentOptions } from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 Vue.use(VueRouter)
 type Modify<T, R> = Omit<T, keyof R> & R
@@ -9,7 +9,7 @@ type MenuRouteConfig = Modify<
   {
     meta?: { title: string; icon?: string[]; isPublic?: boolean }
     children?: MenuRouteConfig[]
-    component: RouteConfig['component']
+    component: ComponentOptions<Vue> | typeof Vue | AsyncComponent
   }
 >
 
