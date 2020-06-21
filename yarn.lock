@@ -1296,10 +1296,10 @@
   resolved "https://registry.yarnpkg.com/@soda/get-current-script/-/get-current-script-1.0.0.tgz#623aa40623550e3b94767cffeb096a6fb597ed09"
   integrity sha512-9GvTek+7cVw7r+L7TNGOG1astZJWXz2h5q4BqMXl28KN+24iSCm1xo+RhZOZvwdT3bzNe9hD7riJc/lBoO7mgg==
 
-"@types/codemirror@0.0.94":
-  version "0.0.94"
-  resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-0.0.94.tgz#386a74ee1fac9db624be288947df66e3cdb5ad45"
-  integrity sha512-uMf+r8CPbR8sRsFqdoKpE+SqXqTvw/7l21pk31TRSyH0nXKmtcPBW+YAOdBapEctIvwHkFvlybApP4OExE1glA==
+"@types/codemirror@0.0.96":
+  version "0.0.96"
+  resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-0.0.96.tgz#73b52e784a246cebef31d544fef45ea764de5bad"
+  integrity sha512-GTswEV26Bl1byRxpD3sKd1rT2AISr0rK9ImlJgEzfvqhcVWeu4xQKFQI6UgSC95NT5swNG4st/oRMeGVZgPj9w==
   dependencies:
     "@types/tern" "*"
 
