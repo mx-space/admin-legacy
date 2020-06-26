@@ -1,3 +1,12 @@
+/*
+ * @Author: Innei
+ * @Date: 2020-04-30 20:08:37
+ * @LastEditTime: 2020-06-26 22:14:15
+ * @LastEditors: Innei
+ * @FilePath: /mx-admin/.eslintrc.js
+ * @Coding with Love
+ */
+
 module.exports = {
   root: true,
   env: {
@@ -27,5 +36,6 @@ module.exports = {
     '@typescript-eslint/no-namespace': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/ban-types': 'off',
   },
 }

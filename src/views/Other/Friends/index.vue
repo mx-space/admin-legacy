@@ -128,7 +128,7 @@ import { pickNoEmpty } from '../../../utils'
 import { Getter } from 'vuex-class'
 import { ViewportRecord } from '../../../store/interfaces/viewport.interface'
 
-const checkUrl = (rule: string, val: string, cb: Function) => {
+const checkUrl = (rule: string, val: string, cb: any) => {
   if (!val) {
     return cb(new Error('网站不能为空啦'))
   }

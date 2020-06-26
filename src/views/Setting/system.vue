@@ -234,7 +234,7 @@ export default class SystemSettingView extends Vue {
     this.raw = cloneDeep(this.configs)
   }
 
-  fullConfigs(configs: object): IConfig {
+  fullConfigs(configs: any): IConfig {
     return merge(
       {
         seo: { title: '', description: '', keywords: [] },

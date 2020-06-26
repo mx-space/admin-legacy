@@ -18,7 +18,7 @@ export const sleep = (ms: number) => {
   })
 }
 
-export const pickNoEmpty = <T extends { __proto__: any } = any>(
+export const pickNoEmpty = <T = any>(
   obj: T,
 ): Partial<T> | undefined | any[] => {
   if (!obj) {
@@ -27,7 +27,7 @@ export const pickNoEmpty = <T extends { __proto__: any } = any>(
   if (Array.isArray(obj)) {
     return obj.length > 0 ? obj : undefined
   }
-  if (typeof obj === 'object' && obj.__proto__.constructor.name === 'Object') {
+  if (isObject(obj)) {
     // @ts-expect-error
     return Object.fromEntries(
       Object.entries(obj).filter(([_, val]) => {
