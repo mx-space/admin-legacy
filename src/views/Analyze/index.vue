@@ -207,49 +207,8 @@ export default class AnalyzeView extends Vue {
     this.chartDataDay = today
     this.chartDataWeek = weeks
     this.chartDataMonth = months
-    // this.chartDataDay = this._parseChartValue(today, ['时刻', '访问次数'], {
-    //   postfix: '时',
-    // })
-    // this.chartDataWeek = this._parseChartValue(weeks, ['本周天', '访问次数'], {
-    //   customLable: (label) => {
-    //     // return ~~label
-    //     //   ? dayjs(new Date())
-    //     //       .add(-~~label, 'date')
-    //     //       .set('hour', 0)
-    //     //       .set('minute', 0)
-    //     //       .set('millisecond', 0)
-    //     //       .fromNow()
-    //     //   : '今天'
-    //     return `${-label}`
-    //   },
-    // })
-    // this.chartDataMonth = this._parseChartValue(
-    //   months,
-    //   ['本月天', '访问次数'],
-    //   { prefix: new Date().getMonth() + 1 + '-' },
-    // )
   }
 
-  // _parseChartValue(
-  //   data: Record<string, number>,
-  //   label: [string, string],
-  //   options?: {
-  //     prefix?: string
-  //     postfix?: string
-  //     customLable?: (lebal: string) => string
-  //   },
-  // ) {
-  //   const { prefix, postfix, customLable } = options || {}
-  //   return Object.entries(data).map(([k, v]) => {
-  //     return {
-  //       [label[0]]: customLable
-  //         ? customLable(k)
-  //         : (prefix ?? '') + k + (postfix ?? ''),
-  //       [label[1]]: v,
-  //     }
-  //   })
-  // }
-  _parseChartValue(data: any[]) {}
   renderChart() {
     this._renderChart(
       this.$refs['day-chart'] as HTMLElement,
@@ -362,15 +321,20 @@ export default class AnalyzeView extends Vue {
 
   async getIpLocation(ip: string) {
     this.ipLocation = '获取中...'
-    const response = await fetch(
-      `https://api.ipgeolocation.io/ipgeo?apiKey=${process.env.VUE_APP_IP_APIKEY}&ip=${ip}`,
-    )
+    //https://github.com/metowolf/ipdb-API
+    const apiUrl =
+      process.env.VUE_APP_IP_QUERY_URL || 'https://api.i-meto.com/ip/v1/qqwry/'
+
+    const response = await fetch(apiUrl + ip)
     const data = await response.json()
 
     this.ipLocation = `IP: ${data.ip}<br />
-    城市: ${data.city}<br />
-    ISP: ${data.isp}<br />
-    组织: ${data.organization}
+    城市: ${data.country_name || ''} ${data.region_name || ''} ${
+      data.city_name || ''
+    }<br />
+    ISP: ${data.isp_domain}<br />
+    组织: ${data.owner_domain}<br />
+    范围: ${JSON.stringify(data.range)}
     `
   }
   async handleClearData() {

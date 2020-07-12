@@ -6,6 +6,10 @@
         :icon="['fas', 'plus']"
         name="新增"
     /></template>
+    <el-tabs v-model="tabActive" @tab-click="handleTabClick">
+      <el-tab-pane label="朋友们" name="0"></el-tab-pane>
+      <el-tab-pane label="待审核" name="1"></el-tab-pane>
+    </el-tabs>
     <el-table
       :data="data"
       style="width: 100%;"
@@ -27,14 +31,27 @@
         </template>
       </el-table-column>
       <el-table-column prop="description" label="描述"> </el-table-column>
-      <el-table-column label="操作" width="100" fixed="right">
+      <el-table-column
+        label="操作"
+        :width="tabActive === '1' ? 160 : 130"
+        fixed="right"
+      >
         <template slot-scope="scope">
+          <el-button
+            type="text"
+            size="small"
+            @click="handleApprove(scope.row._id)"
+            style="color: green;"
+            v-if="tabActive === '1'"
+            >通过</el-button
+          >
           <el-button type="text" size="small" @click="handleEdit(scope.row)">
             编辑
           </el-button>
           <el-popconfirm
             title="确定删除吗？"
             @onConfirm="handleDelete(scope.$index)"
+            style="padding: 9px 15px;"
           >
             <el-button
               type="text"
@@ -137,7 +154,10 @@ const checkUrl = (rule: string, val: string, cb: any) => {
   }
   cb()
 }
-
+enum LinkState {
+  Pass,
+  Audit,
+}
 @Component({
   components: {
     LayoutButton: LayoutButtonVue,
@@ -148,7 +168,10 @@ const checkUrl = (rule: string, val: string, cb: any) => {
 export default class extends Vue {
   @Getter('viewport')
   viewport!: ViewportRecord
-
+  handleTabClick() {
+    this.fetch()
+  }
+  tabActive = String(LinkState.Pass)
   data: LinkModel[] = []
   model: LinkModel = {
     name: '',
@@ -190,6 +213,7 @@ export default class extends Vue {
     const resp = (await this.$api('Link').gets({
       page,
       size: 50,
+      state: parseInt(this.tabActive),
     })) as LinkRespDto
     this.data = resp.data
     this.page = resp.page
@@ -237,6 +261,14 @@ export default class extends Vue {
     this.model = omit(row, ['_id'])
     this.edit = row._id as string
     this.dialogVisible = true
+  }
+
+  handleApprove(id: string) {
+    this.$api('Link', 'audit')
+      .patch({ id })
+      .then(() => {
+        this.fetch()
+      })
   }
 }
 </script>

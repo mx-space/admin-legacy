@@ -1,3 +1,12 @@
+/*
+ * @Author: Innei
+ * @Date: 2020-04-21 16:05:54
+ * @LastEditTime: 2020-07-12 10:58:50
+ * @LastEditors: Innei
+ * @FilePath: /mx-admin/src/utils/request.ts
+ * @Coding with Love
+ */
+
 import { Message } from 'kico-message'
 import router from '@/router'
 import store from '@/store'
@@ -35,11 +44,15 @@ service.interceptors.response.use(
     if (process.env.NODE_ENV === 'development') {
       console.log(error)
     }
-    Message.error(
-      error.response.data.message || error.response.data.msg || error.message,
-    )
+    try {
+      Message.error(
+        error.response.data.message || error.response.data.msg || error.message,
+      )
+    } catch {
+      Message.error('出错了, 请查看控制台')
+    }
 
-    if (error.response.status === 401) {
+    if (error?.response?.status === 401) {
       router.push('/login')
     }
     return Promise.reject(error)

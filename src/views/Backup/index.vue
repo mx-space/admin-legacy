@@ -113,6 +113,7 @@ export default class BackupView extends Vue {
     this.$api('Backup')
       .get(row.filename, {
         responseType: 'blob',
+        timeout: Infinity,
       })
       .then((response) => {
         const url = window.URL.createObjectURL(new Blob([response as any]))

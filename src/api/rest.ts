@@ -25,7 +25,7 @@ interface Gets {
   page?: number
   size?: number
   select?: string
-  state?: 0 | 1 | 2
+  state?: number
 }
 
 export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {

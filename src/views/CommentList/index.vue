@@ -48,14 +48,17 @@
       <el-table-column label="作者" width="200">
         <template slot-scope="scope">
           <div class="">
-            <a :href="scope.row.url || '#'" class="name">{{
+            <a :href="scope.row.url || '#'" class="name" _target="blank">{{
               scope.row.author
             }}</a>
           </div>
           <div class="">
-            <a :href="'mailto:' + scope.row.mail || ''" class="mail">{{
-              scope.row.mail
-            }}</a>
+            <a
+              :href="'mailto:' + scope.row.mail || ''"
+              class="mail"
+              _target="blank"
+              >{{ scope.row.mail }}</a
+            >
           </div>
           <div class="">
             <span class="gray">{{ scope.row.ip }}</span>
