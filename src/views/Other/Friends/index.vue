@@ -221,6 +221,17 @@ export default class extends Vue {
   }
   handleAdd() {
     this.dialogVisible = true
+    this.edit = false
+    this.reset()
+  }
+  reset() {
+    this.model = {
+      name: '',
+      url: '',
+      avatar: '',
+      type: LinkType.Friend,
+      description: '',
+    }
   }
   async handleSubmit() {
     ;(this.$refs.form as ElForm).validate(async (valid) => {
@@ -234,13 +245,7 @@ export default class extends Vue {
         }
         this.fetch()
         this.dialogVisible = false
-        this.model = {
-          name: '',
-          url: '',
-          avatar: '',
-          type: LinkType.Friend,
-          description: '',
-        }
+        this.reset()
       }
     })
   }

@@ -103,7 +103,7 @@ const routes: MenuRouteConfig[] = [
               {
                 path: 'edit',
                 name: 'project-edit',
-                meta: { title: '编辑项目', icon: ['fas', 'pencil-alt'] },
+                meta: { title: '创建项目', icon: ['fas', 'pencil-alt'] },
                 component: () => import('@/views/Other/Project/Edit.vue'),
               },
             ],
@@ -143,7 +143,7 @@ const routes: MenuRouteConfig[] = [
               {
                 path: 'edit',
                 name: 'page-edit',
-                meta: { title: '编辑页面', icon: ['fas', 'pencil-alt'] },
+                meta: { title: '创建页面', icon: ['fas', 'pencil-alt'] },
                 component: () => import('@/views/Other/Page/Edit.vue'),
               },
             ],
@@ -157,7 +157,7 @@ const routes: MenuRouteConfig[] = [
           {
             name: 'files',
             path: 'files',
-            meta: { title: '文件', icon: ['far', 'file-alt'] },
+            meta: { title: '管理文件', icon: ['far', 'file-alt'] },
             component: () => import('@/views/Other/Files/index.vue'),
           },
         ],
