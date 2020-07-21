@@ -106,10 +106,10 @@
     "@antv/util" "~2.0.0"
     detect-browser "^4.6.0"
 
-"@antv/g2@4.0.12":
-  version "4.0.12"
-  resolved "https://registry.npm.taobao.org/@antv/g2/download/@antv/g2-4.0.12.tgz#3cb582e12499af5f2716c700ec8e781fc77c69ab"
-  integrity sha1-PLWC4SSZr18nFscA7I54H8d8aas=
+"@antv/g2@4.0.13":
+  version "4.0.13"
+  resolved "https://registry.yarnpkg.com/@antv/g2/-/g2-4.0.13.tgz#ca2482fe45c7e1905e38c675a99ae9645038d7c1"
+  integrity sha512-58uD4jAFrl7Xq5GsKMK9ZxT+nu7i1IjnOAUdie6rOL4STFo7uiYxcPLJkNswYHXTNK+9m9bSABraTxPP4Rgb1w==
   dependencies:
     "@antv/adjust" "^0.2.1"
     "@antv/attr" "^0.3.1"
