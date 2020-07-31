@@ -2,6 +2,20 @@
   <page-layout>
     <template #header>
       <layout-button
+        :icon="['fas', 'undo-alt']"
+        backcolor="#2ecc71"
+        @click.native="handleBackup"
+        name="立即备份"
+      ></layout-button>
+
+      <layout-button
+        :icon="['fas', 'redo-alt']"
+        backcolor="#2980b9"
+        @click.native="handleRestore"
+        name="上传恢复"
+      ></layout-button>
+
+      <layout-button
         :icon="['far', 'trash-alt']"
         backcolor="#e67e22"
         @click.native="handleDeleteMore"
@@ -14,7 +28,10 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55"> </el-table-column>
-      <el-table-column prop="filename" label="备份日期" width="120px">
+      <el-table-column prop="filename" label="备份日期" width="160px">
+        <template slot-scope="scope">
+          {{ scope.row.filename }}
+        </template>
       </el-table-column>
       <el-table-column prop="size" label="大小"> </el-table-column>
       <el-table-column fixed="right" label="操作" width="100px">
@@ -109,6 +126,14 @@ export default class BackupView extends Vue {
       },
     })
   }
+  responseBlobToFile(response: any, filename: string) {
+    const url = window.URL.createObjectURL(new Blob([response as any]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', filename)
+    document.body.appendChild(link)
+    link.click()
+  }
   handleDownload(row) {
     this.$api('Backup')
       .get(row.filename, {
@@ -116,17 +141,44 @@ export default class BackupView extends Vue {
         timeout: Infinity,
       })
       .then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response as any]))
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', row.filename + '.zip')
-        document.body.appendChild(link)
-        link.click()
+        this.responseBlobToFile(response, row.filename + '.zip')
       })
   }
   multipleSelection = []
   handleSelectionChange(val) {
     this.multipleSelection = val
+  }
+  handleBackup() {
+    this.$api('Backup')
+      .get('new', { timeout: Infinity, responseType: 'blob' })
+      .then((res) => {
+        this.responseBlobToFile(res, 'Backup.zip')
+      })
+  }
+  handleRestore() {
+    const $file = document.createElement('input')
+    $file.type = 'file'
+    $file.style.cssText = `position: absolute; opacity: 0; z-index: -9999;top: 0; left: 0`
+    $file.accept = '.zip'
+    document.body.append($file)
+    $file.click()
+    $file.onchange = () => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const [file] = $file.files!
+      const formData = new FormData()
+      formData.append('file', file)
+      this.$api('Backup')
+        .post(formData, {
+          timeout: Infinity,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then(() => {
+          this.$message.success('回复成功')
+          location.reload()
+        })
+    }
   }
 }
 </script>

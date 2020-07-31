@@ -62,8 +62,11 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
       const data = await $axios.get(`${pluralize}${id ? '/' + id : ''}`, config)
       return data as any
     },
-    async postNew<T = unknown, U = any>(body: T): Promise<U> {
-      const data = await $axios.post(`${pluralize}`, body)
+    async postNew<T = unknown, U = any>(
+      body: T,
+      config?: AxiosRequestConfig,
+    ): Promise<U> {
+      const data = await $axios.post(`${pluralize}`, body, config)
       return data as any
     },
     async modifyOne<T = unknown, U = any>(id: string, body: T): Promise<U> {
