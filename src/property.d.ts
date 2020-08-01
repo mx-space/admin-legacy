@@ -16,6 +16,10 @@ declare module 'vue/types/vue' {
     $events: Omit<
       CombinedVueInstance<Vue, object, object, object, Record<never, any>>,
       '$on'
-    > & { $on: (event: EventTypes, data: any) => void }
+    > &
+      (
+        | { $on: (event: EventTypes, data: any) => void }
+        | { $on: (event: string, ...payload: any[]) => void }
+      )
   }
 }

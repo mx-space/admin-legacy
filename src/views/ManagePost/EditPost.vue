@@ -2,12 +2,6 @@
   <PageLayout :options="options">
     <template #header>
       <Button
-        @click.native="handleSave"
-        :icon="['far', 'save']"
-        backcolor="#2ecc71"
-        name="保存"
-      />
-      <Button
         @click.native="handleSubmit"
         :icon="['fab', 'telegram-plane']"
         :name="$route.query.id ? '更新' : '发布'"
@@ -17,8 +11,9 @@
       :name="inputLabel"
       :title="model.title"
       :text="model.text"
+      :id="id || 'post'"
       @change="onChange"
-      :fullscreen="fullscreen"
+      ref="writer"
     >
       <div class="url">
         <label class="prefix">{{ `${baseUrl}/${category.slug}/` }}</label>
@@ -80,28 +75,22 @@
       <button @click="() => (drawerOpen = !drawerOpen)">
         <icon :icon="['fas', 'sliders-h']" />
       </button>
-      <button @click="toggleFullscreen(true)">
-        <icon :icon="['fas', 'arrows-alt']" />
-      </button>
     </template>
   </PageLayout>
 </template>
 
 <script lang="ts">
 import Component from 'vue-class-component'
-
+import { Mixins } from 'vue-property-decorator'
 import Button from '@/components/Button/LayoutButton.vue'
 import PageLayout from '@/layouts/PageLayout.vue'
-import Writer from '@/components/Writer/index.vue'
+import Writer, { BaseWriter } from '@/components/Writer/index.vue'
 import UnderlineInput from '@/components/Input/UnderlineInput.vue'
 import { Getter } from 'vuex-class'
 import { Map } from 'immutable'
 import { CategoryModel } from '../../store/interfaces/category.interface'
 import { PostRespDto } from '@/models/response.dto'
 
-import { AutoSave } from '@/mixins/autosave'
-import { Mixins } from 'vue-property-decorator'
-import { FullScreenProperty } from '@/mixins/fullscreen'
 import { PostDto } from '../../models'
 
 @Component({
@@ -112,10 +101,7 @@ import { PostDto } from '../../models'
     UInput: UnderlineInput,
   },
 })
-export default class PostWriteView extends Mixins(
-  AutoSave,
-  FullScreenProperty,
-) {
+export default class PostWriteView extends Mixins(BaseWriter) {
   @Getter
   categories!: Map<string, CategoryModel>
 
@@ -141,7 +127,8 @@ export default class PostWriteView extends Mixins(
     this.id
       ? await this.$api('Post').update(this.id as string, model)
       : await this.$api('Post').post(model)
-    this.$notice.success('发布成功')
+    this.AfterSubmit()
+
     this.$router.push('/posts')
   }
   onChange(model: { title: string; text: string }) {
@@ -194,26 +181,11 @@ export default class PostWriteView extends Mixins(
   beforeDestroy() {
     clearInterval(this.timer as number)
     this.timer = null
-    // this.autoSaveTimer = clearInterval(this.autoSaveTimer)
-  }
-  get id() {
-    return this.$route.query.id
   }
 
   async created() {
     this.options.title = this.id ? '修改文章' : '撰写新文章'
     if (!this.id) {
-      // const savedData = localStorage.getItem(this.prefix)
-      // if (savedData) {
-      //   MessageBox.confirm('检测到保存的版本，是否读取？', '提示', {
-      //     type: 'info',
-      //   })
-      //     .then(() => {
-      //       const parseData = JSON.parse(savedData) as SavedDataType
-      //       this.model = parseData.data
-      //     })
-      //     .catch(() => {})
-      // }
       return
     } else {
       const { data } = await this.$api('Post').get<PostRespDto>(
@@ -228,16 +200,6 @@ export default class PostWriteView extends Mixins(
       }
       this.hide = data.hide
       this.categoryId = data.categoryId
-
-      // const savedData = localStorage.getItem(this.prefix + '-' + this.id)
-      // if (savedData) {
-      //   MessageBox.confirm('检测到保存的版本，是否读取？', '提示', {
-      //     type: 'info',
-      //   })
-      //     .then(() => {
-      //       this.model = (JSON.parse(savedData) as SavedDataType).data
-      //     })
-      //     .catch(() => {})
     }
   }
   slug = ''
@@ -252,7 +214,7 @@ export default class PostWriteView extends Mixins(
   color: #666;
 
   input {
-    width: 8rem;
+    max-width: 18rem;
   }
 }
 </style>

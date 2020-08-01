@@ -1,3 +1,11 @@
+<!--
+ * @Author: Innei
+ * @Date: 2020-05-17 16:16:26
+ * @LastEditTime: 2020-08-01 13:56:19
+ * @LastEditors: Innei
+ * @FilePath: /mx-admin/src/components/Writer/index.vue
+ * @Coding with Love
+-->
 <template>
   <el-form ref="form" :model="model" label-width="80px" @submit.native.prevent>
     <material-input
@@ -11,30 +19,7 @@
       <slot />
     </div>
 
-    <div
-      :class="{
-        'grid-half': !(device === 'mobile' || !preview),
-        full: !preview,
-      }"
-    >
-      <codemirror
-        v-model="model.text"
-        :options="cmOptions"
-        :events="cmEvents"
-        @mousedown="handleUpdatePosition"
-        @keydown="handleUpdatePosition"
-        @change="handleChangeText"
-        ref="code"
-      />
-      <article
-        id="markdown-render"
-        class="preview"
-        v-if="(device !== 'mobile' && preview && !fullscreen)"
-        ref="preview"
-      >
-        <vue-markdown @rendered="update" :source="model.text"> </vue-markdown>
-      </article>
-    </div>
+    <div id="writer" ref="writer"></div>
   </el-form>
 </template>
 
@@ -44,26 +29,28 @@ import Component from 'vue-class-component'
 import NormInput from '@/components/Input/NormalInput.vue'
 import MaterialInput from '../Input/MaterialInput.vue'
 import { Prop, Watch } from 'vue-property-decorator'
-import { Getter } from 'vuex-class'
-import { codemirror } from 'vue-codemirror'
-import { Editor } from 'codemirror'
 
-import { cmOptions } from '@/commom/editor'
+import Vditor from 'vditor'
+
 import '@/assets/scss/shizuku.scss'
-import { ViewportRecord } from '../../store/interfaces/viewport.interface'
-import 'codemirror/addon/display/fullscreen'
-import 'codemirror/addon/display/fullscreen.css'
 
-import VueMarkdown from 'vue-markdown'
-import Prism from 'prismjs'
+@Component
+export class BaseWriter extends Vue {
+  AfterSubmit() {
+    this.$emit('writer-submit')
+    this.$notice.success((this.id ? '修改' : '发布') + '成功')
+  }
+
+  get id() {
+    return this.$route.query.id
+  }
+}
 
 declare const window: any
 @Component({
   components: {
     NormInput,
     MaterialInput,
-    codemirror,
-    VueMarkdown,
   },
 })
 export default class Writer extends Vue {
@@ -74,17 +61,73 @@ export default class Writer extends Vue {
     }
     this.$data.model = model
   }
+  vditor!: Vditor
+  // TODO: custom cache data (not only text but also title and raw data)
+  handleUpdateText(value: string) {
+    if (!this.vditor.vditor.options.cache?.enable) {
+      this.vditor.enableCache()
+    }
+    this.model.text = value
+    this.handleEmitChange()
+  }
+  beforeDestroy() {
+    this.vditor.destroy()
+    this.$events.$off('writer-submit')
+  }
   mounted() {
-    const Editor: Editor = (this.$refs.code as any)?.codemirror
+    // @ts-ignore
+    this.$events.$on('writer-submit', () => {
+      console.log('clear cache.')
 
-    setTimeout(() => {
-      Editor.setSize(null, null)
-      Editor.refresh()
-      if (this.fullscreen) {
-        this.toggleFullscreen(this.fullscreen)
-        return
-      }
-    }, 2000)
+      this.vditor.clearCache()
+      this.vditor.disabledCache()
+    })
+    const cachedKey = 'mx-space-writer' + (this.id ? `-${this.id}` : '')
+    this.vditor = new Vditor(this.$refs['writer'] as HTMLElement, {
+      after: () => {
+        this.vditor.setValue(this.$props.text || '')
+        const cachedData = localStorage.getItem(cachedKey)
+        if (cachedData) {
+          this.$confirm('检测到存在草稿, 是否加载')
+            .then(() => {
+              this.vditor.setValue(cachedData, true)
+            })
+            .catch(() => {})
+        }
+      },
+      cache: {
+        id: cachedKey,
+        enable: false,
+        after: this.handleUpdateText,
+      },
+      input: this.handleUpdateText,
+      focus: this.handleUpdateText,
+      preview: {
+        hljs: {
+          lineNumber: true,
+        },
+        markdown: {
+          autoSpace: true,
+          fixTermTypo: true,
+          chinesePunct: true,
+          codeBlockPreview: true,
+          sanitize: false,
+          paragraphBeginningSpace: true,
+        },
+      },
+      typewriterMode: true,
+      toolbar: [
+        'bold',
+        'emoji',
+        'italic',
+        'strike',
+        '|',
+        'quote',
+        'upload',
+        'fullscreen',
+        'preview',
+      ],
+    })
   }
 
   @Watch('title')
@@ -95,20 +138,10 @@ export default class Writer extends Vue {
   @Watch('text')
   syncText(val: string) {
     this.model.text = val
+    try {
+      this.vditor.setValue(val, true)
+    } catch {}
   }
-  cmOptions = cmOptions
-  cmEvents = ['mousedown', 'keydown', 'viewportChange', 'change']
-
-  update() {
-    this.$nextTick(() => {
-      Prism.highlightAll()
-    })
-  }
-
-  @Getter
-  viewport!: ViewportRecord
-  @Getter
-  device!: 'mobile' | 'desktop'
 
   @Prop({ required: true })
   name!: string
@@ -119,16 +152,8 @@ export default class Writer extends Vue {
   @Prop({ required: true })
   text!: string
 
-  @Prop({ default: false })
-  fullscreen!: boolean
-
-  @Watch('fullscreen')
-  toggleFullscreen(val: boolean) {
-    const Editor: Editor = (this.$refs.code as any)?.codemirror
-    Editor.setOption('fullScreen' as any, val)
-  }
-
-  preview = true
+  @Prop({ type: String })
+  id!: string | undefined
 
   model = {
     title: '',
@@ -141,117 +166,26 @@ export default class Writer extends Vue {
     this.model.title = e
     this.handleEmitChange()
   }
-  handleChangeText() {
-    // this.model.text = e.getValue()
-    this.handleEmitChange()
-  }
 
-  handleUpdatePosition(e: Editor) {
-    if (this.device !== 'mobile' && this.preview) {
-      // console.log(e.getCursor().line)
-
-      const preview = this.$refs.preview as HTMLElement
-
-      const allRootNodes: HTMLElement[] = [
-        ...preview.querySelectorAll(
-          'div > *:not(ul):not(blockquote), div > ul > li, div > blockquote > *',
-        ),
-      ] as HTMLElement[]
-
-      // const blockquoteNode = [
-      //   ...preview.querySelectorAll('div > blockquote > *'),
-      // ]
-      // const allRootNodeLength = allRootNodes.length
-
-      const cur = e.getCursor().line
-      const lines = this.model.text.split('\n')
-      const thisLine = getPrevNotBlankLine(lines, cur)
-      const notEmptyLines = lines.filter(Boolean)
-      const shouldScrollToLine = notEmptyLines.findIndex((t) => t === thisLine)
-      try {
-        // console.log(allRootNodes[shouldScrollToLine].innerText)
-
-        const top = allRootNodes[shouldScrollToLine].offsetTop
-        const half = preview.getBoundingClientRect().height / 2
-
-        preview.scrollTop = top - half - 30
-      } catch {}
-
-      // console.log(allRootNodes[cur])
-
-      // const shouldScrollTop = pos
-      // preview.scrollTo({
-      //   left: 0,
-      //   // top: curPos * previewHeight * 1.2,
-      //   top: shouldScrollTop,
-      // })
-    }
-  }
   composition = false
   handleFocus() {
     if (!this.composition) {
-      ;((this.$refs.code as any).codemirror as Editor).focus()
+      this.vditor.focus()
     }
   }
 }
-
-function getPrevNotBlankLine(lines: string[], pos: number) {
-  if (pos < 0) {
-    return null
-  }
-  return lines[pos] || getPrevNotBlankLine(lines, pos - 1)
-}
 </script>
-<style lang="scss" scoped>
-.grid-half {
-  display: grid;
-  position: relative;
-  grid-template-columns: 1fr 1fr;
-}
-.preview {
-  height: calc(100vh - 16.7rem);
-  overflow: auto;
-  padding: 12px 2rem;
-}
-.preview.fullscreen {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  right: 0;
-  bottom: 0;
-  height: auto;
-  z-index: 9;
-  background: #fff;
+<style lang="scss">
+@import '~vditor/src/assets/scss/index.scss';
+.vditor-toolbar {
+  display: none;
 }
 </style>
-<style lang="scss">
-.CodeMirror-fullscreen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 50%;
-  bottom: 0;
-  height: auto;
-  z-index: 9;
-}
-.CodeMirror {
-  border-radius: 4px;
-  height: calc(100vh - 15rem);
-}
-@media (max-width: $small) {
-  .CodeMirror-fullscreen {
-    left: 0;
-    right: 0;
-  }
-  .CodeMirror {
-    height: 70vh;
-  }
-}
-.full .CodeMirror-fullscreen {
-  right: 0;
-}
-
+<style lang="scss" scoped>
 .middle-content {
-  margin: 0.8rem 0;
+  padding: 12px 0;
+}
+#writer {
+  min-height: calc(100vh - 15rem);
 }
 </style>

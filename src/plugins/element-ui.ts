@@ -21,6 +21,7 @@ import {
   FormItem,
   Input,
   Loading,
+  MessageBox,
   Option,
   Pagination,
   Popconfirm,
@@ -72,3 +73,5 @@ const components = [
 components.forEach((component) => {
   Vue.use(component)
 })
+
+Vue.prototype.$confirm = MessageBox.confirm

@@ -1,6 +1,6 @@
 <template>
   <div class="side-bar" :class="{ active: sidebar }">
-    <div class="title" @click="$parent.$refs.wrap.classList.toggle('full')">
+    <div class="title">
       {{ title }}
     </div>
     <perfect-scrollbar class="items" :suppressScrollX="true">

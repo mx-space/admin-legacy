@@ -17,7 +17,7 @@
           ;(model.title = title), (model.text = text)
         }
       "
-      :fullscreen="fullscreen"
+      :id="id || 'page'"
     >
       <div class="subtitle">
         <UInput
@@ -47,9 +47,6 @@
       <button @click="() => (drawerOpen = !drawerOpen)">
         <icon :icon="['fas', 'sliders-h']" />
       </button>
-      <button @click="toggleFullscreen">
-        <icon :icon="['fas', 'arrows-alt']" />
-      </button>
     </template> </PageLayout
 ></template>
 
@@ -60,11 +57,10 @@ import PageLayout from '@/layouts/PageLayout.vue'
 import LayoutButton from '@/components/Button/LayoutButton.vue'
 import { EnumPageType, PageDto } from '../../../models'
 import { pickNoEmpty } from '@/utils'
-import Writer from '@/components/Writer/index.vue'
+import Writer, { BaseWriter } from '@/components/Writer/index.vue'
 import UnderlineInput from '@/components/Input/UnderlineInput.vue'
 import { Mixins } from 'vue-property-decorator'
 
-import { FullScreenProperty } from '@/mixins/fullscreen'
 @Component({
   components: {
     PageLayout,
@@ -73,7 +69,7 @@ import { FullScreenProperty } from '@/mixins/fullscreen'
     UInput: UnderlineInput,
   },
 })
-export default class PageList extends Mixins(FullScreenProperty) {
+export default class PageList extends Mixins(BaseWriter) {
   model: PageDto = {
     title: '',
     subtitle: '',
@@ -98,7 +94,6 @@ export default class PageList extends Mixins(FullScreenProperty) {
   async handleSubmit() {
     if (!this.id) {
       await this.$api('Page').post(pickNoEmpty(this.model) as PageDto)
-      this.$message.success('发送成功~')
     } else {
       await this.$api('Page').update(
         this.id as string,
@@ -107,12 +102,10 @@ export default class PageList extends Mixins(FullScreenProperty) {
           subtitle: this.model.subtitle || null,
         } as PageDto,
       )
-      this.$message.success('修改成功~')
     }
+    this.AfterSubmit()
+
     this.$router.push({ name: 'page-list' })
-  }
-  get id() {
-    return this.$route.query.id
   }
 }
 </script>

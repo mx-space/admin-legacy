@@ -1,3 +1,11 @@
+<!--
+ * @Author: Innei
+ * @Date: 2020-05-17 16:16:26
+ * @LastEditTime: 2020-08-01 13:16:50
+ * @LastEditors: Innei
+ * @FilePath: /mx-admin/src/views/ManageNote/EditNote.vue
+ * @Coding with Love
+-->
 <template>
   <PageLayout :options="options">
     <template #header>
@@ -7,12 +15,7 @@
         name="解析"
         backcolor="#34495e"
       />
-      <Button
-        @click.native="handleSave"
-        :icon="['far', 'save']"
-        backcolor="#2ecc71"
-        name="保存"
-      />
+
       <Button
         @click.native="handleSubmit"
         :icon="['fab', 'telegram-plane']"
@@ -23,8 +26,8 @@
       :name="inputLabel"
       :title="model.title"
       :text="model.text"
+      :id="id || 'note'"
       @change="onChange"
-      :fullscreen="fullscreen"
     >
       <div class="url">
         <label class="prefix">{{ `${baseUrl}/notes/${nid || ''}` }}</label>
@@ -89,9 +92,6 @@
       <button @click="() => (drawerOpen = !drawerOpen)">
         <icon :icon="['fas', 'sliders-h']" />
       </button>
-      <button @click="toggleFullscreen(true)">
-        <icon :icon="['fas', 'arrows-alt']" />
-      </button>
     </template>
   </PageLayout>
 </template>
@@ -101,7 +101,7 @@ import Component from 'vue-class-component'
 
 import Button from '@/components/Button/LayoutButton.vue'
 import PageLayout from '@/layouts/PageLayout.vue'
-import Writer from '@/components/Writer/index.vue'
+import Writer, { BaseWriter } from '@/components/Writer/index.vue'
 import UnderlineInput from '@/components/Input/UnderlineInput.vue'
 
 import { NoteRespDto } from '../../models/response.dto'
@@ -112,9 +112,8 @@ import {
   MoodValues,
   WeatherValues,
 } from '../../models'
-import { AutoSave } from '@/mixins/autosave'
+
 import { Mixins } from 'vue-property-decorator'
-import { FullScreenProperty } from '@/mixins/fullscreen'
 @Component({
   components: {
     Button,
@@ -123,10 +122,7 @@ import { FullScreenProperty } from '@/mixins/fullscreen'
     UInput: UnderlineInput,
   },
 })
-export default class NoteWriteView extends Mixins(
-  AutoSave,
-  FullScreenProperty,
-) {
+export default class NoteWriteView extends Mixins(BaseWriter) {
   options = {
     title: '随便写点啥',
   }
@@ -165,7 +161,8 @@ export default class NoteWriteView extends Mixins(
     this.id
       ? await this.$api('Note').update(this.id as string, model)
       : await this.$api('Note').post(model)
-    this.$notice.success('发布成功')
+
+    this.AfterSubmit()
     this.$router.push({ name: 'view-notes' })
   }
   onChange(model: { title: string; text: string }) {
@@ -174,10 +171,6 @@ export default class NoteWriteView extends Mixins(
 
   get baseUrl() {
     return process.env.VUE_APP_WEB_URL || 'http://localhost:2323'
-  }
-
-  get id() {
-    return this.$route.query.id
   }
 
   async created() {

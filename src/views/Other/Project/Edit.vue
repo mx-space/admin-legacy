@@ -53,7 +53,12 @@
       </el-form-item>
 
       <el-form-item label="正文" prop="text" required>
-        <codemirror v-model="model.text" ref="code" :options="cmOptions" />
+        <el-input
+          type="textarea"
+          :autosize="{ minRows: 2, maxRows: 6 }"
+          v-model="model.text"
+          placeholder="在这里介绍一下你的项目吧"
+        ></el-input>
       </el-form-item>
     </el-form>
   </PageLayout>
@@ -65,17 +70,13 @@ import Component from 'vue-class-component'
 import PageLayout from '@/layouts/PageLayout.vue'
 import LayoutButton from '@/components/Button/LayoutButton.vue'
 import { ProjectDto } from '../../../models'
-import { codemirror } from 'vue-codemirror'
-import { cmOptions } from '@/commom/editor'
-import { Editor } from 'codemirror'
-import { pickNoEmpty } from '@/utils'
+
 import { ElForm } from 'element-ui/types/form'
-import { ElInput } from 'element-ui/types/input'
+
 @Component({
   components: {
     PageLayout,
     LayoutButton,
-    codemirror,
   },
 })
 export default class ProjectEdit extends Vue {
@@ -98,7 +99,7 @@ export default class ProjectEdit extends Vue {
     ],
     text: [{ required: true, message: '请输入正文', trigger: 'blur' }],
   }
-  cmOptions = cmOptions
+
   async created() {
     if (!this.id) {
       return
@@ -108,14 +109,7 @@ export default class ProjectEdit extends Vue {
     )
     this.model = data
   }
-  mounted() {
-    // window.cm = this.$refs.code.codemirror
-    setTimeout(() => {
-      const Editor: Editor = (this.$refs.code as any)?.codemirror
-      Editor.setSize(null, null)
-      Editor.refresh()
-    }, 2000)
-  }
+
   async handleSubmit() {
     ;(this.$refs['form'] as ElForm).validate(async (valid) => {
       if (valid) {
@@ -162,11 +156,7 @@ export default class ProjectEdit extends Vue {
   }
 }
 </script>
-<style>
-.el-form-item__content .vue-codemirror {
-  line-height: 1.3 !important;
-}
-</style>
+
 <style scoped>
 .el-tag + .el-tag {
   margin-left: 10px;

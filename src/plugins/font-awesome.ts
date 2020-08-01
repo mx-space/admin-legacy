@@ -50,12 +50,14 @@ import {
   faArrowsAlt,
   faLockOpen,
   faWrench,
+  faEllipsisH,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Vue from 'vue'
 
 type IconType = IconDefinition | IconPack
 export const Icons: IconType[] = [
+  faEllipsisH,
   faUser,
   faUserFriends,
   faComment,

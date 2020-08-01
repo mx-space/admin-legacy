@@ -1,7 +1,7 @@
 <!--
  * @Author: Innei
  * @Date: 2020-04-11 19:47:00
- * @LastEditTime: 2020-05-30 13:32:26
+ * @LastEditTime: 2020-08-01 12:58:29
  * @LastEditors: Innei
  * @FilePath: /mx-admin/src/layouts/BasicLayout.vue
  * @Coding with Love
@@ -35,29 +35,20 @@ export default {
     }
     this.fetchCategory()
   },
-  mounted() {
-    setTimeout(() => {
-      this.$refs.wrap.classList.toggle('full')
-    }, 1000)
-  },
 }
 </script>
 <style lang="scss" scoped>
-.basic-wrap.full {
-  transform: scale(1);
-  border-radius: 0;
-  .title .icon {
-    display: none;
-  }
-}
 .basic-wrap {
   margin: 0;
   height: 100%;
   width: 100%;
   position: relative;
-  transform: scale(0.95);
+
+  .title .icon {
+    display: none;
+  }
   background: linear-gradient(to bottom, #1188e8, #16aae7);
-  border-radius: 24px;
+
   display: grid;
   grid-template-columns: 15rem auto;
   box-shadow: 5px 24px 133px rgba(0, 0, 0, 0.3);
@@ -68,10 +59,10 @@ export default {
     transition: border-radius 0.5s;
     position: relative;
   }
-  &.full .content {
+  .content {
     border-radius: 0;
   }
-  &.full .items {
+  .items {
     height: calc(100vh - 12.875rem);
   }
 }
