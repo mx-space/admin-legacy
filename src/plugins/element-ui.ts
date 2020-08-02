@@ -1,7 +1,7 @@
 /*
  * @Author: Innei
  * @Date: 2020-04-20 21:39:10
- * @LastEditTime: 2020-05-30 13:31:05
+ * @LastEditTime: 2020-08-02 21:24:38
  * @LastEditors: Innei
  * @FilePath: /mx-admin/src/plugins/element-ui.ts
  * @Coding with Love
@@ -36,12 +36,14 @@ import {
   Tag,
   Upload,
   DatePicker,
+  Autocomplete,
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Vue from 'vue'
 
 const components = [
   Avatar,
+  Autocomplete,
   Button,
   Card,
   Checkbox,

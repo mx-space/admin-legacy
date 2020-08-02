@@ -2,36 +2,37 @@ import { VuexModule, Action, Module, Mutation } from 'vuex-module-decorators'
 import { CategoryModel } from '../interfaces/category.interface'
 import { rest } from '@/api/rest'
 import { CategoriesRespDto, CategoryRespDto } from '@/models/response.dto'
-import { Map } from 'immutable'
 
 export type CategoryMap = Map<string, CategoryModel>
 
 @Module({ namespaced: true })
 export class CategoryModule extends VuexModule {
-  categories?: CategoryMap = Map<string, CategoryModel>()
+  categories?: CategoryMap = new Map<string, CategoryModel>()
 
   @Action({ commit: 'SET_CATEGORY', rawError: true })
   async fetchCategory(_data?: CategoryRespDto[]) {
-    let data
+    let data: CategoryRespDto[]
     if (!_data) {
-      const resp: CategoriesRespDto = await rest('Category').gets()
+      const resp: CategoriesRespDto = await rest('Category').gets(
+        {},
+        { type: 'Category' },
+      )
       data = resp.data
     } else {
       data = _data
     }
-    const map = Map<string, CategoryModel>()
-    const newMap: CategoryMap = data.reduce(
-      (prev: CategoryMap, item: CategoryRespDto) => {
-        const value: CategoryModel = {
-          ...item,
-          created: new Date(item.created),
-          modified: new Date(item.modified),
-        }
-        return prev.set(item._id, value)
-      },
-      map,
-    )
-    return newMap
+    const map = new Map<string, CategoryModel>()
+    data.forEach((category) => {
+      const value: CategoryModel = {
+        ...category,
+        created: new Date(category.created),
+        modified: new Date(category.modified),
+      }
+      map.set(category._id, value)
+    })
+    console.log(data, map)
+
+    return map
   }
 
   @Mutation

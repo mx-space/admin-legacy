@@ -55,6 +55,7 @@ export interface PostRespDto extends BaseResp {
     category: CategoryRespDto
     id: string
     summary?: string
+    tags?: string[]
     options?: Record<string, any>
   }
 }

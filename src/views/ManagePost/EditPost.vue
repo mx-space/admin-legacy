@@ -39,6 +39,37 @@
             </el-option>
           </el-select>
         </el-form-item>
+
+        <el-form-item label="标签">
+          <el-tag
+            :key="tag"
+            v-for="tag in tags"
+            closable
+            :disable-transitions="false"
+            @close="handleClose(tag)"
+          >
+            {{ tag }}
+          </el-tag>
+          <el-autocomplete
+            class="input-new-tag"
+            v-if="inputVisible"
+            v-model="newTagValue"
+            ref="saveTagInput"
+            size="small"
+            @keyup.enter.native="handleInputConfirm"
+            :fetch-suggestions="querySearch"
+            @select="handleSelect"
+          >
+          </el-autocomplete>
+          <el-button
+            v-else
+            class="button-new-tag"
+            size="small"
+            @click="showInput"
+            >+ 新标签</el-button
+          >
+        </el-form-item>
+
         <el-form-item label="概要">
           <el-input
             type="textarea"
@@ -72,7 +103,7 @@
     </el-drawer>
 
     <template #footer>
-      <button @click="() => (drawerOpen = !drawerOpen)">
+      <button @click="handleDrawerOpen">
         <icon :icon="['fas', 'sliders-h']" />
       </button>
     </template>
@@ -114,7 +145,15 @@ export default class PostWriteView extends Mixins(BaseWriter) {
     text: '',
   }
   drawerOpen = false
+  async handleDrawerOpen() {
+    this.drawerOpen = !this.drawerOpen
+    const { data } = await this.$api('Category').gets({}, { type: 'Tag' })
 
+    this.allExistTags = (data as any[]).map((item) => ({ value: item.name }))
+  }
+  async handleSelect() {
+    this.handleInputConfirm()
+  }
   async handleSubmit() {
     const model: PostDto = {
       ...this.model,
@@ -123,6 +162,7 @@ export default class PostWriteView extends Mixins(BaseWriter) {
       summary: this.summary === '' ? undefined : this.summary,
       hide: this.hide,
       copyright: this.copyright,
+      tags: this.tags || [],
     }
     this.id
       ? await this.$api('Post').update(this.id as string, model)
@@ -152,11 +192,12 @@ export default class PostWriteView extends Mixins(BaseWriter) {
   }
   categoryRecord: Record<string, CategoryModel> = {}
   setDefaultCategory(): boolean {
-    this.categoryRecord = this.categories.toObject()
+    const entries = [...this.categories.entries()]
+    this.categoryRecord = Object.fromEntries(entries)
     if (this.categoryId) {
       return true
     }
-    const defaultCategory = this.categories.first<CategoryModel>()
+    const defaultCategory = entries.shift()?.[1]
     if (!defaultCategory) {
       return false
     }
@@ -200,13 +241,51 @@ export default class PostWriteView extends Mixins(BaseWriter) {
       }
       this.hide = data.hide
       this.categoryId = data.categoryId
+      this.tags = data.tags || []
     }
   }
+
+  showInput() {
+    this.inputVisible = true
+    this.$nextTick(() => {
+      // @ts-ignore
+      this.$refs.saveTagInput.$refs.input.focus()
+    })
+  }
+  allExistTags = [] as any[]
+  async querySearch(queryString, cb) {
+    const allExistTags = this.allExistTags
+    const results = queryString
+      ? allExistTags.filter(this.createFilter(queryString))
+      : allExistTags
+    // 调用 callback 返回建议列表的数据
+    cb(results)
+  }
+  createFilter(queryString) {
+    return (tag) => {
+      return tag.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+    }
+  }
+  handleClose(tag: string) {
+    this.tags.splice(this.tags.indexOf(tag), 1)
+  }
+  inputVisible = false
+  newTagValue = ''
+  handleInputConfirm() {
+    const newTagValue = this.newTagValue
+    if (newTagValue && !this.tags.includes(newTagValue)) {
+      this.tags.push(newTagValue)
+    }
+    this.inputVisible = false
+    this.newTagValue = ''
+  }
+
   slug = ''
   summary = ''
   hide = false
   copyright = true
   prefix = 'mx-space-post'
+  tags: string[] = []
 }
 </script>
 <style lang="scss" scoped>
@@ -216,5 +295,25 @@ export default class PostWriteView extends Mixins(BaseWriter) {
   input {
     max-width: 18rem;
   }
+}
+</style>
+
+<style lang="scss">
+.el-tag + .el-tag {
+  margin-left: 10px;
+}
+</style>
+<style lang="scss" scoped>
+.button-new-tag {
+  margin-left: 10px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.input-new-tag {
+  width: 90px;
+  margin-left: 10px;
+  vertical-align: bottom;
 }
 </style>

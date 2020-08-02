@@ -151,6 +151,7 @@ export interface PostDto {
   summary?: string
 
   hide?: boolean
+  tags: string[]
   copyright?: boolean
   options?: object
 }

@@ -41,7 +41,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import PageLayout from '@/layouts/PageLayout.vue'
-import { ElUpload } from 'element-ui/types/upload'
+
 import { ParseMarkdownYAML, ParsedModel } from '@/utils/markdown'
 import rest from '../../api/rest'
 
@@ -117,7 +117,7 @@ export default class ImportView extends Vue {
     if (!this.parsedList.length) {
       return this.$message.error('请先解析!!')
     }
-    const { data } = await rest.post('import', {
+    await rest.post('helper/markdown/import', {
       type: this.importTo,
       data: this.parsedList,
     })

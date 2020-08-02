@@ -102,6 +102,7 @@ import { mapGetters } from 'vuex'
 import Button from '@/components/Button/LayoutButton'
 import { omit } from 'lodash'
 import * as time from '@/utils/time'
+import { CategoryModel } from '../../store/interfaces/category.interface'
 export default {
   components: {
     PageLayout,
@@ -124,7 +125,7 @@ export default {
   computed: {
     ...mapGetters(['categories']),
     categoryFilters() {
-      return this.categories.toArray().map(([id, val]) => {
+      return [...this.categories.entries()].map(([id, val]) => {
         return { text: val.name, value: id }
       })
     },
