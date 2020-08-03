@@ -118,7 +118,6 @@ import PageLayout from '@/layouts/PageLayout.vue'
 import Writer, { BaseWriter } from '@/components/Writer/index.vue'
 import UnderlineInput from '@/components/Input/UnderlineInput.vue'
 import { Getter } from 'vuex-class'
-import { Map } from 'immutable'
 import { CategoryModel } from '../../store/interfaces/category.interface'
 import { PostRespDto } from '@/models/response.dto'
 
