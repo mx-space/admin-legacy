@@ -146,7 +146,11 @@ export default class PostWriteView extends Mixins(BaseWriter) {
   drawerOpen = false
   async handleDrawerOpen() {
     this.drawerOpen = !this.drawerOpen
-    const { data } = await this.$api('Category').gets({}, { type: 'Tag' })
+    const { data } = await this.$api('Category').get(undefined, {
+      params: {
+        type: 'Tag',
+      },
+    })
 
     this.allExistTags = (data as any[]).map((item) => ({ value: item.name }))
   }
