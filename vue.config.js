@@ -32,7 +32,7 @@ module.exports = {
   publicPath:
     process.env.NODE_ENV === 'production'
       ? !process.env.VUE_APP_PUBLIC_URL
-        ? 'https://cdn.jsdelivr.net/gh/Innei/admin-cdn@master'
+        ? 'https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages'
         : ''
       : '/',
 

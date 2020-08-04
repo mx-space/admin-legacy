@@ -24,7 +24,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn
-      - run: sh deploy.sh
       - run: yarn build
       - run: yarn lint
       - run: echo 'i-backend.top' > dist/CNAME
