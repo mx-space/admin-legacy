@@ -1,7 +1,7 @@
 /*
  * @Author: Innei
  * @Date: 2020-05-21 17:01:09
- * @LastEditTime: 2020-06-07 15:16:07
+ * @LastEditTime: 2020-08-05 10:33:54
  * @LastEditors: Innei
  * @FilePath: /mx-admin/src/socket/socket-client.ts
  * @MIT
@@ -28,6 +28,8 @@ export class SocketClient {
         timeout: 10000,
         reconnectionDelay: 3000,
         autoConnect: false,
+        reconnectionAttempts: 3,
+        transports: ['websocket'],
         query: {
           token: getToken(),
         },
