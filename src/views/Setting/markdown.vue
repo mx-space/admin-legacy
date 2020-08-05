@@ -1,3 +1,11 @@
+<!--
+ * @Author: Innei
+ * @Date: 2020-05-07 09:27:03
+ * @LastEditTime: 2020-08-05 10:58:32
+ * @LastEditors: Innei
+ * @FilePath: /mx-admin/src/views/Setting/markdown.vue
+ * @Coding with Love
+-->
 <template>
   <Layout>
     <h4>从 MarkDown 导入数据</h4>
@@ -17,6 +25,7 @@
         <el-upload
           action=""
           multiple
+          accept=".md,.markdown"
           :on-change="handleChange"
           :auto-upload="false"
           :file-list="fileList"
@@ -26,12 +35,21 @@
             开始转换
           </el-button>
           <el-button type="primary" size="small" @click="handleUpload">
-            点击上传
+            开始导入
           </el-button>
           <div slot="tip" class="el-upload__tip">
             只能上传markdown文件
           </div>
         </el-upload>
+      </el-form-item>
+    </el-form>
+
+    <h4>导出数据到 Markdown (Hexo YAML Format)</h4>
+    <el-form label-width="80px">
+      <el-form-item label="导出">
+        <el-button type="primary" @click="handleExportMarkdown">
+          导出到 Markdown
+        </el-button>
       </el-form-item>
     </el-form>
   </Layout>
@@ -44,6 +62,7 @@ import PageLayout from '@/layouts/PageLayout.vue'
 
 import { ParseMarkdownYAML, ParsedModel } from '@/utils/markdown'
 import rest from '../../api/rest'
+import { responseBlobToFile } from '@/utils/file'
 
 enum ImportType {
   Post,
@@ -100,13 +119,23 @@ export default class ImportView extends Vue {
       strList.push(res as string)
     }
     const parsedList = this.parseMarkdown(strList)
+    this.$message.success('解析完成, 结果查看 console 哦')
     console.log(parsedList)
     this.parsedList = parsedList
   }
   parseMarkdown(strList: string[]) {
     const parser = new ParseMarkdownYAML(strList)
     return parser.start().map((i, index) => {
-      i.meta!.slug = (this.fileList[index] as any).raw.name.replace(/\.md$/, '')
+      const filename = (this.fileList[index] as any).raw.name
+      const title = filename.replace(/\.md$/, '')
+      if (i.meta) {
+        i.meta.slug = i.meta.slug ?? title
+      } else {
+        i.meta = {
+          title,
+          slug: title,
+        } as any
+      }
       return i
     })
   }
@@ -123,6 +152,16 @@ export default class ImportView extends Vue {
     })
     this.$message.success('上传成功!')
     this.fileList = []
+  }
+  async handleExportMarkdown() {
+    const data = await rest.get('helper/markdown/export', {
+      params: {
+        slug: 1,
+      },
+      responseType: 'blob',
+    })
+
+    responseBlobToFile(data, 'markdown.zip')
   }
 }
 </script>

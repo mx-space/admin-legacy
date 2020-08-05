@@ -1,3 +1,11 @@
+/*
+ * @Author: Innei
+ * @Date: 2020-04-09 20:40:28
+ * @LastEditTime: 2020-08-05 10:49:31
+ * @LastEditors: Innei
+ * @FilePath: /mx-admin/src/store/modules/category.ts
+ * @Coding with Love
+ */
 import { VuexModule, Action, Module, Mutation } from 'vuex-module-decorators'
 import { CategoryModel } from '../interfaces/category.interface'
 import { rest } from '@/api/rest'
@@ -30,7 +38,6 @@ export class CategoryModule extends VuexModule {
       }
       map.set(category._id, value)
     })
-    console.log(data, map)
 
     return map
   }

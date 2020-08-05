@@ -7,6 +7,7 @@ import {
   faGithub,
   faTelegramPlane,
   faSlackHash,
+  faMarkdown,
 } from '@fortawesome/free-brands-svg-icons'
 import {
   faCheckCircle,
@@ -93,6 +94,7 @@ export const Icons: IconType[] = [
   faComments,
   faUpload,
   faFileImport,
+  faMarkdown,
   faRedoAlt,
   faChartLine,
   faSyncAlt,

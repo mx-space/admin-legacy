@@ -214,10 +214,10 @@ const routes: MenuRouteConfig[] = [
             component: () => import('@/views/Backup/index.vue'),
           },
           {
-            path: 'import',
-            name: 'import',
-            meta: { title: '导入', icon: ['fas', 'file-import'] },
-            component: () => import('@/views/Setting/import.vue'),
+            path: 'markdown',
+            name: 'markdown',
+            meta: { title: 'Markdown 导入导出', icon: ['fab', 'markdown'] },
+            component: () => import('@/views/Setting/markdown.vue'),
           },
           {
             path: 'optimize',

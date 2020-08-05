@@ -11,3 +11,12 @@ export const getEnumFromType = (type: keyof typeof FileType) => {
     PHOTO: 3,
   }[type]
 }
+
+export function responseBlobToFile(response: any, filename: string) {
+  const url = window.URL.createObjectURL(new Blob([response as any]))
+  const link = document.createElement('a')
+  link.href = url
+  link.setAttribute('download', filename)
+  document.body.appendChild(link)
+  link.click()
+}
