@@ -9164,10 +9164,10 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
-vditor@3.4.3:
-  version "3.4.3"
-  resolved "https://registry.yarnpkg.com/vditor/-/vditor-3.4.3.tgz#f475566a35be8d3b73fee23b80b8b3246fdce495"
-  integrity sha512-BxiynI3K/s5gPHaILgvCxAsrQ5mg/6VITO3ykv/KIBw939wNEFovsQREIZ9UgsERfAxU+1vY0PsV+gX8XKMi0Q==
+vditor@3.4.4:
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/vditor/-/vditor-3.4.4.tgz#4f130b807b943431a74bcd4143119818a17686d3"
+  integrity sha512-yWovZK+Vv34dACnROz+qVcu8/D5ppGS58seSzSNGgxOU1VtHxkCz3vogvSgc202J0ayjz8Mr8C9kFLKXBiDJcg==
   dependencies:
     diff-match-patch "^1.0.5"
 
