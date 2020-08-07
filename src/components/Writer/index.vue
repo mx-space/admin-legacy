@@ -1,7 +1,7 @@
 <!--
  * @Author: Innei
  * @Date: 2020-05-17 16:16:26
- * @LastEditTime: 2020-08-01 13:56:19
+ * @LastEditTime: 2020-08-07 11:10:21
  * @LastEditors: Innei
  * @FilePath: /mx-admin/src/components/Writer/index.vue
  * @Coding with Love
@@ -19,7 +19,13 @@
       <slot />
     </div>
 
-    <div id="writer" ref="writer"></div>
+    <codemirror
+      class="editor"
+      ref="editor"
+      :value="model.text"
+      :options="cmOptions"
+      @input="handleChangeText"
+    />
   </el-form>
 </template>
 
@@ -29,8 +35,19 @@ import Component from 'vue-class-component'
 import NormInput from '@/components/Input/NormalInput.vue'
 import MaterialInput from '../Input/MaterialInput.vue'
 import { Prop, Watch } from 'vue-property-decorator'
+import { codemirror } from 'vue-codemirror'
+import { EditorConfiguration, Editor } from 'codemirror'
 
-import Vditor from 'vditor'
+// import base style
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/keymap/sublime'
+import 'codemirror/mode/gfm/gfm'
+import 'codemirror/mode/javascript/javascript'
+import 'codemirror/mode/go/go'
+import 'codemirror/mode/htmlembedded/htmlembedded'
+import 'codemirror/mode/css/css'
+import 'codemirror/mode/sass/sass'
+import 'codemirror/mode/swift/swift'
 
 import '@/assets/scss/shizuku.scss'
 
@@ -51,6 +68,7 @@ declare const window: any
   components: {
     NormInput,
     MaterialInput,
+    codemirror,
   },
 })
 export default class Writer extends Vue {
@@ -59,88 +77,41 @@ export default class Writer extends Vue {
       title: this.$props.title,
       text: this.$props.text,
     }
-    this.$data.model = model
+    this.model = model
   }
-  vditor!: Vditor
-  // TODO: custom cache data (not only text but also title and raw data)
-  handleUpdateText(value: string) {
-    if (!this.vditor.vditor.options.cache?.enable) {
-      this.vditor.enableCache()
-    }
-    this.model.text = value
-    this.handleEmitChange()
+  cmOptions: EditorConfiguration = {
+    mode: 'gfm',
+    keyMap: 'sublime',
+    lineNumbers: true,
+    tabSize: 2,
+    autocapitalize: false,
+    autocorrect: true,
+    lineWrapping: true,
+    foldGutter: true,
   }
   beforeDestroy() {
-    this.vditor.destroy()
     this.$events.$off('writer-submit')
   }
   mounted() {
     // @ts-ignore
     this.$events.$on('writer-submit', () => {
       console.log('clear cache.')
-
-      this.vditor.clearCache()
-      this.vditor.disabledCache()
     })
     const cachedKey = 'mx-space-writer' + (this.id ? `-${this.id}` : '')
-    this.vditor = new Vditor(this.$refs['writer'] as HTMLElement, {
-      after: () => {
-        this.vditor.setValue(this.$props.text || '')
-        const cachedData = localStorage.getItem(cachedKey)
-        if (cachedData) {
-          this.$confirm('检测到存在草稿, 是否加载')
-            .then(() => {
-              this.vditor.setValue(cachedData, true)
-            })
-            .catch(() => {})
-        }
-      },
-      cache: {
-        id: cachedKey,
-        enable: false,
-        after: this.handleUpdateText,
-      },
-      input: this.handleUpdateText,
-      focus: this.handleUpdateText,
-      preview: {
-        hljs: {
-          lineNumber: true,
-        },
-        markdown: {
-          autoSpace: true,
-          fixTermTypo: true,
-          chinesePunct: true,
-          codeBlockPreview: true,
-          sanitize: false,
-          paragraphBeginningSpace: true,
-        },
-      },
-      typewriterMode: true,
-      toolbar: [
-        'bold',
-        'emoji',
-        'italic',
-        'strike',
-        '|',
-        'quote',
-        'upload',
-        'fullscreen',
-        'preview',
-      ],
-    })
   }
 
   @Watch('title')
   syncTitle(val: string) {
-    this.model.title = val
+    if (this.model.title !== val) {
+      this.model.title = val
+    }
   }
 
   @Watch('text')
   syncText(val: string) {
-    this.model.text = val
-    try {
-      this.vditor.setValue(val, true)
-    } catch {}
+    if (this.model.text !== val) {
+      this.model.text = val
+    }
   }
 
   @Prop({ required: true })
@@ -166,11 +137,14 @@ export default class Writer extends Vue {
     this.model.title = e
     this.handleEmitChange()
   }
-
+  handleChangeText(e: string) {
+    this.model.text = e
+    this.handleEmitChange()
+  }
   composition = false
   handleFocus() {
     if (!this.composition) {
-      this.vditor.focus()
+      ;((this.$refs.editor as any) as Editor).focus()
     }
   }
 }
@@ -180,12 +154,22 @@ export default class Writer extends Vue {
 .vditor-toolbar {
   display: none;
 }
+.CodeMirror {
+  border: 1px solid #eee;
+  /* height: auto; */
+  font-family: inherit;
+  height: calc(100vh - 15rem);
+  .CodeMirror-code {
+    font-family: 'Operator Mono', monospace;
+    .CodeMirror-linenumber {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+  }
+}
 </style>
 <style lang="scss" scoped>
 .middle-content {
   padding: 12px 0;
-}
-#writer {
-  min-height: calc(100vh - 15rem);
 }
 </style>

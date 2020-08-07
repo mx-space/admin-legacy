@@ -1,7 +1,7 @@
 <!--
  * @Author: Innei
  * @Date: 2020-05-17 16:16:26
- * @LastEditTime: 2020-08-01 13:16:50
+ * @LastEditTime: 2020-08-06 21:42:14
  * @LastEditors: Innei
  * @FilePath: /mx-admin/src/views/ManageNote/EditNote.vue
  * @Coding with Love
@@ -187,6 +187,7 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
     }
     this.hide = data.hide
     this.mood = (data.mood as MoodValues) ?? 'happy'
+    this.weather = (data.weather as WeatherValues) || null
     this.nid = data.nid
   }
 

@@ -150,7 +150,7 @@ footer {
   right: 3rem;
   display: flex;
   flex-direction: column;
-  z-index: 3;
+  z-index: 30;
   button {
     z-index: 3;
     box-sizing: border-box;
@@ -161,7 +161,7 @@ footer {
     background: #fff;
     border-radius: 66%;
     transition: transform 0.3s;
-    animation: show 0.5s 1.8s both;
+    animation: show 0.5s both;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 5px 20px rgba(0, 0, 0, 0.2);
     &:not(:first-child) {
       margin-top: 0.8rem;
