@@ -6,8 +6,7 @@ name: Node.js CI
 on:
   push:
     branches: [master]
-  pull_request:
-    branches: [master]
+
 
 jobs:
   build:
@@ -26,4 +25,9 @@ jobs:
       - run: yarn
       - run: yarn build
       - run: yarn lint
-
+      - run: echo 'i-backend.top' > dist/CNAME
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
