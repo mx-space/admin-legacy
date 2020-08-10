@@ -1,7 +1,7 @@
 /*
  * @Author: Innei
  * @Date: 2020-04-11 17:13:13
- * @LastEditTime: 2020-06-21 21:07:14
+ * @LastEditTime: 2020-08-10 21:36:18
  * @LastEditors: Innei
  * @FilePath: /mx-admin/src/utils/index.ts
  * @Coding with Love
@@ -30,7 +30,7 @@ export const pickNoEmpty = <T = any>(
   if (isObject(obj)) {
     // @ts-expect-error
     return Object.fromEntries(
-      Object.entries(obj).filter(([_, val]) => {
+      Object.entries(obj).filter(([, val]) => {
         if (Array.isArray(val)) {
           return val.length > 0
         }
@@ -39,6 +39,23 @@ export const pickNoEmpty = <T = any>(
     )
   }
   return obj
+}
+
+/**
+ * 去掉对象中的空串, 转化为 undefined
+ * @param obj
+ */
+export const emptyString2Undefined = <T = Record<string, any>>(obj: T): T => {
+  const entries = Object.entries(obj)
+  const newObj = {}
+  for (const [key, val] of entries) {
+    if (val === '') {
+      newObj[key] = undefined
+    } else {
+      newObj[key] = val
+    }
+  }
+  return newObj as T
 }
 
 export function difference(object, base) {

@@ -67,7 +67,7 @@
     </el-table>
 
     <el-dialog
-      title="新朋友"
+      :title="edit ? '编辑' : '新朋友'"
       :visible.sync="dialogVisible"
       :width="viewport.mobile ? '360px' : '500px'"
     >
@@ -130,7 +130,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import LayoutButtonVue from '../../../components/Button/LayoutButton.vue'
 import PageLayout from '@/layouts/PageLayout.vue'
-import omit from 'lodash/omit'
+import pick from 'lodash/pick'
 import {
   LinkModel,
   LinkRespDto,
@@ -141,7 +141,7 @@ import ParallaxButton from '@/components/Button/ParallaxButton.vue'
 import { ElForm } from 'element-ui/types/form'
 // @ts-ignore
 import isURL from 'validator/lib/isURL'
-import { pickNoEmpty } from '../../../utils'
+import { emptyString2Undefined } from '../../../utils'
 import { Getter } from 'vuex-class'
 import { ViewportRecord } from '../../../store/interfaces/viewport.interface'
 
@@ -237,10 +237,13 @@ export default class extends Vue {
     ;(this.$refs.form as ElForm).validate(async (valid) => {
       if (valid) {
         if (this.edit) {
-          await this.$api('Link').update(this.edit, pickNoEmpty(this.model))
+          await this.$api('Link').update(
+            this.edit,
+            emptyString2Undefined(this.model),
+          )
           this.$message.success('修改成功')
         } else {
-          await this.$api('Link').post(pickNoEmpty(this.model))
+          await this.$api('Link').post(emptyString2Undefined(this.model))
           this.$message.success('添加成功')
         }
         this.fetch()
@@ -263,7 +266,7 @@ export default class extends Vue {
 
   edit: false | string = false
   handleEdit(row: LinkModel) {
-    this.model = omit(row, ['_id'])
+    this.model = pick(row, ['name', 'url', 'avatar', 'description', 'type'])
     this.edit = row._id as string
     this.dialogVisible = true
   }

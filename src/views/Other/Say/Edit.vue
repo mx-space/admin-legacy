@@ -46,7 +46,7 @@ import Component from 'vue-class-component'
 import PageLayout from '@/layouts/PageLayout.vue'
 import LayoutButton from '@/components/Button/LayoutButton.vue'
 import { SayDto } from '../../../models'
-import { pickNoEmpty } from '@/utils'
+import { emptyString2Undefined } from '@/utils'
 import { ElForm } from 'element-ui/types/form'
 @Component({
   components: {
@@ -102,7 +102,9 @@ export default class SayEdit extends Vue {
   }
 
   async handlePostHitokoto() {
-    await this.$api('Say').post(pickNoEmpty(this.placeholder) as SayDto)
+    await this.$api('Say').post(
+      emptyString2Undefined(this.placeholder) as SayDto,
+    )
     this.$message.success('发送成功~')
     this.$router.push({ name: 'say-list' })
   }
@@ -111,12 +113,14 @@ export default class SayEdit extends Vue {
     ;(this.$refs['form'] as ElForm).validate(async (valid) => {
       if (valid) {
         if (!this.id) {
-          await this.$api('Say').post(pickNoEmpty(this.model) as SayDto)
+          await this.$api('Say').post(
+            emptyString2Undefined(this.model) as SayDto,
+          )
           this.$message.success('发送成功~')
         } else {
           await this.$api('Say').update(
             this.id as string,
-            pickNoEmpty(this.model) as SayDto,
+            emptyString2Undefined(this.model) as SayDto,
           )
           this.$message.success('修改成功~')
         }

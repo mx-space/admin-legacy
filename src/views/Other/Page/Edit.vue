@@ -51,12 +51,11 @@
 ></template>
 
 <script lang="ts">
-import Vue from 'vue'
 import Component from 'vue-class-component'
 import PageLayout from '@/layouts/PageLayout.vue'
 import LayoutButton from '@/components/Button/LayoutButton.vue'
 import { EnumPageType, PageDto } from '../../../models'
-import { pickNoEmpty } from '@/utils'
+import { emptyString2Undefined } from '@/utils'
 import Writer, { BaseWriter } from '@/components/Writer/index.vue'
 import UnderlineInput from '@/components/Input/UnderlineInput.vue'
 import { Mixins } from 'vue-property-decorator'
@@ -93,12 +92,12 @@ export default class PageList extends Mixins(BaseWriter) {
 
   async handleSubmit() {
     if (!this.id) {
-      await this.$api('Page').post(pickNoEmpty(this.model) as PageDto)
+      await this.$api('Page').post(emptyString2Undefined(this.model) as PageDto)
     } else {
       await this.$api('Page').update(
         this.id as string,
         {
-          ...pickNoEmpty(this.model),
+          ...emptyString2Undefined(this.model),
           subtitle: this.model.subtitle || null,
         } as PageDto,
       )

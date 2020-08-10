@@ -194,10 +194,10 @@
 <script lang="ts">
 import Layout from '@/layouts/PageLayout.vue'
 import { Vue, Component } from 'vue-property-decorator'
-import pick from 'lodash/pick'
+
 import omit from 'lodash/omit'
 import ParallaxButton from '@/components/Button/ParallaxButton.vue'
-import { pickNoEmpty, difference } from '../../utils'
+import { difference } from '../../utils'
 import { IConfig } from '../../models'
 import cloneDeep from 'lodash/cloneDeep'
 import LayoutButton from '@/components/Button/LayoutButton.vue'
