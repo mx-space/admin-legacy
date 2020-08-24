@@ -187,6 +187,24 @@
           </el-form-item>
         </el-form>
       </el-collapse-item>
+      <el-collapse-item name="6" title="百度推送">
+        <el-form :model="configs" label-width="8rem">
+          <el-form-item label="开启推送">
+            <el-switch
+              v-model="configs.baiduSearchOptions.enable"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            ></el-switch>
+          </el-form-item>
+
+          <el-form-item label="token">
+            <el-input
+              v-model="configs.baiduSearchOptions.token"
+              type="password"
+            ></el-input>
+          </el-form-item>
+        </el-form>
+      </el-collapse-item>
     </el-collapse>
   </Layout>
 </template>
@@ -266,6 +284,10 @@ export default class SystemSettingView extends Vue {
           Bucket: '',
           Region: '',
         },
+        baiduSearchOptions: {
+          enable: false,
+          token: '',
+        },
       },
       configs,
     ) as IConfig
@@ -277,7 +299,7 @@ export default class SystemSettingView extends Vue {
   async handleSave() {
     const diff = difference(this.configs, this.raw)
     if (!isEmpty(diff)) {
-      console.log(diff)
+      // console.log(diff)
 
       const entries = Object.entries(diff)
 

@@ -174,6 +174,7 @@ export interface IConfig {
   mailOptions: MailOptionsDto
   commentOptions: CommentOptions
   backupOptions: BackupOptions
+  baiduSearchOptions: BaiduSearchOptions
 }
 export declare class SEODto {
   title: string
@@ -253,4 +254,10 @@ export interface TokenModel {
   name: string
 
   id: string
+}
+
+export class BaiduSearchOptions {
+  enable?: boolean
+
+  token?: string
 }
