@@ -9598,10 +9598,10 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
-vditor@3.5.1:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/vditor/-/vditor-3.5.1.tgz#920805d4bf9cf99992a5e61234e59224537cd561"
-  integrity sha512-Y/0D82K9fXMsJBc0idfHSg6aTV0WBtX955Djjdi5NXPHltPnxFaygiZv9icbJ8Sa+ayQs6YYcsuMuY+bCy0vvw==
+vditor@3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/vditor/-/vditor-3.5.2.tgz#a4766743cbc3376c076c2d4a769c7ebf16240469"
+  integrity sha512-jWtDM8cx7bpH+j+ZBkc9AFZXjbLTIUfPbVDUPKckbYMHrvCwWgKlyPwuCpnqe2FrOX0/c0CUoiB29baDArPqnQ==
   dependencies:
     diff-match-patch "^1.0.5"
 
