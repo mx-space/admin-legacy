@@ -155,7 +155,7 @@ export default class ListNotes extends Vue {
     const { page, data } = await this.$api('Note').gets(
       {
         page: ops.page || this.page?.currentPage || 1,
-        size: ops.size || this.page?.size || 10,
+        size: ops.size || 10,
       },
       this.sortBy ? { sortBy: this.sortBy, sortOrder: this.sortOrder } : {},
     )
