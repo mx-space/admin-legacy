@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@types/js-cookie": "2.2.6",
-    "@types/lodash": "4.14.162",
+    "@types/lodash": "4.14.163",
     "@types/socket.io-client": "1.4.34",
     "@types/validator": "13.1.0",
     "@typescript-eslint/eslint-plugin": "4.6.0",
