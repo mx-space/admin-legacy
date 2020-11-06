@@ -1,3 +1,5 @@
+import { NoteMusicRecord } from './response.dto'
+
 export interface UserDto {
   username?: string
 
@@ -114,6 +116,8 @@ export interface NoteDto {
   password?: string
 
   options?: Record<string, any>
+
+  music?: NoteMusicRecord[] | undefined
 }
 
 export interface PageDto {

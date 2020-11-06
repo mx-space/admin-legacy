@@ -83,8 +83,13 @@ export interface NoteRecord {
   created: string
   modified: string
   nid: number
+  music?: NoteMusicRecord[]
 }
 
+export interface NoteMusicRecord {
+  type: string
+  id: string
+}
 export interface NotesRespDto extends BaseResp {
   data: NoteRecord[]
 }

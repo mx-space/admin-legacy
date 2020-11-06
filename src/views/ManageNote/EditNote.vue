@@ -67,8 +67,6 @@
         <el-form-item label="设定密码?">
           <el-input v-model="password" type="password"> </el-input>
         </el-form-item>
-      </el-form>
-      <el-form>
         <el-form-item label="隐藏?">
           <el-switch
             v-model="hide"
@@ -77,6 +75,34 @@
           >
           </el-switch>
         </el-form-item>
+
+        <el-form-item label="标签">
+          <el-tag
+            :key="music"
+            v-for="music in musics"
+            closable
+            :disable-transitions="false"
+            @close="handleClose(music.id)"
+          >
+            {{ music.id }}
+          </el-tag>
+          <el-input
+            class="input-new-tag"
+            v-if="inputVisible"
+            v-model="newMusicValue"
+            ref="saveMusicInput"
+            size="small"
+            @keyup.enter.native="handleInputConfirm"
+          >
+          </el-input>
+          <el-button
+            v-else
+            class="button-new-tag"
+            size="small"
+            @click="showInput"
+            >+ 新音乐</el-button
+          >
+        </el-form-item>
       </el-form>
     </el-drawer>
 
@@ -84,7 +110,7 @@
       <el-input type="textarea" v-model="unparsed" rows="15"></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="unparsed = ''">重置</el-button>
-        <el-button type="primary" @click="handleParse">确 定</el-button>
+        <el-button type="primary" @click="handleParse">确定</el-button>
       </span>
     </el-dialog>
 
@@ -104,7 +130,7 @@ import PageLayout from '@/layouts/PageLayout.vue'
 import Writer, { BaseWriter } from '@/components/Writer/index.vue'
 import UnderlineInput from '@/components/Input/UnderlineInput.vue'
 
-import { NoteRespDto } from '../../models/response.dto'
+import { NoteRespDto, NoteMusicRecord } from '../../models/response.dto'
 import {
   NoteDto,
   MoodSet,
@@ -157,6 +183,7 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
       password: this.password === '' ? undefined : this.password,
       mood: this.mood,
       weather: this.weather ?? undefined,
+      music: this.musics ?? [],
     }
     this.id
       ? await this.$api('Note').update(this.id as string, model)
@@ -189,8 +216,33 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
     this.mood = (data.mood as MoodValues) ?? 'happy'
     this.weather = (data.weather as WeatherValues) || null
     this.nid = data.nid
+    this.musics = data.music ?? []
   }
-
+  musics: NoteMusicRecord[] = []
+  handleClose(id: string) {
+    // this.musics.splice(this.musics.indexOf(tag), 1)
+    this.musics = [...this.musics.filter((music) => music.id !== id)]
+  }
+  inputVisible = false
+  newMusicValue = ''
+  handleInputConfirm() {
+    const newTagValue = this.newMusicValue
+    if (newTagValue && this.musics.every((m) => m.id !== newTagValue)) {
+      this.musics.push({
+        type: 'netease',
+        id: this.newMusicValue,
+      })
+    }
+    this.inputVisible = false
+    this.newMusicValue = ''
+  }
+  showInput() {
+    this.inputVisible = true
+    this.$nextTick(() => {
+      // @ts-ignore
+      this.$refs.saveMusicInput.$refs.input.focus()
+    })
+  }
   hide = false
   password = ''
   nid: number | null = null
@@ -211,5 +263,26 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
   input {
     width: 8rem;
   }
+}
+</style>
+
+<style lang="scss" scoped>
+.button-new-tag {
+  margin-left: 10px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.input-new-tag {
+  width: 90px;
+  margin-left: 10px;
+  vertical-align: bottom;
+}
+</style>
+
+<style lang="scss">
+.el-tag + .el-tag {
+  margin-left: 10px;
 }
 </style>
