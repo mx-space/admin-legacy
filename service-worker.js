@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/precache-manifest.acabdeb07598161b0c9059fb314ba405.js"
+  "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/precache-manifest.51debdc18adce89fa15e35ae0b543d3a.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "mx-admin"});
