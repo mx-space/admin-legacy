@@ -34,7 +34,7 @@
         <el-tag v-for="ip in todayIps" :key="ip" effect="plain">
           <el-popover placement="top" trigger="click" @show="getIpLocation(ip)">
             <p v-html="ipLocation"></p>
-            <span slot="reference" style="cursor: pointer;">{{ ip }}</span>
+            <span slot="reference" style="cursor: pointer">{{ ip }}</span>
           </el-popover>
         </el-tag>
       </div>
@@ -42,7 +42,7 @@
 
     <section>
       <small>最近请求</small>
-      <el-table :data="tableData" style="width: 100%;">
+      <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="date" label="时间" width="120px">
         </el-table-column>
         <el-table-column prop="ip" label="IP" width="130px">
@@ -322,8 +322,7 @@ export default class AnalyzeView extends Vue {
   async getIpLocation(ip: string) {
     this.ipLocation = '获取中...'
     //https://github.com/metowolf/ipdb-API
-    const apiUrl =
-      process.env.VUE_APP_IP_QUERY_URL || 'https://api.i-meto.com/ip/v1/qqwry/'
+    const apiUrl = 'https://api.i-meto.com/ip/v1/qqwry/'
 
     const response = await fetch(apiUrl + ip)
     const data = await response.json()
