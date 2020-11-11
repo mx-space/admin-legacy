@@ -76,7 +76,7 @@
           </el-switch>
         </el-form-item>
 
-        <el-form-item label="标签">
+        <el-form-item label="音乐">
           <el-tag
             :key="music"
             v-for="music in musics"
