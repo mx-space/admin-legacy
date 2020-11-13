@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/favicon.svg"
   },
   {
-    "revision": "59c119cdf5460f4ce5cb90d552d6aed8",
+    "revision": "a9c48d74134de02b650ff460fa984d8b",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/index.html"
   },
   {
@@ -16,119 +16,119 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/robots.txt"
   },
   {
-    "revision": "479307d96d63725fa562",
+    "revision": "aac02b9246b0fcc6fcca",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/app.9366e5ff.css"
   },
   {
-    "revision": "05b84960f6a1fc3a6233",
+    "revision": "2f7fa9763febddb79c55",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-03364bfc.5d25c6ab.css"
   },
   {
-    "revision": "48f1828c8a9962a1e0bd",
+    "revision": "250aff4cca50c855561c",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-050c6108.5d25c6ab.css"
   },
   {
-    "revision": "c8ffcb398cc1c1297731",
+    "revision": "8b2cab20e668f063dfe8",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-11895f59.f3dc7cb7.css"
   },
   {
-    "revision": "ef9f586a3c7eb6abc67e",
+    "revision": "85dba108d60a964808f0",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-1289da56.f683988f.css"
   },
   {
-    "revision": "bcaf8b768edc41974ab9",
+    "revision": "e002785546b4b453f00a",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-1de5f912.33276500.css"
   },
   {
-    "revision": "4b31abc77828e5f10bc4",
+    "revision": "77bd3da304bd4bc25ed1",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-29b45cf9.04d52699.css"
   },
   {
-    "revision": "8561b121b4150a334448",
+    "revision": "59685f56efc9244fac9a",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-2ce6aff4.33276500.css"
   },
   {
-    "revision": "146c5e273a4f13f39b84",
+    "revision": "2e7c6ed543e0e53e5492",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-33913f02.dc3ce0cc.css"
   },
   {
-    "revision": "278c9cabdc58d5017e0d",
+    "revision": "f58f9cedd5cd0c99826a",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-3531976a.113add8c.css"
   },
   {
-    "revision": "978fda3d591f11c30d1a",
+    "revision": "c16a8ce570d6ac64d7a9",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-354f72da.33276500.css"
   },
   {
-    "revision": "9f4c471049195d1dcf69",
+    "revision": "201125d4bdfd4c47f3e3",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-389bb65f.33276500.css"
   },
   {
-    "revision": "3cab1cf13ceb8353c984",
+    "revision": "d1e3035676262a62219a",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-41ee9416.38b60f01.css"
   },
   {
-    "revision": "47644beae5ab28e6caa3",
+    "revision": "f4dfec13aac06d31156b",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-47431d79.c9b63c89.css"
   },
   {
-    "revision": "39da427be68bee7b95b8",
+    "revision": "502b06ed5db8a1fbd9bd",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-4d326bcc.5ed0c26e.css"
   },
   {
-    "revision": "d512556b1ae814bfb009",
+    "revision": "6fb17601456a4e842f30",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-5e003117.5d25c6ab.css"
   },
   {
-    "revision": "90aeb9cb2a351ca1caec",
+    "revision": "8d3e0f8c1db2ec23247d",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-6c4f1ac6.33276500.css"
   },
   {
-    "revision": "2e0f9873f483b0aa53be",
+    "revision": "2a34228d87aa1e9c46c4",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-6c6a5742.6e34b9b3.css"
   },
   {
-    "revision": "701a34d0a6de7522a1a2",
+    "revision": "2183951d1e1e919526da",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-71ed29b6.169da2d3.css"
   },
   {
-    "revision": "83a42ca14f340eb98417",
+    "revision": "65f6c34c75d4e9eba823",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-74c37c41.991d0026.css"
   },
   {
-    "revision": "a08b658490c7d2bf04f2",
+    "revision": "dda8d703653b1b8948ae",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-79bf3179.eb62e322.css"
   },
   {
-    "revision": "78ede0fdc257108ec9c0",
+    "revision": "3d0582206319299a59ae",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-a9593de4.39fd489a.css"
   },
   {
-    "revision": "591a71ac7d8d0a372600",
+    "revision": "12f5d51a106a105b1e0d",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-bde98ac8.c891bdf5.css"
   },
   {
-    "revision": "5d69fbd4a7963d9aa0af",
+    "revision": "40e42ffd93a61ace28bf",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-c0341468.f683988f.css"
   },
   {
-    "revision": "4a371610887957cb93c4",
+    "revision": "2e33ac0a0feadd9e5ee7",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-c904c3aa.0fa6ae5e.css"
   },
   {
-    "revision": "b80c58cd6cdf0817b875",
+    "revision": "f4e19fccd5ffc6b75a49",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-cef1557c.80a7db5a.css"
   },
   {
-    "revision": "bfeca46531b2572974d8",
+    "revision": "4d350e52388893077186",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-e8c5e500.904f4ee7.css"
   },
   {
-    "revision": "b44362a5a0807f8e9f92",
+    "revision": "7fcffbecd18ee7ee45c7",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-f476173e.dc3ce0cc.css"
   },
   {
-    "revision": "b694f22caf5fbe50f829",
+    "revision": "9074a22aac3bb174af1e",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-vendors.79743892.css"
   },
   {
@@ -248,127 +248,127 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/img/JosefinSans-Thin.214e9dd1.svg"
   },
   {
-    "revision": "479307d96d63725fa562",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/app.cdacafbe.js"
+    "revision": "aac02b9246b0fcc6fcca",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/app.126563c4.js"
   },
   {
-    "revision": "05b84960f6a1fc3a6233",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-03364bfc.22df6e75.js"
+    "revision": "2f7fa9763febddb79c55",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-03364bfc.e76ee61b.js"
   },
   {
-    "revision": "48f1828c8a9962a1e0bd",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-050c6108.90d33425.js"
+    "revision": "250aff4cca50c855561c",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-050c6108.c96b63af.js"
   },
   {
-    "revision": "c8ffcb398cc1c1297731",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-11895f59.892d5fe4.js"
+    "revision": "8b2cab20e668f063dfe8",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-11895f59.632e0e61.js"
   },
   {
-    "revision": "ef9f586a3c7eb6abc67e",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-1289da56.3e02ee1d.js"
+    "revision": "85dba108d60a964808f0",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-1289da56.c9c9cbc0.js"
   },
   {
-    "revision": "bcaf8b768edc41974ab9",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-1de5f912.d4214b86.js"
+    "revision": "e002785546b4b453f00a",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-1de5f912.7496a5a1.js"
   },
   {
-    "revision": "4b31abc77828e5f10bc4",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-29b45cf9.754c0cb1.js"
+    "revision": "77bd3da304bd4bc25ed1",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-29b45cf9.137ba03b.js"
   },
   {
-    "revision": "8561b121b4150a334448",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-2ce6aff4.bfd8b69c.js"
+    "revision": "59685f56efc9244fac9a",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-2ce6aff4.5dd5431f.js"
   },
   {
-    "revision": "175eda5125b51362d68f",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-2d222d55.fcb46207.js"
+    "revision": "7855b109b786601995b9",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-2d222d55.07103633.js"
   },
   {
     "revision": "6997223ffe62f81d8a6d",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-31101686.6d5c8275.js"
   },
   {
-    "revision": "146c5e273a4f13f39b84",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-33913f02.03aaf39f.js"
+    "revision": "2e7c6ed543e0e53e5492",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-33913f02.808367bd.js"
   },
   {
-    "revision": "278c9cabdc58d5017e0d",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-3531976a.46c4c01c.js"
+    "revision": "f58f9cedd5cd0c99826a",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-3531976a.889badbf.js"
   },
   {
-    "revision": "978fda3d591f11c30d1a",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-354f72da.eb879fe7.js"
+    "revision": "c16a8ce570d6ac64d7a9",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-354f72da.0a2c3110.js"
   },
   {
-    "revision": "9f4c471049195d1dcf69",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-389bb65f.89669fcb.js"
+    "revision": "201125d4bdfd4c47f3e3",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-389bb65f.424a01eb.js"
   },
   {
-    "revision": "3cab1cf13ceb8353c984",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-41ee9416.bc2fab7b.js"
+    "revision": "d1e3035676262a62219a",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-41ee9416.abb03523.js"
   },
   {
-    "revision": "47644beae5ab28e6caa3",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-47431d79.edba90a6.js"
+    "revision": "f4dfec13aac06d31156b",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-47431d79.30684ba0.js"
   },
   {
-    "revision": "39da427be68bee7b95b8",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-4d326bcc.76d62ea3.js"
+    "revision": "502b06ed5db8a1fbd9bd",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-4d326bcc.892a1b37.js"
   },
   {
-    "revision": "d512556b1ae814bfb009",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-5e003117.a3197a50.js"
+    "revision": "6fb17601456a4e842f30",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-5e003117.3acad0a7.js"
   },
   {
-    "revision": "90aeb9cb2a351ca1caec",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-6c4f1ac6.b3ea0247.js"
+    "revision": "8d3e0f8c1db2ec23247d",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-6c4f1ac6.064e296b.js"
   },
   {
-    "revision": "2e0f9873f483b0aa53be",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-6c6a5742.ad0c8afb.js"
+    "revision": "2a34228d87aa1e9c46c4",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-6c6a5742.d0d7341e.js"
   },
   {
-    "revision": "701a34d0a6de7522a1a2",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-71ed29b6.f223b1ab.js"
+    "revision": "2183951d1e1e919526da",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-71ed29b6.08edf466.js"
   },
   {
-    "revision": "83a42ca14f340eb98417",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-74c37c41.5bd50da6.js"
+    "revision": "65f6c34c75d4e9eba823",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-74c37c41.1df52112.js"
   },
   {
-    "revision": "a08b658490c7d2bf04f2",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-79bf3179.9decf802.js"
+    "revision": "dda8d703653b1b8948ae",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-79bf3179.88431d9f.js"
   },
   {
-    "revision": "78ede0fdc257108ec9c0",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-a9593de4.a3818596.js"
+    "revision": "3d0582206319299a59ae",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-a9593de4.f7c59dab.js"
   },
   {
-    "revision": "591a71ac7d8d0a372600",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-bde98ac8.72c004bb.js"
+    "revision": "12f5d51a106a105b1e0d",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-bde98ac8.bbab90c0.js"
   },
   {
-    "revision": "5d69fbd4a7963d9aa0af",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-c0341468.64947a9a.js"
+    "revision": "40e42ffd93a61ace28bf",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-c0341468.a9d20d9a.js"
   },
   {
-    "revision": "4a371610887957cb93c4",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-c904c3aa.1ba33bb0.js"
+    "revision": "2e33ac0a0feadd9e5ee7",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-c904c3aa.a76d7776.js"
   },
   {
-    "revision": "b80c58cd6cdf0817b875",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-cef1557c.de65be6b.js"
+    "revision": "f4e19fccd5ffc6b75a49",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-cef1557c.38962c9a.js"
   },
   {
-    "revision": "bfeca46531b2572974d8",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-e8c5e500.3ec01e01.js"
+    "revision": "4d350e52388893077186",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-e8c5e500.10c3d6b9.js"
   },
   {
-    "revision": "b44362a5a0807f8e9f92",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-f476173e.df6f14b5.js"
+    "revision": "7fcffbecd18ee7ee45c7",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-f476173e.9a55359b.js"
   },
   {
-    "revision": "b694f22caf5fbe50f829",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-vendors.75750a12.js"
+    "revision": "9074a22aac3bb174af1e",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-vendors.15cc3253.js"
   }
 ]);
