@@ -45,8 +45,37 @@
       :value="tag.count"
       class="tag"
     >
-      <el-tag>{{ tag.name }}</el-tag>
+      <el-tag @click="handleFetchArticleWithTag(tag.name)">{{
+        tag.name
+      }}</el-tag>
     </el-badge>
+
+    <el-table
+      :data="posts"
+      style="width: 100%"
+      max-height="650"
+      v-loading="posts === null"
+      v-if="!posts || posts.length > 0"
+    >
+      <el-table-column prop="title" label="标题">
+        <template slot-scope="scope">
+          <el-button
+            @click.native.prevent="
+              $router.push('/posts/edit?id=' + scope.row._id)
+            "
+            type="text"
+            size="small"
+          >
+            {{ scope.row.title }}
+          </el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="分类">
+        <template slot-scope="scope">
+          <span>{{ scope.row.category.name }}</span>
+        </template>
+      </el-table-column>
+    </el-table>
 
     <el-dialog title="新分类" :visible.sync="dialogVisible" width="360px">
       <el-form :model="model" label-width="80px" :rules="rules" ref="form">
@@ -82,6 +111,7 @@ import {
   CategoryType,
   CategoryRespDto,
   CategoriesRespDto,
+  PostRespDto,
 } from '../../../models/response.dto'
 import ParallaxButton from '@/components/Button/ParallaxButton.vue'
 import { ElForm } from 'element-ui/types/form'
@@ -128,8 +158,8 @@ export default class extends Vue {
     this.loading = false
 
     const tagdata = (await this.$api('Category').get(undefined, {
-      data: {
-        type: CategoryType.Tag,
+      params: {
+        type: 'Tag',
       },
     })) as { data: { name: string; count: number }[] }
 
@@ -173,11 +203,26 @@ export default class extends Vue {
     this.edit = row._id as string
     this.dialogVisible = true
   }
+
+  posts: PostRespDto[] | null = []
+  curTag: null | string = null
+  async handleFetchArticleWithTag(tag: string) {
+    this.curTag = tag
+    this.posts = null
+    const { data: posts } = (await this.$api('Category').get(tag, {
+      params: {
+        tag: 'true',
+      },
+    })) as any
+    this.posts = posts
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .tag {
   margin-right: 1rem;
+  cursor: pointer;
+  user-select: none;
 }
 </style>

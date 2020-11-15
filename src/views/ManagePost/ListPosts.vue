@@ -9,7 +9,7 @@
     </template>
     <el-table
       :data="data"
-      style="width: 100%;"
+      style="width: 100%"
       max-height="650"
       stripe
       v-loading="loading"
