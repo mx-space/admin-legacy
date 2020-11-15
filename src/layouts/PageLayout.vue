@@ -69,7 +69,7 @@ export default {
   right: 0;
   left: 0;
   overflow: auto;
-  margin: 0 3rem 0;
+  padding: 0 3rem 0;
   main {
     padding: 0 0.8rem;
     min-height: calc(100vh - 12rem);

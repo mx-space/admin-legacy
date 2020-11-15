@@ -37,6 +37,7 @@ import {
   Upload,
   DatePicker,
   Autocomplete,
+  Badge,
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Vue from 'vue'
@@ -70,6 +71,7 @@ const components = [
   Popover,
   Upload,
   DatePicker,
+  Badge,
 ]
 
 components.forEach((component) => {

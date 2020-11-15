@@ -6,9 +6,10 @@
         :icon="['fas', 'plus']"
         name="新增"
     /></template>
+    <h4>分类</h4>
     <el-table
       :data="data"
-      style="width: 100%;"
+      style="width: 100%"
       max-height="650"
       stripe
       v-loading="loading"
@@ -28,7 +29,7 @@
               type="text"
               size="small"
               slot="reference"
-              style="color: red;"
+              style="color: red"
             >
               移除
             </el-button>
@@ -37,6 +38,16 @@
       </el-table-column>
     </el-table>
 
+    <h4>标签</h4>
+    <el-badge
+      v-for="tag in tags"
+      :key="tag.name"
+      :value="tag.count"
+      class="tag"
+    >
+      <el-tag>{{ tag.name }}</el-tag>
+    </el-badge>
+
     <el-dialog title="新分类" :visible.sync="dialogVisible" width="360px">
       <el-form :model="model" label-width="80px" :rules="rules" ref="form">
         <el-form-item label="名字" prop="name">
@@ -44,18 +55,6 @@
         </el-form-item>
         <el-form-item label="路径" prop="slug">
           <el-input v-model="model.slug"></el-input>
-        </el-form-item>
-
-        <el-form-item label="类型" prop="type">
-          <el-select v-model="model.type" placeholder="">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -107,20 +106,6 @@ export default class extends Vue {
     slug: '',
     type: CategoryType.Category,
   }
-  options = [
-    {
-      label: '分类',
-      value: CategoryType.Category,
-    },
-    {
-      label: '标签',
-      value: CategoryType.Tag,
-    },
-  ]
-
-  getType(type: 0 | 1) {
-    return ['分类', '标签'][type]
-  }
 
   dialogVisible = false
 
@@ -133,12 +118,22 @@ export default class extends Vue {
   }
 
   loading = false
+
+  tags: { name: string; count: number }[] = []
   async fetch() {
     this.loading = true
-    const resp = (await this.$api('Category').get()) as CategoriesRespDto
-    this.data = resp.data
-    this.fetchCategory(resp.data)
+    const catedata = (await this.$api('Category').get()) as CategoriesRespDto
+    this.data = catedata.data
+    this.fetchCategory(catedata.data)
     this.loading = false
+
+    const tagdata = (await this.$api('Category').get(undefined, {
+      data: {
+        type: CategoryType.Tag,
+      },
+    })) as { data: { name: string; count: number }[] }
+
+    this.tags = [...tagdata.data]
   }
   handleAdd() {
     this.dialogVisible = true
@@ -180,3 +175,9 @@ export default class extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.tag {
+  margin-right: 1rem;
+}
+</style>

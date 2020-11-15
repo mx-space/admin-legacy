@@ -49,7 +49,7 @@ const routes: MenuRouteConfig[] = [
           {
             path: 'category',
             name: 'edit-category',
-            meta: { title: '管理分类', icon: ['fas', 'puzzle-piece'] },
+            meta: { title: '分类/标签', icon: ['fas', 'puzzle-piece'] },
             component: () => import('@/views/Other/Categories/index.vue'),
           },
         ],
