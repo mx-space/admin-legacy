@@ -9,7 +9,7 @@
     </template>
     <el-table
       :data="data"
-      style="width: 100%;"
+      style="width: 100%"
       max-height="650"
       stripe
       v-loading="loading"
@@ -30,11 +30,6 @@
       </el-table-column>
 
       <el-table-column prop="mood" label="心情" width="100" sortable="custom">
-        <template slot-scope="scope">
-          {{
-            moodSet[data[scope.$index].mood] || data[scope.$index].mood || ''
-          }}
-        </template>
       </el-table-column>
 
       <el-table-column
@@ -43,13 +38,6 @@
         width="100"
         sortable="custom"
       >
-        <template slot-scope="scope">
-          {{
-            weatherSet[data[scope.$index].weather] ||
-            data[scope.$index].weather ||
-            ''
-          }}
-        </template>
       </el-table-column>
       <el-table-column
         prop="created"
@@ -107,7 +95,7 @@ import Button from '@/components/Button/LayoutButton.vue'
 
 import * as time from '@/utils/time'
 import { PagerDto, NotesRespDto, NoteRecord } from '../../models/response.dto'
-import { MoodSet, WeatherSet } from '@/models'
+
 @Component({
   components: {
     PageLayout,
@@ -118,9 +106,6 @@ export default class ListNotes extends Vue {
   page: Partial<PagerDto> = {}
   data: NotesRespDto['data'] = []
   loading = true
-
-  moodSet = MoodSet
-  weatherSet = WeatherSet
 
   async created() {
     await this.getData()

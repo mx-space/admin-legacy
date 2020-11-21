@@ -42,24 +42,36 @@
     >
       <el-form :model="model" label-width="80px" label-position="top">
         <el-form-item label="心情">
-          <el-select v-model="mood" placeholder="请选择">
+          <el-select
+            v-model="mood"
+            placeholder="请选择心情"
+            allow-create
+            default-first-option
+            filterable
+          >
             <el-option
               v-for="(value, key) in moodSet"
               :key="key"
               :label="value"
-              :value="key"
+              :value="value"
             >
             </el-option>
           </el-select>
         </el-form-item>
 
         <el-form-item label="天气">
-          <el-select v-model="weather" placeholder="请选择">
+          <el-select
+            v-model="weather"
+            placeholder="请选择天气"
+            allow-create
+            default-first-option
+            filterable
+          >
             <el-option
               v-for="(value, key) in weatherSet"
               :key="key"
               :label="value"
-              :value="key"
+              :value="value"
             >
             </el-option>
           </el-select>
@@ -131,13 +143,7 @@ import Writer, { BaseWriter } from '@/components/Writer/index.vue'
 import UnderlineInput from '@/components/Input/UnderlineInput.vue'
 
 import { NoteRespDto, NoteMusicRecord } from '../../models/response.dto'
-import {
-  NoteDto,
-  MoodSet,
-  WeatherSet,
-  MoodValues,
-  WeatherValues,
-} from '../../models'
+import { NoteDto } from '../../models'
 
 import { Mixins } from 'vue-property-decorator'
 @Component({
@@ -181,7 +187,7 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
       ...this.model,
       hide: this.hide,
       password: this.password === '' ? undefined : this.password,
-      mood: this.mood,
+      mood: this.mood ?? undefined,
       weather: this.weather ?? undefined,
       music: this.musics ?? [],
     }
@@ -213,8 +219,8 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
       text: data.text,
     }
     this.hide = data.hide
-    this.mood = (data.mood as MoodValues) ?? 'happy'
-    this.weather = (data.weather as WeatherValues) || null
+    this.mood = data.mood || null
+    this.weather = data.weather || null
     this.nid = data.nid
     this.musics = data.music ?? []
   }
@@ -247,12 +253,28 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
   password = ''
   nid: number | null = null
 
-  mood: MoodValues = 'happy'
-  moodSet = MoodSet
+  mood: string | null = null
 
-  weather: WeatherValues | null = null
-  weatherSet = WeatherSet
+  weather: string | null = null
 
+  moodSet = [
+    '开心',
+    '伤心',
+    '决心',
+    '坚定',
+    '痛恨',
+    '生气',
+    '悲哀',
+    '痛苦',
+    '可怕',
+    '不快',
+    '可恶',
+    '担心',
+    '绝望',
+    '焦虑',
+    '激动',
+  ]
+  weatherSet = ['晴', '多云', '雨', '阴', '雪', '雷雨']
   prefix = 'mx-space-note'
 }
 </script>

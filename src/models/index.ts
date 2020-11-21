@@ -107,7 +107,7 @@ export interface NoteDto {
 
   text: string
 
-  mood?: keyof typeof Mood
+  mood?: string
 
   weather?: string
 
