@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@antv/g2": "4.0.15",
-    "@fortawesome/fontawesome-svg-core": "1.2.30",
+    "@fortawesome/fontawesome-svg-core": "1.2.32",
     "@fortawesome/free-brands-svg-icons": "5.14.0",
     "@fortawesome/free-regular-svg-icons": "5.14.0",
     "@fortawesome/free-solid-svg-icons": "5.14.0",
