@@ -26,7 +26,7 @@
     "normalize.css": "8.0.1",
     "qier-progress": "1.0.4",
     "register-service-worker": "1.7.1",
-    "socket.io-client": "2.3.1",
+    "socket.io-client": "3.0.3",
     "validator": "13.1.17",
     "vditor": "3.6.6",
     "vue": "2.6.12",
