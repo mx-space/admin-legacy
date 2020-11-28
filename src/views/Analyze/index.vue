@@ -25,9 +25,13 @@
       <div ref="week-chart"></div>
       <small>本月请求走势</small>
       <div ref="month-chart"></div>
-      <small>请求量</small>
+      <small>最近 7 天请求路径 Top 10</small>
       <div ref="pie-chart"></div>
     </section>
+    <section>
+      <small> 总请求量中: PV {{ total.callTime }} UV {{ total.uv }} </small>
+    </section>
+
     <section>
       <small> 今天 - 所有请求的 IP {{ todayIps.length }} 个 </small>
       <div class="tags">
@@ -148,7 +152,7 @@ export default class AnalyzeView extends Vue {
   fragment:
     | {}
     | Record<'today' | 'weeks' | 'months', Record<string, number>> = {}
-
+  topPaths: { count: number; path: string }[] = []
   chartDay: null | Chart = null
   chartMonth: null | Chart = null
   chartWeek: null | Chart = null
@@ -184,8 +188,10 @@ export default class AnalyzeView extends Vue {
     this.tableData = this.parseUATableData(data)
     this.pager = { ...resp.page }
 
-    const fragment = (await this.$api('Analyze').get('fragment')) as Fragment
+    const fragment = (await this.$api('Analyze').get('fragment')) as Fragment &
+      Record<string, any>
     this.fragment = fragment
+    this.topPaths = [...fragment.paths]
     this.parseChartData(fragment)
   }
 
@@ -275,19 +281,16 @@ export default class AnalyzeView extends Vue {
     this[field]!.render()
   }
   renderPie() {
-    const total = this.total
-    const data = [
-      {
-        item: 'Other',
-        count: total.callTime - total.uv,
-        percent: 1 - total.uv / total.callTime,
-      },
-      {
-        item: 'UV',
-        count: total.uv,
-        percent: total.uv / total.callTime,
-      },
-    ]
+    const pieData = this.topPaths.slice(0, 10)
+    const total = pieData.reduce((prev, { count }) => count + prev, 0)
+
+    const data = pieData.map((paths) => {
+      return {
+        item: decodeURI(paths.path),
+        count: paths.count,
+        percent: paths.count / total,
+      }
+    })
     const chart = new Chart({
       container: this.$refs['pie-chart'] as HTMLElement,
       autoFit: true,
@@ -304,7 +307,7 @@ export default class AnalyzeView extends Vue {
       showTitle: false,
       showMarkers: false,
     })
-
+    chart.legend(false)
     chart
       .interval()
       .position('count')
