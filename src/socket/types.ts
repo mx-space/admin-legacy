@@ -30,6 +30,8 @@ export enum EventTypes {
   SAY_DELETE = 'SAY_DELETE',
   SAY_UPDATE = 'SAY_UPDATE',
 
+  LINK_APPLY = 'LINK_APPLY',
+
   DANMAKU_CREATE = 'DANMAKU_CREATE',
   // util
   CONTENT_REFRESH = 'CONTENT_REFRESH', // 内容更新或重置 页面需要重载

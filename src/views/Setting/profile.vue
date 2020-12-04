@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <el-row :gutter="10">
-      <el-col :xs="12" :sm="12" style="padding-bottom: 1rem;" class="avatar">
+      <el-col :xs="12" :sm="12" style="padding-bottom: 1rem" class="avatar">
         <img
           class="before"
           @load="$refs.avatar.classList.remove('before')"
@@ -10,7 +10,7 @@
           ref="avatar"
         />
       </el-col>
-      <el-col :xs="12" :sm="12" style="min-height: 15rem;">
+      <el-col :xs="12" :sm="12" style="min-height: 15rem">
         <form action="#">
           <div class="row">
             <label>主人昵称</label>
@@ -133,6 +133,8 @@ export default class Profile extends Vue {
         this.raw[key as keyof MasterModel] = value as any
       }
     }
+
+    this.$message.success('保存成功!')
   }
 
   checkSameValue<T extends keyof MasterModel>(key: T) {

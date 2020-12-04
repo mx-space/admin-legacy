@@ -78,16 +78,22 @@ export class SocketClient {
       }
       case EventTypes.COMMENT_CREATE: {
         const body = payload.author + ': ' + payload.text
+        const handler = () => {
+          router.push({ name: 'comment' })
+          notice.close()
+        }
         const notice = Notification.success({
           title: '新的评论',
           message: body,
-          onClick: () => {
-            router.push({ name: 'comment' })
-            notice.close()
-          },
+          onClick: handler,
         })
         // TODO
-        this.#notice.notice(this.#title + ' 收到新的评论', body)
+        this.#notice.notice(this.#title + ' 收到新的评论', body).then((no) => {
+          if (!no) {
+            return
+          }
+          no.onclick = handler
+        })
         break
       }
       case EventTypes.ADMIN_NOTIFICATION: {
@@ -104,6 +110,29 @@ export class SocketClient {
         setTimeout(() => {
           location.reload()
         }, 1000)
+        break
+      }
+      case EventTypes.LINK_APPLY: {
+        const sitename = payload.name
+
+        const handler = () => {
+          router.push({ name: 'friends' })
+          notice.close()
+        }
+        const notice = Notification.success({
+          title: '新的友链申请',
+          message: sitename,
+          onClick: handler,
+        })
+        this.#notice
+          .notice(this.#title + ' 收到新的友链申请', sitename)
+          .then((n) => {
+            if (!n) {
+              return
+            }
+
+            n.onclick = handler
+          })
         break
       }
     }

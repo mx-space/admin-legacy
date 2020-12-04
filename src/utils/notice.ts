@@ -26,7 +26,7 @@ export class Notice {
   ): Promise<Notification | undefined> {
     return new Promise((r) => {
       this.initNotice().then((b) => {
-        if (b) {
+        if (b && !document.hasFocus()) {
           const notification = new Notification(title, { body, ...options })
           r(notification)
         }
