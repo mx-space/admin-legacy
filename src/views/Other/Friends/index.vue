@@ -8,11 +8,16 @@
     /></template>
     <el-tabs v-model="tabActive" @tab-click="handleTabClick">
       <el-tab-pane label="朋友们" name="0"></el-tab-pane>
-      <el-tab-pane label="待审核" name="1"></el-tab-pane>
+
+      <el-tab-pane label="待审核" name="1">
+        <span slot="label"
+          ><el-badge :value="audit" class="link-tab-badge">待审核</el-badge>
+        </span>
+      </el-tab-pane>
     </el-tabs>
     <el-table
       :data="data"
-      style="width: 100%;"
+      style="width: 100%"
       max-height="650"
       stripe
       v-loading="loading"
@@ -25,7 +30,7 @@
       </el-table-column>
       <el-table-column label="网址">
         <template slot-scope="scope">
-          <a :href="scope.row.url" nofollow>
+          <a :href="scope.row.url" nofollow target="_blank">
             {{ scope.row.url }}
           </a>
         </template>
@@ -41,7 +46,7 @@
             type="text"
             size="small"
             @click="handleApprove(scope.row._id)"
-            style="color: green;"
+            style="color: green"
             v-if="tabActive === '1'"
             >通过</el-button
           >
@@ -51,13 +56,13 @@
           <el-popconfirm
             title="确定删除吗？"
             @onConfirm="handleDelete(scope.$index)"
-            style="padding: 9px 15px;"
+            style="padding: 9px 15px"
           >
             <el-button
               type="text"
               size="small"
               slot="reference"
-              style="color: red;"
+              style="color: red"
             >
               移除
             </el-button>
@@ -208,6 +213,7 @@ export default class extends Vue {
     await this.fetch()
   }
   loading = false
+  audit = 0
   async fetch(page = 1) {
     this.loading = true
     const resp = (await this.$api('Link').gets({
@@ -215,9 +221,15 @@ export default class extends Vue {
       size: 50,
       state: parseInt(this.tabActive),
     })) as LinkRespDto
+    const state = (await this.$api('Link').get('state')) as {
+      audit: number
+      collection: number
+      friends: number
+    }
     this.data = resp.data
     this.page = resp.page
     this.loading = false
+    this.audit = state.audit
   }
   handleAdd() {
     this.dialogVisible = true
@@ -280,3 +292,11 @@ export default class extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.link-tab-badge {
+  & .el-badge__content.is-fixed {
+    transform: translateX(160%);
+  }
+}
+</style>
