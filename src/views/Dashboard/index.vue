@@ -23,7 +23,7 @@
         <el-table-column
           prop="text"
           label="内容"
-          :width="viewport.mobile && data.length > 0 ? '600px' : ''"
+          :width="viewport.mobile && comments.length > 0 ? '600px' : ''"
         >
         </el-table-column>
       </el-table>
