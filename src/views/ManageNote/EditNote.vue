@@ -146,6 +146,7 @@ import { NoteRespDto, NoteMusicRecord } from '../../models/response.dto'
 import { NoteDto } from '../../models'
 
 import { Mixins } from 'vue-property-decorator'
+import { getDayOfYear } from '@/utils/time'
 @Component({
   components: {
     Button,
@@ -156,9 +157,12 @@ import { Mixins } from 'vue-property-decorator'
 })
 export default class NoteWriteView extends Mixins(BaseWriter) {
   options = {
-    title: '随便写点啥',
+    title: '树洞',
   }
-  inputLabel = '想想取个什么题目比较好呢~'
+  date = new Date()
+  inputLabel = `记录 ${this.date.getFullYear()} 年第 ${getDayOfYear(
+    this.date,
+  )} 天`
 
   drawerOpen = false
   model = {
@@ -184,7 +188,8 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
 
   async handleSubmit() {
     const model: NoteDto = {
-      ...this.model,
+      title: this.model.title || this.inputLabel,
+      text: this.model.text,
       hide: this.hide,
       password: this.password === '' ? undefined : this.password,
       mood: this.mood ?? undefined,

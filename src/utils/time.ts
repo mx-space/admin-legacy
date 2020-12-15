@@ -24,4 +24,13 @@ export const parseDate = (
 export const relativeTimeFromNow = (time: Date | string) =>
   dayjs(new Date(time)).fromNow()
 
+export const getDayOfYear = (date = new Date()) => {
+  const now = date
+  const start = new Date(now.getFullYear(), 0, 0)
+  const diff = now.getTime() - start.getTime()
+  const oneDay = 1000 * 60 * 60 * 24
+  const day = Math.floor(diff / oneDay)
+
+  return day
+}
 export default { parseDate, relativeTimeFromNow }
