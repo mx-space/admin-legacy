@@ -17,7 +17,7 @@
     "@types/codemirror": "0.0.99",
     "@types/inflection": "1.5.28",
     "axios": "0.21.0",
-    "core-js": "3.7.0",
+    "core-js": "3.8.1",
     "dayjs": "1.9.7",
     "element-ui": "2.13.0",
     "inflection": "1.12.0",
