@@ -88,6 +88,15 @@
           </el-switch>
         </el-form-item>
 
+        <el-form-item label="是否存在回忆, 日后需要重温?">
+          <el-switch
+            v-model="hasMemory"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+          >
+          </el-switch>
+        </el-form-item>
+
         <el-form-item label="音乐">
           <el-tag
             :key="music"
@@ -142,7 +151,11 @@ import PageLayout from '@/layouts/PageLayout.vue'
 import Writer, { BaseWriter } from '@/components/Writer/index.vue'
 import UnderlineInput from '@/components/Input/UnderlineInput.vue'
 
-import { NoteRespDto, NoteMusicRecord } from '../../models/response.dto'
+import {
+  NoteRespDto,
+  NoteMusicRecord,
+  NoteRecord,
+} from '../../models/response.dto'
 import { NoteDto } from '../../models'
 
 import { Mixins } from 'vue-property-decorator'
@@ -194,6 +207,7 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
       password: this.password === '' ? undefined : this.password,
       mood: this.mood ?? undefined,
       weather: this.weather ?? undefined,
+      hasMemory: this.hasMemory,
       music: this.musics ?? [],
     }
     this.id
@@ -215,8 +229,13 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
     if (!this.id) {
       return
     }
-    const { data } = await this.$api('Note').get<NoteRespDto>(
+    const { data } = await this.$api('Note').get<{ data: NoteRecord }>(
       this.$route.query.id as string,
+      {
+        params: {
+          single: true,
+        },
+      },
     )
 
     this.model = {
@@ -226,6 +245,7 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
     this.hide = data.hide
     this.mood = data.mood || null
     this.weather = data.weather || null
+    this.hasMemory = data.hasMemory || false
     this.nid = data.nid
     this.musics = data.music ?? []
   }
@@ -261,6 +281,8 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
   mood: string | null = null
 
   weather: string | null = null
+
+  hasMemory = false
 
   moodSet = [
     '开心',

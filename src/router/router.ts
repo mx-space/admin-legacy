@@ -57,20 +57,20 @@ const routes: MenuRouteConfig[] = [
       {
         path: 'notes',
         name: 'note',
-        meta: { title: '随记', icon: ['fas', 'book'] },
+        meta: { title: '记录', icon: ['fas', 'book'] },
         redirect: '/notes/view',
         component: () => import('@/layouts/BlankLayout.vue'),
         children: [
           {
             path: 'view',
             name: 'view-notes',
-            meta: { title: '管理随记', icon: ['fas', 'eye'] },
+            meta: { title: '管理记录', icon: ['fas', 'eye'] },
             component: () => import('@/views/ManageNote/ListNotes.vue'),
           },
           {
             path: 'edit',
             name: 'edit-notes',
-            meta: { title: '撰写随记', icon: ['fas', 'pencil-alt'] },
+            meta: { title: '撰写记录', icon: ['fas', 'pencil-alt'] },
             component: () => import('@/views/ManageNote/EditNote.vue'),
           },
         ],

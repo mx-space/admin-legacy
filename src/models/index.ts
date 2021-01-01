@@ -110,6 +110,7 @@ export interface NoteDto {
   mood?: string
 
   weather?: string
+  hasMemory?: boolean
 
   hide?: boolean
 

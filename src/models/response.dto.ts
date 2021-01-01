@@ -80,6 +80,7 @@ export interface NoteRecord {
   text: string
   mood?: string
   weather?: string
+  hasMemory?: boolean
   created: string
   modified: string
   nid: number
