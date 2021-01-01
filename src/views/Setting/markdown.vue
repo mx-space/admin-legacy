@@ -37,16 +37,36 @@
           <el-button type="primary" size="small" @click="handleUpload">
             开始导入
           </el-button>
-          <div slot="tip" class="el-upload__tip">
-            只能上传markdown文件
-          </div>
+          <div slot="tip" class="el-upload__tip">只能上传markdown文件</div>
         </el-upload>
       </el-form-item>
     </el-form>
 
     <h4>导出数据到 Markdown (Hexo YAML Format)</h4>
     <el-form label-width="80px">
-      <el-form-item label="导出">
+      <el-form-item>
+        <el-switch
+          v-model="includeYAMLHeader"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+        >
+        </el-switch>
+        <br />
+        <small class="desc">是否包括 yaml header</small>
+      </el-form-item>
+
+      <el-form-item>
+        <el-switch
+          v-model="titleFirstLine"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+        >
+        </el-switch>
+        <br />
+        <small class="desc">是否在第一行显示 文章标题</small>
+      </el-form-item>
+
+      <el-form-item label="">
         <el-button type="primary" @click="handleExportMarkdown">
           导出到 Markdown
         </el-button>
@@ -123,6 +143,7 @@ export default class ImportView extends Vue {
     console.log(parsedList)
     this.parsedList = parsedList
   }
+
   parseMarkdown(strList: string[]) {
     const parser = new ParseMarkdownYAML(strList)
     return parser.start().map((i, index) => {
@@ -153,10 +174,14 @@ export default class ImportView extends Vue {
     this.$message.success('上传成功!')
     this.fileList = []
   }
+  includeYAMLHeader = true
+  titleFirstLine = false
   async handleExportMarkdown() {
     const data = await rest.get('helper/markdown/export', {
       params: {
         slug: 1,
+        yaml: this.includeYAMLHeader,
+        show_title: this.titleFirstLine,
       },
       responseType: 'blob',
     })
@@ -165,3 +190,13 @@ export default class ImportView extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.desc {
+  display: inline-block;
+  font-size: 12px;
+  color: #606266;
+  margin-top: 7px;
+  line-height: 1.2;
+}
+</style>

@@ -8,6 +8,7 @@ export interface MenuModel {
   subItems?: Array<MenuModel>
   hasParent: boolean
   fullPath: string
+  query?: any
 }
 
 const model = (
@@ -23,6 +24,7 @@ const model = (
     subItems: buildSubMenus(item, fullPath),
     hasParent,
     fullPath,
+    query: item.meta?.query,
   }
 }
 function buildSubMenus(route: RouteConfig, prevPath = '') {

@@ -79,6 +79,7 @@
         hide-on-single-page
         layout="prev, pager, next"
         :total="page.total"
+        :current-page="page.currentPage"
         @prev-click="handleTo(page.currentPage - 1)"
         @next-click="handleTo(page.currentPage + 1)"
         @current-change="handleTo"
@@ -96,6 +97,8 @@ import Button from '@/components/Button/LayoutButton.vue'
 import * as time from '@/utils/time'
 import { PagerDto, NotesRespDto, NoteRecord } from '../../models/response.dto'
 
+const NotePageKey = 'npk'
+
 @Component({
   components: {
     PageLayout,
@@ -110,6 +113,7 @@ export default class ListNotes extends Vue {
   async created() {
     await this.getData()
   }
+
   async handleDelete(index: number) {
     const _id = this.data[index]._id
     await this.$api('Note').delete(_id)
@@ -124,22 +128,44 @@ export default class ListNotes extends Vue {
       },
     })
   }
+
   async handleTo(page: number) {
     await this.getData({ page })
+
+    this.$router.replace({
+      query: {
+        page: page.toString(),
+      },
+    })
+    sessionStorage.setItem(NotePageKey, page.toString())
   }
+
   relativeTimeFromNow(val: string) {
     return time.relativeTimeFromNow(val)
   }
+
   parseDate(val: string) {
     return time.parseDate(val, 'YYYY年M月D日')
   }
+
   sortBy = ''
   sortOrder = 0
+
   async getData(ops: { page?: number; size?: number } = {}) {
     this.loading = true
+    const routePage: number | undefined = this.$route.query.page
+      ? ~~((this.$route.query.page as any) as string)
+      : undefined
+
+    const storedPage = sessionStorage.getItem(NotePageKey)
     const { page, data } = await this.$api('Note').gets(
       {
-        page: ops.page || this.page?.currentPage || 1,
+        page:
+          ops.page ||
+          routePage ||
+          (storedPage ? ~~storedPage : undefined) ||
+          this.page?.currentPage ||
+          1,
         size: ops.size || 10,
       },
       this.sortBy ? { sortBy: this.sortBy, sortOrder: this.sortOrder } : {},

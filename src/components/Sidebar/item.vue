@@ -10,7 +10,7 @@
         <object :data="item.icon" type="image/svg+xml" ref="svg" v-else />
       </div>
       <div class="title">{{ item.title }}</div>
-      <div v-if="hasChild" style="justify-content: left;">
+      <div v-if="hasChild" style="justify-content: left">
         <div class="down">
           <icon :icon="['fas', 'chevron-down']" />
         </div>
@@ -77,7 +77,10 @@ export default {
   methods: {
     handleClick() {
       if (!this.item.subItems && this.item.fullPath !== this.$route.fullPath) {
-        this.$router.push(this.item.fullPath)
+        this.$router.push({
+          path: this.item.fullPath,
+          query: this.item.query,
+        })
       } else {
         this.expand = !this.expand
       }

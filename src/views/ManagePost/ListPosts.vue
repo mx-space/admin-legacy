@@ -86,6 +86,7 @@
         hide-on-single-page
         layout="prev, pager, next"
         :total="page.total"
+        :current-page="page.currentPage"
         @prev-click="handleTo(page.currentPage - 1)"
         @next-click="handleTo(page.currentPage + 1)"
         @current-change="handleTo"
@@ -102,7 +103,9 @@ import { mapGetters } from 'vuex'
 import Button from '@/components/Button/LayoutButton'
 import { omit } from 'lodash'
 import * as time from '@/utils/time'
-import { CategoryModel } from '../../store/interfaces/category.interface'
+
+const NotePageKey = 'npk'
+
 export default {
   components: {
     PageLayout,
@@ -149,6 +152,12 @@ export default {
       })
     },
     async handleTo(page) {
+      this.$router.replace({
+        query: {
+          page: page.toString(),
+        },
+      })
+      sessionStorage.setItem(NotePageKey, page.toString())
       await this.getData({ page })
     },
     relativeTimeFromNow(val) {
@@ -159,9 +168,20 @@ export default {
     },
     async getData(ops = {}) {
       this.loading = true
+      const routePage = this.$route.query.page
+        ? ~~this.$route.query.page
+        : undefined
+
+      const storedPage = sessionStorage.getItem(NotePageKey)
+
       const { page, data } = await this.$api('Post').gets(
         {
-          page: ops.page || this.page?.currentPage || 1,
+          page:
+            ops.page ||
+            routePage ||
+            (storedPage ? ~~storedPage : undefined) ||
+            this.page?.currentPage ||
+            1,
           size: ops.size || 10,
         },
         this.sortBy ? { sortBy: this.sortBy, sortOrder: this.sortOrder } : {},

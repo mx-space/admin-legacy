@@ -16,12 +16,19 @@ import './plugins/processbar'
 import './plugins/kico-message'
 import { rest } from '@/api/rest'
 import 'vue-tsx-support/enable-check'
+import Component from 'vue-class-component'
 
 export const $events = new Vue()
 
 Vue.prototype.$api = rest
 Vue.prototype.$events = $events
 Vue.config.productionTip = false
+
+Component.registerHooks([
+  'beforeRouteEnter',
+  'beforeRouteLeave',
+  'beforeRouteUpdate',
+])
 
 new Vue({
   router,

@@ -7,7 +7,7 @@ router.beforeEach(async (to, _, next) => {
   if (to.meta.isPublic) {
     next()
   } else {
-    const { ok } = await rest('Master').get('check_logged')
+    const { ok } = (await rest('Master').get('check_logged')) as any
     if (ok) {
       next()
     } else {

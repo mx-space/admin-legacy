@@ -36,13 +36,20 @@ const routes: MenuRouteConfig[] = [
           {
             path: 'view',
             name: 'view-posts',
-            meta: { title: '管理文章', icon: ['fas', 'eye'] },
+            meta: {
+              title: '管理文章',
+              icon: ['fas', 'eye'],
+              query: { page: 1 },
+            },
             component: () => import('@/views/ManagePost/ListPosts.vue'),
           },
           {
             path: 'edit',
             name: 'edit-posts',
-            meta: { title: '撰写文章', icon: ['fas', 'pencil-alt'] },
+            meta: {
+              title: '撰写文章',
+              icon: ['fas', 'pencil-alt'],
+            },
             props: true,
             component: () => import('@/views/ManagePost/EditPost.vue'),
           },
@@ -64,13 +71,13 @@ const routes: MenuRouteConfig[] = [
           {
             path: 'view',
             name: 'view-notes',
-            meta: { title: '管理记录', icon: ['fas', 'eye'] },
+            meta: { title: '管理', icon: ['fas', 'eye'], query: { page: 1 } },
             component: () => import('@/views/ManageNote/ListNotes.vue'),
           },
           {
             path: 'edit',
             name: 'edit-notes',
-            meta: { title: '撰写记录', icon: ['fas', 'pencil-alt'] },
+            meta: { title: '树洞', icon: ['fas', 'pencil-alt'] },
             component: () => import('@/views/ManageNote/EditNote.vue'),
           },
         ],
@@ -137,7 +144,11 @@ const routes: MenuRouteConfig[] = [
               {
                 path: 'list',
                 name: 'page-list',
-                meta: { title: '独立页面', icon: ['fas', 'eye'] },
+                meta: {
+                  title: '独立页面',
+                  icon: ['fas', 'eye'],
+                  query: { page: 1 },
+                },
                 component: () => import('@/views/Other/Page/List.vue'),
               },
               {
