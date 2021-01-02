@@ -150,10 +150,6 @@ export default class Writer extends Vue {
 }
 </script>
 <style lang="scss">
-@import '~vditor/src/assets/scss/index.scss';
-.vditor-toolbar {
-  display: none;
-}
 .CodeMirror {
   border: 1px solid #eee;
   /* height: auto; */
