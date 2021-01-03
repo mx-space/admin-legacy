@@ -45,12 +45,12 @@
           </el-form-item>
           <el-form-item label="关键字">
             <el-tag
-              v-for="tag in (configs.seo.keywords || [])"
+              v-for="tag in configs.seo.keywords || []"
               :key="tag"
               closable
               :disable-transitions="false"
               @close="handleClose(tag)"
-              style="margin-right: 1rem;"
+              style="margin-right: 1rem"
             >
               {{ tag }}
             </el-tag>
@@ -116,14 +116,25 @@
               inactive-color="#ff4949"
             ></el-switch>
           </el-form-item>
-
-          <el-form-item label="邮箱地址">
+          <el-form-item label="发件邮箱 Host">
+            <el-input
+              v-model="configs.mailOptions.options.host"
+              :disabled="!configs.mailOptions.enable"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="发件邮箱端口">
+            <el-input
+              v-model="configs.mailOptions.options.port"
+              :disabled="!configs.mailOptions.enable"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="发件邮箱地址">
             <el-input
               v-model="configs.mailOptions.user"
               :disabled="!configs.mailOptions.enable"
             ></el-input>
           </el-form-item>
-          <el-form-item label="邮箱密码">
+          <el-form-item label="发件邮箱密码">
             <el-input
               v-model="configs.mailOptions.pass"
               :disabled="!configs.mailOptions.enable"
@@ -271,6 +282,7 @@ export default class SystemSettingView extends Vue {
         mailOptions: {
           user: '',
           pass: '',
+          options: { host: '', port: '' },
           enable: false,
         },
         commentOptions: {

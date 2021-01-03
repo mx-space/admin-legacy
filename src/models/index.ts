@@ -204,10 +204,8 @@ export declare class MailOptionsDto {
   user: string
   pass: string
   options?: {
-    name?: string
-    port?: number
-    host?: string
-    service?: string
+    port: number
+    host: string
   }
 }
 export declare class CommentOptions {
