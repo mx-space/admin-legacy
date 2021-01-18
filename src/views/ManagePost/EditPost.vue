@@ -243,6 +243,7 @@ export default class PostWriteView extends Mixins(BaseWriter) {
         text: data.text,
       }
       this.hide = data.hide
+      this.copyright = data.copyright ?? true
       this.categoryId = data.categoryId
       this.tags = data.tags || []
     }

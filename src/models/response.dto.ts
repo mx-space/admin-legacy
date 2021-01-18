@@ -56,6 +56,7 @@ export interface PostRespDto extends BaseResp {
     id: string
     summary?: string
     tags?: string[]
+    copyright?: boolean
     options?: Record<string, any>
   }
 }
