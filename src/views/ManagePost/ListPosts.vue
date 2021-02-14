@@ -205,14 +205,14 @@ export default {
       data = data
         .map((c) => {
           return c.category.children.map((ch) => ({
+            ...omit(c.category, ['children', 'id', '_id']),
             ...ch,
             categoryId: c.category._id,
-            ...omit(c.category, 'children'),
           }))
         })
         .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
         .flat()
-      // console.log(data)
+
       this.data = data
       this.isFilter = true
     },
