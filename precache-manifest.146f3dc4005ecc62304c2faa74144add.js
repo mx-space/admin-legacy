@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/favicon.svg"
   },
   {
-    "revision": "0f43e782cce223def1961df80bd0ebba",
+    "revision": "9650f8dd6a82378f34340611898cb37a",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/index.html"
   },
   {
@@ -16,12 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/robots.txt"
   },
   {
-    "revision": "ff6ef6db1cfaee1be410",
+    "revision": "710833ae87b9868239cd",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/app.3f035642.css"
-  },
-  {
-    "revision": "9f128b0472967785bc95",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-02f57e21.2ce384ce.css"
   },
   {
     "revision": "0b9f632c87f99d63b038",
@@ -42,6 +38,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "a3e4b0cc9f05fc2289b4",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-2bf162d7.4759f84a.css"
+  },
+  {
+    "revision": "a20bc6aba6616e156e96",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/css/chunk-35fae5d3.5d1be40b.css"
   },
   {
     "revision": "9cd580901ccb15344eb7",
@@ -248,12 +248,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/img/JosefinSans-Thin.214e9dd1.svg"
   },
   {
-    "revision": "ff6ef6db1cfaee1be410",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/app.59f703a3.js"
-  },
-  {
-    "revision": "9f128b0472967785bc95",
-    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-02f57e21.e6d63743.js"
+    "revision": "710833ae87b9868239cd",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/app.2ba0a898.js"
   },
   {
     "revision": "0b9f632c87f99d63b038",
@@ -282,6 +278,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "6dac6ae71c4986df5aec",
     "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-31101686.38807d05.js"
+  },
+  {
+    "revision": "a20bc6aba6616e156e96",
+    "url": "https://cdn.jsdelivr.net/gh/mx-space/admin@gh-pages/static/js/chunk-35fae5d3.17e56927.js"
   },
   {
     "revision": "9cd580901ccb15344eb7",
