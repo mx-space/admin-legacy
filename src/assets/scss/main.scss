@@ -132,6 +132,7 @@ input {
   }
   .el-drawer__body {
     margin: 1rem;
+    overflow: auto;
   }
 }
 .el-drawer {
