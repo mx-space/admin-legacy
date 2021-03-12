@@ -114,7 +114,8 @@ export interface NoteDto {
 
   hide?: boolean
 
-  password?: string
+  password?: string | null
+  secret?: Date | null
 
   options?: Record<string, any>
 

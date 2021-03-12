@@ -2,7 +2,7 @@
   <div class="full bg">
     <img
       class="wallpaper-placeholder"
-      src="https://i.loli.net/2020/04/08/OseRqS2jn7WaJKM.png"
+      src="https://gitee.com/xun7788/my-imagination/raw/master/uPic/1615516941397.jpg"
       @load="loading = false"
       @error="loading = true"
       :class="{ loading }"
@@ -18,9 +18,9 @@
         ref="input"
         @change="(e) => (password = e)"
       />
-      <footer style="text-align: center;">
+      <footer style="text-align: center">
         <Button
-          style="margin-top: 12px;"
+          style="margin-top: 12px"
           @click="onSubmit"
           title="登陆"
         ></Button>

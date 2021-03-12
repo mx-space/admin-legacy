@@ -148,7 +148,19 @@ input {
 .el-notification {
   cursor: pointer;
 }
+.el-drawer {
+  width: inherit !important;
+  max-width: 400px;
+  min-width: 300px;
 
+  & .el-select {
+    display: block;
+  }
+
+  & .el-form-item {
+    margin-right: 12px;
+  }
+}
 // .el-table {
 //   * {
 //     border-right: 0 !important;

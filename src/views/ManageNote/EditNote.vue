@@ -1,9 +1,9 @@
 <!--
  * @Author: Innei
  * @Date: 2020-05-17 16:16:26
- * @LastEditTime: 2020-08-06 21:42:14
+ * @LastEditTime: 2021-03-12 11:18:16
  * @LastEditors: Innei
- * @FilePath: /mx-admin/src/views/ManageNote/EditNote.vue
+ * @FilePath: /admin/src/views/ManageNote/EditNote.vue
  * @Coding with Love
 -->
 <template>
@@ -79,6 +79,16 @@
         <el-form-item label="设定密码?">
           <el-input v-model="password" type="password"> </el-input>
         </el-form-item>
+        <el-form-item label="多久之后公开">
+          <el-date-picker
+            v-model="secret"
+            type="datetime"
+            placeholder="选择日期时间"
+            align="right"
+            :picker-options="{ shortcuts }"
+          >
+          </el-date-picker>
+        </el-form-item>
         <el-form-item label="隐藏?">
           <el-switch
             v-model="hide"
@@ -151,15 +161,13 @@ import PageLayout from '@/layouts/PageLayout.vue'
 import Writer, { BaseWriter } from '@/components/Writer/index.vue'
 import UnderlineInput from '@/components/Input/UnderlineInput.vue'
 
-import {
-  NoteRespDto,
-  NoteMusicRecord,
-  NoteRecord,
-} from '../../models/response.dto'
+import { NoteMusicRecord, NoteRecord } from '../../models/response.dto'
 import { NoteDto } from '../../models'
 
 import { Mixins } from 'vue-property-decorator'
 import { getDayOfYear } from '@/utils/time'
+import { PartialObject } from 'lodash'
+import dayjs from 'dayjs'
 @Component({
   components: {
     Button,
@@ -168,10 +176,13 @@ import { getDayOfYear } from '@/utils/time'
     UInput: UnderlineInput,
   },
 })
-export default class NoteWriteView extends Mixins(BaseWriter) {
+export default class NoteWriteView
+  extends Mixins(BaseWriter)
+  implements PartialObject<Record<keyof NoteDto, any>> {
   options = {
     title: '树洞',
   }
+
   date = new Date()
   inputLabel = `记录 ${this.date.getFullYear()} 年第 ${getDayOfYear(
     this.date,
@@ -204,11 +215,12 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
       title: this.model.title || this.inputLabel,
       text: this.model.text,
       hide: this.hide,
-      password: this.password === '' ? undefined : this.password,
+      password: this.password === '' ? null : this.password,
       mood: this.mood ?? undefined,
       weather: this.weather ?? undefined,
       hasMemory: this.hasMemory,
       music: this.musics ?? [],
+      secret: this.secret ?? null,
     }
     this.id
       ? await this.$api('Note').update(this.id as string, model)
@@ -248,6 +260,8 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
     this.hasMemory = data.hasMemory || false
     this.nid = data.nid
     this.musics = data.music ?? []
+    this.secret = data.secret ?? null
+    this.password = (data.password as any) ?? ''
   }
   musics: NoteMusicRecord[] = []
   handleClose(id: string) {
@@ -275,7 +289,8 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
     })
   }
   hide = false
-  password = ''
+  password = null
+  secret: Date | null = null
   nid: number | null = null
 
   mood: string | null = null
@@ -303,6 +318,27 @@ export default class NoteWriteView extends Mixins(BaseWriter) {
   ]
   weatherSet = ['晴', '多云', '雨', '阴', '雪', '雷雨']
   prefix = 'mx-space-note'
+
+  shortcuts = [
+    {
+      text: '明天',
+      onClick(picker) {
+        picker.$emit('pick', dayjs().add(1, 'day').toDate())
+      },
+    },
+    {
+      text: '一周后',
+      onClick(picker) {
+        picker.$emit('pick', dayjs().add(1, 'week').toDate())
+      },
+    },
+    {
+      text: '一个月后',
+      onClick(picker) {
+        picker.$emit('pick', dayjs().add(1, 'month').toDate())
+      },
+    },
+  ]
 }
 </script>
 <style lang="scss" scoped>

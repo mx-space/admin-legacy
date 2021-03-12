@@ -84,6 +84,8 @@ export interface NoteRecord {
   hasMemory?: boolean
   created: string
   modified: string
+  secret?: Date
+  password?: string | null
   nid: number
   music?: NoteMusicRecord[]
 }
