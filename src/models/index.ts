@@ -211,7 +211,6 @@ export declare class MailOptionsDto {
 }
 export declare class CommentOptions {
   antiSpam: boolean
-  akismetApiKey?: string
 }
 
 export interface Dimensions {

@@ -88,14 +88,6 @@
               inactive-color="#ff4949"
             ></el-switch>
           </el-form-item>
-          <el-form-item label="反垃圾邮件 ApiKey">
-            <el-input
-              v-model="configs.commentOptions.akismetApiKey"
-              placeholder="前往 https://akismet.com/ 注册"
-              type="password"
-              :disabled="!configs.commentOptions.antiSpam"
-            ></el-input>
-          </el-form-item>
         </el-form>
       </el-collapse-item>
       <el-collapse-item
@@ -287,7 +279,6 @@ export default class SystemSettingView extends Vue {
         },
         commentOptions: {
           antiSpam: false,
-          akismetApiKey: '',
         },
         backupOptions: {
           enable: false,
