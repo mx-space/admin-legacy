@@ -7,7 +7,7 @@
         @click.native="uploadWeightShow = true"
       />
     </template>
-    <el-table :data="data" style="width: 100%;" :default-sort="order">
+    <el-table :data="data" style="width: 100%" :default-sort="order">
       <el-table-column
         prop="filename"
         label="文件名"
@@ -69,7 +69,7 @@
               type="text"
               size="small"
               slot="reference"
-              style="color: red;"
+              style="color: red"
             >
               移除
             </el-button>
@@ -107,15 +107,13 @@
         :headers="headers"
         :on-preview="handlePreview"
       >
-        <div slot="tip" class="el-upload__tip">
-          只能上传图片，且不超过5MB
-        </div>
+        <div slot="tip" class="el-upload__tip">只能上传图片，且不超过5MB</div>
 
         <el-button slot="trigger" size="small" type="primary"
           >选取文件</el-button
         >
         <el-button
-          style="margin-left: 10px;"
+          style="margin-left: 10px"
           size="small"
           type="success"
           @click="submitUpload"

@@ -37,8 +37,9 @@
           auto-complete="off"
         ></el-input>
       </el-form-item>
-    </el-form> </PageLayout
-></template>
+    </el-form>
+  </PageLayout>
+</template>
 
 <script lang="ts">
 import Vue from 'vue'

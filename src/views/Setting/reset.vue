@@ -3,7 +3,7 @@
     <el-collapse v-model="activeName" accordion>
       <el-collapse-item name="1" title="修改密码">
         <el-form
-          style="max-width: 30rem;"
+          style="max-width: 30rem"
           ref="passForm"
           :model="pass"
           label-width="8rem"

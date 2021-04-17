@@ -30,7 +30,7 @@
       ref="multipleTable"
       :data="comments"
       tooltip-effect="dark"
-      style="width: 100%;"
+      style="width: 100%"
       @selection-change="handleSelectionChange"
       stripe
       v-loading="loading"

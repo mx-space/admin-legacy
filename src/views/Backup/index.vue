@@ -24,7 +24,7 @@
     </template>
     <el-table
       :data="data"
-      style="width: 100%;"
+      style="width: 100%"
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55"> </el-table-column>
@@ -51,7 +51,7 @@
               type="text"
               size="small"
               slot="reference"
-              style="color: #f77c38;"
+              style="color: #f77c38"
             >
               回退
             </el-button>
@@ -65,7 +65,7 @@
               type="text"
               size="small"
               slot="reference"
-              style="color: #e74c3c;"
+              style="color: #e74c3c"
             >
               移除
             </el-button>

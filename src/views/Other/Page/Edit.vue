@@ -47,8 +47,9 @@
       <button @click="() => (drawerOpen = !drawerOpen)">
         <icon :icon="['fas', 'sliders-h']" />
       </button>
-    </template> </PageLayout
-></template>
+    </template>
+  </PageLayout>
+</template>
 
 <script lang="ts">
 import Component from 'vue-class-component'

@@ -6,7 +6,7 @@
           <div class="bg svg welcome full"></div>
         </template>
         <template #right>
-          <div class="text info" :title="name" style="font-weight: 600;">
+          <div class="text info" :title="name" style="font-weight: 600">
             欢迎回来，{{ name }} ～
           </div>
           <perfect-scrollbar class="text hitokoto">
@@ -30,7 +30,7 @@
           <div class="bg svg clock full"></div>
         </template>
         <template #right>
-          <div class="text info" :title="name" style="font-weight: 600;">
+          <div class="text info" :title="name" style="font-weight: 600">
             {{ '距离上次登陆' }}
           </div>
           <div class="box">

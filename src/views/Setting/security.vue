@@ -16,9 +16,7 @@
         @click.native="dialogVisible = true"
       ></layout-button>
     </template>
-    <h5>
-      生成访问令牌以便使用开放接口
-    </h5>
+    <h5>生成访问令牌以便使用开放接口</h5>
     <el-table :data="tokens">
       <el-table-column label="名称" prop="name"></el-table-column>
       <el-table-column label="令牌" prop="token">
