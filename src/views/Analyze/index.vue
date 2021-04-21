@@ -121,12 +121,14 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import PageLayout from '@/layouts/PageLayout.vue'
+// import Chart from '@antv/g2/lib/chart/chart'
 import { Chart } from '@antv/g2'
 import { UA, PagerDto } from '../../models/response.dto'
 import dayjs from 'dayjs'
 import { Getter } from 'vuex-class'
 import { ViewportRecord } from '../../store/interfaces/viewport.interface'
 import LayoutButton from '@/components/Button/LayoutButton.vue'
+import { Ref } from 'vue-property-decorator'
 @Component({
   components: {
     PageLayout,
@@ -157,18 +159,21 @@ export default class AnalyzeView extends Vue {
   chartMonth: null | Chart = null
   chartWeek: null | Chart = null
   chartPie: null | Chart = null
+
   async created() {
     await this.fetch().then(() => {
       this.renderChart()
       this.renderPie()
     })
   }
+
   async refresh() {
     await this.fetch(1)
     this.chartDay?.changeData(this.chartDataDay)
     this.chartMonth?.changeData(this.chartDataMonth)
     this.chartWeek?.changeData(this.chartDataWeek)
   }
+
   async fetch(page = 1, size = 50) {
     const resp = (await this.$api('Analyze').gets({
       page,
@@ -291,6 +296,7 @@ export default class AnalyzeView extends Vue {
         percent: paths.count / total,
       }
     })
+
     const chart = new Chart({
       container: this.$refs['pie-chart'] as HTMLElement,
       autoFit: true,
@@ -323,7 +329,7 @@ export default class AnalyzeView extends Vue {
   }
 
   async getIpLocation(ip: string) {
-    this.ipLocation = '获取中...'
+    this.ipLocation = '获取中...<br/><br/><br/><br/>'
     //https://github.com/metowolf/ipdb-API
     const apiUrl = 'https://api.i-meto.com/ip/v1/qqwry/'
 

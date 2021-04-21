@@ -1,13 +1,10 @@
 <template>
   <div class="full bg">
-    <img
-      class="wallpaper-placeholder"
-      src="https://gitee.com/xun7788/my-imagination/raw/master/uPic/1615516941397.jpg"
-      @load="loading = false"
-      @error="loading = true"
+    <div
+      class="wallpaper"
       :class="{ loading }"
-    />
-    <div class="wallpaper" :class="{ loading }"></div>
+      :style="{ '--bg': 'url(' + WP + ')' }"
+    ></div>
     <div class="dialog">
       <Avatar :size="100" :src="avatar"></Avatar>
       <BlurInput
@@ -35,24 +32,32 @@ import Avatar from '@/components/Avatar'
 import BlurInput from '@/components/Input/BlurInput'
 import { mapGetters } from 'vuex'
 import client from '../../socket'
+
+const WP =
+  'https://gitee.com/xun7788/my-imagination/raw/master/uPic/1615516941397.jpg'
 export default {
   name: 'Login',
   components: { Button, Avatar, BlurInput },
   data() {
     return {
-      logging: false,
       loading: true,
       error: '',
       // remberPassword: true,
       password: '',
+      WP,
     }
   },
   computed: {
     ...mapGetters(['username', 'avatar']),
   },
   created() {
-    // this.username = localStorage.getItem('focus_username') || ''
-    // this.password = localStorage.getItem('focus_password') || ''
+    // preload iamge
+    const image = new Image()
+    image.src = WP
+    image.onload = (e) => {
+      this.loading = false
+    }
+
     document.onkeydown = (e) => {
       try {
         const $input = this.$refs.input.$el.querySelector('input')
@@ -144,9 +149,10 @@ export default {
     right: 0;
     bottom: 0;
     top: 0;
-    background: url('https://i.loli.net/2020/04/08/OseRqS2jn7WaJKM.png') center;
+    background-position: center;
+    background-image: var(--bg);
     background-size: cover;
-    filter: blur(5px);
+    filter: blur(10px);
     transform: scale(1.2);
   }
 }

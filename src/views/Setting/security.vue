@@ -128,7 +128,7 @@ export default class SecurityView extends Vue {
     return (time: string) => parseDate(time, 'YYYY年M月D日 HH:mm:ss')
   }
   async handleShowToken(id: string) {
-    const { token } = await this.$api('Auth').get('token', {
+    const { token } = await this.$api('Auth').get<any>('token', {
       params: {
         id,
       },

@@ -43,7 +43,7 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
   pluralize = prefix ? pluralize + `/${prefix}` : pluralize
   pluralize = encodeURI(pluralize)
   const apis = {
-    async getRecently<T = unknown>(
+    async getRecently<T = any>(
       { page, size, select, state }: Gets = {},
       params: Record<string, any> = {},
     ): Promise<T> {
@@ -60,26 +60,23 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
       })
       return data as any
     },
-    async getOne<T = unknown>(
-      _id = '',
-      config?: AxiosRequestConfig,
-    ): Promise<T> {
+    async getOne<T = any>(_id = '', config?: AxiosRequestConfig): Promise<T> {
       const id = encodeURI(_id)
       const data = await $axios.get(`${pluralize}${id ? '/' + id : ''}`, config)
       return data as any
     },
-    async postNew<T = unknown, U = any>(
+    async postNew<T = any, U = any>(
       body: T,
       config?: AxiosRequestConfig,
     ): Promise<U> {
       const data = await $axios.post(`${pluralize}`, body, config)
       return data as any
     },
-    async modifyOne<T = unknown, U = any>(id: string, body: T): Promise<U> {
+    async modifyOne<T = any, U = any>(id: string, body: T): Promise<U> {
       const data = await $axios.put(`${pluralize}/${id}`, body)
       return data as any
     },
-    async deleteOne<T = unknown>(
+    async deleteOne<T = any>(
       id?: string,
       config?: AxiosRequestConfig,
     ): Promise<T> {

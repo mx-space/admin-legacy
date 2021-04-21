@@ -77,7 +77,9 @@ export default class SayEdit extends Vue {
     if (!this.id) {
       return
     }
-    const { data } = await this.$api('Say').get(this.$route.query.id as string)
+    const { data } = await this.$api('Say').get<{ data: SayDto }>(
+      this.$route.query.id as string,
+    )
     this.model = data
   }
   async getHitokoto() {
