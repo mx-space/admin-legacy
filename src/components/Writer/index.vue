@@ -19,13 +19,14 @@
       <slot />
     </div>
 
-    <codemirror
+    <!-- <codemirror
       class="editor"
       ref="editor"
       :value="model.text"
       :options="cmOptions"
       @input="handleChangeText"
-    />
+    /> -->
+    <div class="editor" ref="editor_wrapper"></div>
   </el-form>
 </template>
 
@@ -35,21 +36,8 @@ import Component from 'vue-class-component'
 import NormInput from '@/components/Input/NormalInput.vue'
 import MaterialInput from '../Input/MaterialInput.vue'
 import { Prop, Watch } from 'vue-property-decorator'
-import { codemirror } from 'vue-codemirror'
-import { EditorConfiguration, Editor } from 'codemirror'
 
-// import base style
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/keymap/sublime'
-import 'codemirror/mode/gfm/gfm'
-import 'codemirror/mode/javascript/javascript'
-import 'codemirror/mode/go/go'
-import 'codemirror/mode/htmlembedded/htmlembedded'
-import 'codemirror/mode/css/css'
-import 'codemirror/mode/sass/sass'
-import 'codemirror/mode/swift/swift'
-
-import '@/assets/scss/shizuku.scss'
+import { editor as Editor, KeyMod, KeyCode, Selection } from 'monaco-editor'
 
 @Component
 export class BaseWriter extends Vue {
@@ -63,15 +51,14 @@ export class BaseWriter extends Vue {
   }
 }
 
-declare const window: any
 @Component({
   components: {
     NormInput,
     MaterialInput,
-    codemirror,
   },
 })
 export default class Writer extends Vue {
+  $editor?: Editor.IStandaloneCodeEditor
   created() {
     const model = {
       title: this.$props.title,
@@ -79,25 +66,132 @@ export default class Writer extends Vue {
     }
     this.model = model
   }
-  cmOptions: EditorConfiguration = {
-    mode: 'gfm',
-    keyMap: 'sublime',
-    lineNumbers: true,
-    tabSize: 2,
-    autocapitalize: false,
-    autocorrect: true,
-    lineWrapping: true,
-    foldGutter: true,
+
+  $refs!: {
+    editor_wrapper: HTMLDivElement
   }
+
   beforeDestroy() {
     this.$events.$off('writer-submit')
   }
   mounted() {
+    this.initEditor()
+
     // @ts-ignore
-    this.$events.$on('writer-submit', () => {
-      console.log('clear cache.')
+    // this.$events.$on('writer-submit', () => {
+    //   console.log('clear cache.')
+    // })
+    // TODO cache
+    // const cachedKey = 'mx-space-writer' + (this.id ? `-${this.id}` : '')
+  }
+
+  initEditor() {
+    const editor = Editor.create(this.$refs.editor_wrapper, {
+      value: this.model.text,
+      language: 'markdown',
+      automaticLayout: true,
+      wrappingStrategy: 'advanced',
+      minimap: { enabled: false },
+      wordWrap: 'on',
+      cursorStyle: 'line-thin',
+      formatOnType: true,
     })
-    const cachedKey = 'mx-space-writer' + (this.id ? `-${this.id}` : '')
+    ;['onKeyDown', 'onDidPaste', 'onDidBlurEditorText'].forEach((eventName) => {
+      // @ts-ignore
+      editor[eventName](() => {
+        this.handleChangeText(editor.getValue())
+      })
+    })
+
+    editor.addAction({
+      id: 'bold',
+      label: 'bold',
+      keybindings: [KeyMod.CtrlCmd | KeyCode.KEY_B],
+      // @ts-ignore
+      run: (e) => {
+        this.registerRule('**')
+
+        return null
+      },
+    })
+
+    editor.addAction({
+      id: 'em',
+      label: 'em',
+      keybindings: [KeyMod.CtrlCmd | KeyCode.KEY_I],
+      // @ts-ignore
+      run: (e) => {
+        this.registerRule('*')
+
+        return null
+      },
+    })
+
+    editor.addAction({
+      id: 'del',
+      label: 'del',
+      keybindings: [KeyMod.CtrlCmd | KeyCode.KEY_D],
+      // @ts-ignore
+      run: (e) => {
+        this.registerRule('~~')
+
+        return null
+      },
+    })
+
+    // eslint-disable-next-line no-sparse-arrays
+    const keycodeMap: number[] = [
+      ,
+      KeyCode.KEY_1,
+      KeyCode.KEY_2,
+      KeyCode.KEY_3,
+      KeyCode.KEY_4,
+      KeyCode.KEY_5,
+    ] as any
+    Array.from({ length: 5 })
+      .fill(null)
+      .forEach((_, _i) => {
+        const i = _i + 1
+        editor.addAction({
+          id: 'head-' + i,
+          label: 'heading',
+          keybindings: [KeyMod.CtrlCmd | keycodeMap[i]],
+          // @ts-ignore
+          run: (e) => {
+            const selection = e.getSelection()
+            if (!selection) {
+              return null
+            }
+            const L = selection.startLineNumber
+            const prefixRange = {
+              startLineNumber: L,
+              endLineNumber: L,
+              startColumn: 0,
+              endColumn: i + 2,
+            }
+            const prefix = e.getModel()?.getValueInRange(prefixRange)
+
+            if (prefix && prefix == '#'.repeat(i) + ' ') {
+              e.executeEdits('', [{ range: prefixRange, text: '' }])
+              return
+            }
+
+            e.executeEdits('', [
+              {
+                range: {
+                  startLineNumber: L,
+                  endLineNumber: L,
+                  startColumn: 0,
+                  endColumn: 0,
+                },
+                text: `${'#'.repeat(i)} `,
+              },
+            ])
+          },
+        })
+      })
+
+    this.$editor = editor
   }
 
   @Watch('title')
@@ -111,6 +205,7 @@ export default class Writer extends Vue {
   syncText(val: string) {
     if (this.model.text !== val) {
       this.model.text = val
+      this.$editor?.setValue(val)
     }
   }
 
@@ -133,39 +228,79 @@ export default class Writer extends Vue {
   handleEmitChange() {
     this.$emit('change', this.model)
   }
-  handleChangeTitle(e: string) {
-    this.model.title = e
+  handleChangeTitle(title: string) {
+    this.model.title = title
     this.handleEmitChange()
   }
-  handleChangeText(e: string) {
-    this.model.text = e
+  handleChangeText(text: string) {
+    this.model.text = text
     this.handleEmitChange()
   }
   composition = false
   handleFocus() {
     if (!this.composition) {
-      ;((this.$refs.editor as any) as Editor).focus()
+      this.$editor?.focus()
     }
+  }
+
+  registerRule(symbol: string) {
+    const e = this.$editor
+    if (!e) {
+      return
+    }
+
+    const len = symbol.length
+
+    const selection = e.getSelection()
+
+    if (!selection) {
+      return
+    }
+    if (
+      selection.startLineNumber == selection.endLineNumber &&
+      selection.startColumn == selection.endColumn
+    ) {
+      e.executeEdits('', [{ range: selection, text: symbol.repeat(2) }])
+
+      const newSelection = new Selection(
+        selection.startLineNumber,
+        selection.startColumn + len,
+        selection.startLineNumber,
+        selection.startColumn + len,
+      )
+      e.setSelection(newSelection)
+    } else {
+      const rangeText = e.getModel()?.getValueInRange(selection)
+      if (!rangeText) {
+        return
+      }
+      if (rangeText.startsWith(symbol) && rangeText.endsWith(symbol)) {
+        // if already apply rule, cancel it
+        e.executeEdits('', [
+          {
+            range: selection,
+            text: `${rangeText.slice(len, rangeText.length - len)}`,
+          },
+        ])
+        return
+      }
+      e.executeEdits('', [
+        { range: selection, text: `${symbol}${rangeText}${symbol}` },
+      ])
+    }
+
+    return
   }
 }
 </script>
-<style lang="scss">
-.CodeMirror {
-  border: 1px solid #eee;
-  /* height: auto; */
-  font-family: inherit;
-  height: calc(100vh - 15rem);
-  .CodeMirror-code {
-    font-family: 'Operator Mono', monospace;
-    .CodeMirror-linenumber {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-  }
-}
-</style>
+
 <style lang="scss" scoped>
 .middle-content {
   padding: 12px 0;
+}
+.editor {
+  height: calc(100vh - 15rem);
+  position: relative;
+  overflow: hidden;
 }
 </style>
