@@ -128,9 +128,22 @@ export default class Writer extends Vue {
     })
 
     editor.addAction({
+      id: 'null',
+      label: 'null',
+      keybindings: [
+        KeyMod.CtrlCmd | KeyCode.KEY_S,
+        KeyMod.Shift | KeyMod.Alt | KeyCode.KEY_F,
+      ],
+      // @ts-ignore
+      run: (e) => {
+        return null
+      },
+    })
+
+    editor.addAction({
       id: 'del',
       label: 'del',
-      keybindings: [KeyMod.CtrlCmd | KeyCode.KEY_D],
+      keybindings: [KeyMod.Alt | KeyCode.KEY_D],
       // @ts-ignore
       run: (e) => {
         this.registerRule('~~')
