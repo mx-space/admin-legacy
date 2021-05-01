@@ -59,12 +59,29 @@ export class BaseWriter extends Vue {
 })
 export default class Writer extends Vue {
   $editor?: Editor.IStandaloneCodeEditor
+
+  handler = (e) => {
+    // console.log(this.isEdited)
+
+    // if (this.isEdited) {
+    const res = confirm('文章未保存是否后退')
+    if (!res) {
+      this.pushState()
+    } else {
+      history.back()
+      window.removeEventListener('popstate', this.handler)
+    }
+    // }
+  }
   created() {
     const model = {
       title: this.$props.title,
       text: this.$props.text,
     }
     this.model = model
+    this.pushState()
+
+    window.addEventListener('popstate', this.handler)
   }
 
   $refs!: {
@@ -73,7 +90,14 @@ export default class Writer extends Vue {
 
   beforeDestroy() {
     this.$events.$off('writer-submit')
+    window.removeEventListener('popstate', this.handler)
   }
+
+  // @Watch('isEdited')
+  pushState() {
+    history.pushState(null, window.location.href)
+  }
+
   mounted() {
     this.initEditor()
 
@@ -84,7 +108,7 @@ export default class Writer extends Vue {
     // TODO cache
     // const cachedKey = 'mx-space-writer' + (this.id ? `-${this.id}` : '')
   }
-
+  // isEdited = false
   initEditor() {
     const editor = Editor.create(this.$refs.editor_wrapper, {
       value: this.model.text,
@@ -96,6 +120,12 @@ export default class Writer extends Vue {
       cursorStyle: 'line-thin',
       formatOnType: true,
     })
+
+    // editor.onKeyUp(() => {
+    //   if (!this.isEdited) {
+    //     this.isEdited = true
+    //   }
+    // })
     ;['onKeyDown', 'onDidPaste', 'onDidBlurEditorText'].forEach((eventName) => {
       // @ts-ignore
       editor[eventName](() => {
