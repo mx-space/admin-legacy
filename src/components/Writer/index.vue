@@ -60,7 +60,7 @@ export class BaseWriter extends Vue {
 export default class Writer extends Vue {
   $editor?: Editor.IStandaloneCodeEditor
 
-  handler = (e) => {
+  popStateHandler = (e) => {
     // console.log(this.isEdited)
 
     // if (this.isEdited) {
@@ -69,10 +69,18 @@ export default class Writer extends Vue {
       this.pushState()
     } else {
       history.back()
-      window.removeEventListener('popstate', this.handler)
+      window.removeEventListener('popstate', this.popStateHandler)
     }
     // }
   }
+
+  beforeUnloadHandler = (event) => {
+    event.preventDefault()
+    // Chrome requires returnValue to be set.
+    event.returnValue = '文章未保存是否后退'
+    return false
+  }
+
   created() {
     const model = {
       title: this.$props.title,
@@ -81,7 +89,8 @@ export default class Writer extends Vue {
     this.model = model
     this.pushState()
 
-    window.addEventListener('popstate', this.handler)
+    window.addEventListener('popstate', this.popStateHandler)
+    window.addEventListener('beforeunload', this.beforeUnloadHandler)
   }
 
   $refs!: {
@@ -90,7 +99,8 @@ export default class Writer extends Vue {
 
   beforeDestroy() {
     this.$events.$off('writer-submit')
-    window.removeEventListener('popstate', this.handler)
+    window.removeEventListener('popstate', this.popStateHandler)
+    window.removeEventListener('beforeunload', this.beforeUnloadHandler)
   }
 
   // @Watch('isEdited')
