@@ -129,6 +129,14 @@ export default class Writer extends Vue {
       wordWrap: 'on',
       cursorStyle: 'line-thin',
       formatOnType: true,
+      quickSuggestions: { strings: false, other: false, comments: false },
+      tabCompletion: 'off',
+      parameterHints: {
+        enabled: false,
+      },
+      suggestOnTriggerCharacters: false,
+      acceptSuggestionOnEnter: 'off',
+      wordBasedSuggestions: false,
     })
 
     // editor.onKeyUp(() => {
