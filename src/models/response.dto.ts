@@ -45,7 +45,7 @@ export interface PostRespDto extends BaseResp {
   data: {
     hide: boolean
     commentsIndex: number
-    id: string
+
     created: string
     modified: string
     title: string
@@ -118,7 +118,6 @@ export interface CommentModel {
   created: string
   modified: string
   avatar: string
-  id: string
 }
 
 export interface CommentsRespDto extends BaseResp {
@@ -143,7 +142,7 @@ export interface PageModel {
   modified: Date
   title: string
   slug: string
-  id: string
+
   subtitle?: string
 }
 export interface PagesRespDto extends BaseResp {
