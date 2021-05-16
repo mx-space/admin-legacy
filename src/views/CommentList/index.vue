@@ -76,7 +76,7 @@
             <router-link
               :to="{
                 name: `edit-${scope.row.refType.toLowerCase()}s`,
-                query: { id: scope.row.ref && scope.row.ref._id },
+                query: { id: scope.row.ref && scope.row.ref.id },
               }"
               class="title"
               >{{ scope.row.ref && scope.row.ref.title }}</router-link
@@ -91,10 +91,10 @@
             {{ scope.row.parent.text }}
           </blockquote>
           <div class="actions">
-            <span class="action green" @click="changeState(scope.row._id, 1)"
+            <span class="action green" @click="changeState(scope.row.id, 1)"
               >已读</span
             >
-            <span class="action yellow" @click="changeState(scope.row._id, 2)"
+            <span class="action yellow" @click="changeState(scope.row.id, 2)"
               >垃圾</span
             >
             <span
@@ -102,7 +102,7 @@
               v-if="activeName !== '2'"
               @click="
                 replyDialogVisible = true
-                replyCid = scope.row._id
+                replyCid = scope.row.id
               "
             >
               回复
@@ -110,7 +110,7 @@
 
             <el-popconfirm
               title="确定删除吗？"
-              @onConfirm="handleDelete(scope.row._id)"
+              @onConfirm="handleDelete(scope.row.id)"
             >
               <span slot="reference" class="action red">删除</span>
             </el-popconfirm>
@@ -224,7 +224,7 @@ export default class CommentList extends Vue {
   }
 
   get replyContext() {
-    return this.comments.find((item) => item._id === this.replyCid) || {}
+    return this.comments.find((item) => item.id === this.replyCid) || {}
   }
 
   async created() {
@@ -264,7 +264,7 @@ export default class CommentList extends Vue {
     }
   }
   handleSelectionChange(val: CommentModel[]) {
-    this.multipleSelection = val.map((c) => c._id)
+    this.multipleSelection = val.map((c) => c.id)
   }
   fromNow(date: string) {
     return relativeTimeFromNow(date)

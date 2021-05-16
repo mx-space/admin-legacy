@@ -19,7 +19,7 @@
         <template slot-scope="scope">
           <el-button
             @click.native.prevent="
-              $router.push('/notes/edit?id=' + data[scope.$index]._id)
+              $router.push('/notes/edit?id=' + data[scope.$index].id)
             "
             type="text"
             size="small"
@@ -115,8 +115,8 @@ export default class ListNotes extends Vue {
   }
 
   async handleDelete(index: number) {
-    const _id = this.data[index]._id
-    await this.$api('Note').delete(_id)
+    const id = this.data[index].id
+    await this.$api('Note').delete(id)
     this.$notice.success('删除成功')
     this.getData()
   }
@@ -124,7 +124,7 @@ export default class ListNotes extends Vue {
     this.$router.push({
       name: 'edit-notes',
       query: {
-        id: row._id,
+        id: row.id,
       },
     })
   }

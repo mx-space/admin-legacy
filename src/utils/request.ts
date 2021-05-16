@@ -12,6 +12,7 @@ import router from '@/router'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 import axios from 'axios'
+import camelcaseKeys from 'camelcase-keys'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API || 'http://localhost:2333',
@@ -36,7 +37,7 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   (response) => {
-    const res = response.data
+    const res = camelcaseKeys(response.data, { deep: true })
 
     return res
   },

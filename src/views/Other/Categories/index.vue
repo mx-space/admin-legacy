@@ -61,7 +61,7 @@
         <template slot-scope="scope">
           <el-button
             @click.native.prevent="
-              $router.push('/posts/edit?id=' + scope.row._id)
+              $router.push('/posts/edit?id=' + scope.row.id)
             "
             type="text"
             size="small"
@@ -191,8 +191,8 @@ export default class extends Vue {
   }
 
   async handleDelete(index: number) {
-    const _id = this.data[index]._id
-    await this.$api('Category').delete(_id as string)
+    const id = this.data[index].id
+    await this.$api('Category').delete(id as string)
     this.$notice.success('删除成功')
     this.fetch()
   }
@@ -200,7 +200,7 @@ export default class extends Vue {
   edit: false | string = false
   handleEdit(row: CategoryRespDto) {
     this.model = pick(row, ['slug', 'name', 'type'])
-    this.edit = row._id as string
+    this.edit = row.id as string
     this.dialogVisible = true
   }
 

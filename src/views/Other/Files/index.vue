@@ -63,7 +63,7 @@
         <template slot-scope="scope">
           <el-popconfirm
             title="确定删除吗？"
-            @onConfirm="handleDelete(scope.row._id)"
+            @onConfirm="handleDelete(scope.row.id)"
           >
             <el-button
               type="text"

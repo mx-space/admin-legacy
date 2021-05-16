@@ -60,8 +60,8 @@ export const rest = (rest: keyof typeof AccessRoutesEnum, prefix?: string) => {
       })
       return data as any
     },
-    async getOne<T = any>(_id = '', config?: AxiosRequestConfig): Promise<T> {
-      const id = encodeURI(_id)
+    async getOne<T = any>(id = '', config?: AxiosRequestConfig): Promise<T> {
+      id = encodeURI(id)
       const data = await $axios.get(`${pluralize}${id ? '/' + id : ''}`, config)
       return data as any
     },

@@ -20,7 +20,7 @@
         <template slot-scope="scope">
           <el-button
             @click.native.prevent="
-              $router.push('/posts/edit?id=' + data[scope.$index]._id)
+              $router.push('/posts/edit?id=' + data[scope.$index].id)
             "
             type="text"
             size="small"
@@ -138,8 +138,8 @@ export default {
       return this.categories.get(id)?.name
     },
     async handleDelete(index) {
-      const _id = this.data[index]._id
-      await this.$api('Post').delete(_id)
+      const id = this.data[index].id
+      await this.$api('Post').delete(id)
       this.$notice.success('删除成功')
       this.getData()
     },
@@ -147,7 +147,7 @@ export default {
       this.$router.push({
         name: 'edit-posts',
         query: {
-          id: row._id,
+          id: row.id,
         },
       })
     },
@@ -205,9 +205,9 @@ export default {
       data = data
         .map((c) => {
           return c.category.children.map((ch) => ({
-            ...omit(c.category, ['children', 'id', '_id']),
+            ...omit(c.category, ['children', 'id', 'id']),
             ...ch,
-            categoryId: c.category._id,
+            categoryId: c.category.id,
           }))
         })
         .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())

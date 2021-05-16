@@ -34,7 +34,7 @@
               v-for="(value, key) in categoryRecord"
               :key="key"
               :label="value.name"
-              :value="value._id"
+              :value="value.id"
             >
             </el-option>
           </el-select>
@@ -161,7 +161,7 @@ export default class PostWriteView extends Mixins(BaseWriter) {
     const model: PostDto = {
       ...this.model,
       slug: this.slug,
-      categoryId: this.category._id,
+      categoryId: this.category.id,
       summary: this.summary === '' ? undefined : this.summary,
       hide: this.hide,
       copyright: this.copyright,
@@ -188,7 +188,7 @@ export default class PostWriteView extends Mixins(BaseWriter) {
       name: '',
     }
     return {
-      _id: this.categoryId,
+      id: this.categoryId,
       slug: category.slug,
       name: category.name,
     }
@@ -204,7 +204,7 @@ export default class PostWriteView extends Mixins(BaseWriter) {
     if (!defaultCategory) {
       return false
     }
-    this.categoryId = defaultCategory._id
+    this.categoryId = defaultCategory.id
 
     return true
   }

@@ -36,7 +36,7 @@ export class CategoryModule extends VuexModule {
         created: new Date(category.created),
         modified: new Date(category.modified),
       }
-      map.set(category._id, value)
+      map.set(category.id, value)
     })
 
     return map

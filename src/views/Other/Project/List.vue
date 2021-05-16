@@ -17,7 +17,7 @@
         <template slot-scope="scope">
           <el-button
             @click.native.prevent="
-              $router.push('/extra/project/edit?id=' + data[scope.$index]._id)
+              $router.push('/extra/project/edit?id=' + data[scope.$index].id)
             "
             type="text"
             size="small"
@@ -88,8 +88,8 @@ export default class ProjectList extends Vue {
     this.loading = false
   }
   async handleDelete(index: number) {
-    const _id = this.data[index]._id
-    await this.$api('Project').delete(_id as string)
+    const id = this.data[index].id
+    await this.$api('Project').delete(id as string)
     this.$notice.success('删除成功')
     this.fetchData()
   }

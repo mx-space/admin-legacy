@@ -51,7 +51,7 @@ export interface CommentDto {
 }
 
 export interface ProjectDto {
-  _id?: string
+  id?: string
   name: string
   previewUrl?: string
   docUrl?: string
@@ -62,7 +62,7 @@ export interface ProjectDto {
   text: string
 }
 export interface SayDto {
-  _id?: string
+  id?: string
   text: string
   source?: string
   author?: string

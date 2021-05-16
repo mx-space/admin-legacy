@@ -45,7 +45,7 @@
           <el-button
             type="text"
             size="small"
-            @click="handleApprove(scope.row._id)"
+            @click="handleApprove(scope.row.id)"
             style="color: green"
             v-if="tabActive === '1'"
             >通过</el-button
@@ -266,8 +266,8 @@ export default class extends Vue {
   }
 
   async handleDelete(index: number) {
-    const _id = this.data[index]._id
-    await this.$api('Link').delete(_id as string)
+    const id = this.data[index].id
+    await this.$api('Link').delete(id as string)
     this.$notice.success('删除成功')
     this.fetch()
   }
@@ -279,7 +279,7 @@ export default class extends Vue {
   edit: false | string = false
   handleEdit(row: LinkModel) {
     this.model = pick(row, ['name', 'url', 'avatar', 'description', 'type'])
-    this.edit = row._id as string
+    this.edit = row.id as string
     this.dialogVisible = true
   }
 

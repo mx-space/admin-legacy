@@ -7,7 +7,7 @@ interface BaseResp {
 interface BaseModel {
   created?: string
   modified?: string
-  _id?: string
+  id?: string
 }
 export interface LoginRespDto {
   ok: number
@@ -31,7 +31,7 @@ export enum CategoryType {
 export interface CategoryRespDto {
   type: CategoryType
   count: number
-  _id: string
+  id: string
   created: string
   slug: string
   name: string
@@ -45,7 +45,7 @@ export interface PostRespDto extends BaseResp {
   data: {
     hide: boolean
     commentsIndex: number
-    _id: string
+    id: string
     created: string
     modified: string
     title: string
@@ -71,7 +71,7 @@ export interface PagerDto {
 }
 
 export interface NoteRecord {
-  _id: string
+  id: string
   hide: boolean
   count: {
     read: number
@@ -106,7 +106,7 @@ export interface CommentModel {
   state: number
   children: CommentModel[]
   commentsIndex: number
-  _id: string
+  id: string
   author: string
   text: string
   mail: string
@@ -138,7 +138,7 @@ export interface SayRespDto extends BaseResp {
 export interface PageModel {
   commentsIndex: number
   order: number
-  _id: string
+  id: string
   created: Date
   modified: Date
   title: string
@@ -167,7 +167,7 @@ export interface LinkRespDto extends BaseResp {
 }
 
 export interface MasterModel {
-  _id: string
+  id: string
   introduce: string
   mail: string
   url: string
@@ -207,7 +207,7 @@ export declare namespace UA {
     os?: Os
   }
   export interface Root {
-    _id: string
+    id: string
     ip?: string
     ua: Ua
     timestamp: Date
