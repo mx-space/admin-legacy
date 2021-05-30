@@ -24,7 +24,7 @@ service.interceptors.request.use(
     if (store.getters.token) {
       config.headers['Authorization'] = 'bearer ' + getToken()
     }
-    config.url += '?timestamp=' + new Date().getTime()
+    config.url += '?t=' + new Date().getTime().toString(16).slice(2, 8)
     return config
   },
   (error) => {
@@ -37,7 +37,14 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   (response) => {
-    const res = camelcaseKeys(response.data, { deep: true })
+    let res = response.data
+
+    if (
+      typeof response.data == 'object' &&
+      Object.prototype.toString.call(response.data) == '[object Object]'
+    ) {
+      res = camelcaseKeys(res, { deep: true })
+    }
 
     return res
   },

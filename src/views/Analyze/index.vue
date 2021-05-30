@@ -32,7 +32,7 @@
       <small> 总请求量中: PV {{ total.callTime }} UV {{ total.uv }} </small>
     </section>
 
-    <section>
+    <section v-if="todayIps">
       <small> 今天 - 所有请求的 IP {{ todayIps.length }} 个 </small>
       <div class="tags">
         <el-tag v-for="ip in todayIps" :key="ip" effect="plain">
@@ -151,9 +151,8 @@ export default class AnalyzeView extends Vue {
   chartDataDay = [{}]
   chartDataMonth = [{}]
   chartDataWeek = [{}]
-  fragment:
-    | {}
-    | Record<'today' | 'weeks' | 'months', Record<string, number>> = {}
+  fragment: {} | Record<'today' | 'weeks' | 'months', Record<string, number>> =
+    {}
   topPaths: { count: number; path: string }[] = []
   chartDay: null | Chart = null
   chartMonth: null | Chart = null
@@ -183,13 +182,14 @@ export default class AnalyzeView extends Vue {
       total: {
         [key: string]: number
       }
-      today_ips: string[]
+      todayIps: string[]
       page: PagerDto
     }
-    const { data, total, today_ips } = resp
+    const { data, total, todayIps } = resp
+
     this.raw = [...data]
     this.total = { ...total } as any
-    this.todayIps = today_ips
+    this.todayIps = todayIps
     this.tableData = this.parseUATableData(data)
     this.pager = { ...resp.page }
 

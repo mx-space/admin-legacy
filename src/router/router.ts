@@ -233,7 +233,7 @@ const routes: MenuRouteConfig[] = [
           {
             path: 'optimize',
             name: 'optimize',
-            meta: { title: '优化', icon: ['fas', 'wrench'] },
+            meta: { title: '开发测试', icon: ['fas', 'wrench'] },
             component: () => import('@/views/Optimize/index.vue'),
           },
         ],
