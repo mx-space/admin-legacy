@@ -40,7 +40,7 @@
     "vuex-module-decorators": "1.0.1"
   },
   "devDependencies": {
-    "@types/js-cookie": "2.2.6",
+    "@types/js-cookie": "2.2.7",
     "@types/lodash": "4.14.169",
     "@types/socket.io-client": "1.4.34",
     "@types/validator": "13.1.3",
